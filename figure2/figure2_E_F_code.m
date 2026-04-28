@@ -75,19 +75,21 @@ set(f,'Paperunits','inches',...
     'Paperposition',[0,0,sizerRaw],...
     'Units','inches',...
     'Position',[2,2,sizerRaw]);
-xends = [2,25];
 goodCa = ca>150&ca<1000;
 meanRiseSF = mean(tRises(goodCa,:))*1000;
 meanRiseB = cellfun(@mean,rises);
 rgb_colores = cell2mat(cellfun(@hex2rgb,colores,'UniformOutput',0)');
 scatter(meanRiseSF,meanRiseB,15,rgb_colores,...
     'filled');
-[fCoeff]=polyfit(meanRiseB,meanRiseSF,1);
-plot(polyval(fCoeff,xends),xends,'k--')
+mdl = fitlm(meanRiseSF(:),meanRiseB(:));
+coef_ci = coefCI(mdl);
+xfit = [0,200];
+yfit = predict(mdl,xfit');
+plot(xfit,yfit,'k--')
 
 %Add error bars
 errSF = iqr(tRises(goodCa,:)*1000);errB = cellfun(@iqr,rises);
-for i = 1:length(consts)-1
+for i = 1:length(consts)
     plot([meanRiseSF(i)-errSF(i)/2,meanRiseSF(i)+errSF(i)/2],...
         [meanRiseB(i),meanRiseB(i)],...
         'color',colores{i},'linewidth',1);
@@ -99,3 +101,22 @@ ylabel({'Bouton 10-90%', 'rise (ms)'})
 xlabel('Stopped flow half rise (ms)')
 set(gca,'LineWidth',1,'FontName','arial','FontSize',10,...
     'TickLength',[0.03,0.003],'ylim',[0,25],'xlim',[0,200]);
+
+% Report the linear regression statistics for panel 2F.
+fitStats = mdl.ModelFitVsNullModel;
+stats_text = {sprintf('R^2 = %.3f',mdl.Rsquared.Ordinary),...
+    sprintf('p = %.3g',fitStats.Pvalue),...
+    sprintf('Slope 95%% CI [%.3f, %.3f]',coef_ci(2,1),coef_ci(2,2))};
+text(0.97,0.03,stats_text,...
+    'Units','normalized','HorizontalAlignment','right',...
+    'VerticalAlignment','bottom','FontName','arial','FontSize',8);
+
+fprintf('Panel 2F linear regression: bouton rise ~ stopped-flow rise\n');
+fprintf('  n = %d\n',mdl.NumObservations);
+fprintf('  slope = %.4f ms/ms (95%%%% CI [%.4f, %.4f])\n',...
+    mdl.Coefficients.Estimate(2),coef_ci(2,1),coef_ci(2,2));
+fprintf('  intercept = %.4f ms (95%%%% CI [%.4f, %.4f])\n',...
+    mdl.Coefficients.Estimate(1),coef_ci(1,1),coef_ci(1,2));
+fprintf('  R^2 = %.4f, adjusted R^2 = %.4f\n',...
+    mdl.Rsquared.Ordinary,mdl.Rsquared.Adjusted);
+fprintf('  model p = %.4g\n',fitStats.Pvalue);

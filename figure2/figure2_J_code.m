@@ -27,6 +27,7 @@ for i = 1:length(sample_const)
     % Process sample trace
     const = processedTraces(sample_const(i)).const;
     this_fit = processedTraces(sample_const(i)).fits{sample_trace(i)};
+    this_gof = processedTraces(sample_const(i)).gofs{sample_trace(i)};
     f = processedTraces(sample_const(i)).traces(:,allTrace{sample_const(i)}(sample_trace(i)));
     thisSS = mean(f(end-50:end));
     f_s = contrastStretch(f,[0,thisSS],[0,1]);
@@ -72,6 +73,23 @@ for i = 1:length(sample_const)
     text(t(round(idxCrit_exp1))*1000,this_fit.frac1/5,['\tau_{slow} = ',num2str(this_fit.tau2*1000,'%0.0f'), ' ms'],...
          'color',[0.8,0.8,0.8,0.9],...
         'HorizontalAlignment','left');
+
+    if iscell(this_gof) && numel(this_gof) >= 2
+        gof_text = {sprintf('mono adj. R^2 = %.3f',this_gof{1}.adjrsquare),...
+            sprintf('bi adj. R^2 = %.3f',this_gof{2}.adjrsquare)};
+        text(0.97,0.03,gof_text,...
+            'Units','normalized','HorizontalAlignment','right',...
+            'VerticalAlignment','bottom','FontName','arial','FontSize',8);
+
+        fprintf('Panel 2J sample fit for %s trace %d\n',const,sample_trace(i));
+        fprintf('  chosen model = %s\n',class(this_fit));
+        fprintf('  monoexp: adj R^2 = %.4f, RMSE = %.4g\n',...
+            this_gof{1}.adjrsquare,this_gof{1}.rmse);
+        fprintf('  biexp:   adj R^2 = %.4f, RMSE = %.4g\n',...
+            this_gof{2}.adjrsquare,this_gof{2}.rmse);
+        fprintf('  delta adj R^2 = %.4f\n',...
+            this_gof{2}.adjrsquare - this_gof{1}.adjrsquare);
+    end
 
     %fomatting axis
     set(gca,'yscale','log','tickdir','out','linewidth',1);

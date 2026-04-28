@@ -127,13 +127,32 @@ cellfun(@(x,y) plot([at0(y,2),at0(y,2)],quantile(x(x(:,3)==1,2),[0.25,0.75])...
     ,'color',colores(y,:),'LineWidth',1),c,{1,2,3,4});
 cellfun(@(x,y) plot(x,[pprs(y),pprs(y)],...
     'color',colores(y,:),'LineWidth',1),atEnds',{1,2,3,4});
-%Err for Hill - -0.5 - 0.5 values
-[fCoeff]=polyfit(at0(:,2)',pprs,1);
-plot(xends,polyval(fCoeff,xends),'k--')
+mdl = fitlm(at0(:,2),pprs(:));
+coef_ci = coefCI(mdl);
+yfit = predict(mdl,xends');
+plot(xends,yfit,'k--')
 xlabel(['early Hill fit at 1',char(956),'M Ca^{2+}'])
 ylabel({[char(916),'F/F normalized'], 'to single pulse'})
 set(gca,'TickDir','out','LineWidth',1,'TickLength',ticklengths,...
     'fontname','arial','fontsize',10)
+
+fitStats = mdl.ModelFitVsNullModel;
+stats_text = {sprintf('R^2 = %.3f',mdl.Rsquared.Ordinary),...
+    sprintf('p = %.3g',fitStats.Pvalue),...
+    sprintf('Slope 95%% CI [%.3f, %.3f]',coef_ci(2,1),coef_ci(2,2))};
+text(0.97,0.03,stats_text,...
+    'Units','normalized','HorizontalAlignment','right',...
+    'VerticalAlignment','bottom','FontName','arial','FontSize',8);
+
+fprintf('Panel 2I linear regression: PPR ~ early Hill slope\n');
+fprintf('  n = %d\n',mdl.NumObservations);
+fprintf('  slope = %.4f (95%%%% CI [%.4f, %.4f])\n',...
+    mdl.Coefficients.Estimate(2),coef_ci(2,1),coef_ci(2,2));
+fprintf('  intercept = %.4f (95%%%% CI [%.4f, %.4f])\n',...
+    mdl.Coefficients.Estimate(1),coef_ci(1,1),coef_ci(1,2));
+fprintf('  R^2 = %.4f, adjusted R^2 = %.4f\n',...
+    mdl.Rsquared.Ordinary,mdl.Rsquared.Adjusted);
+fprintf('  model p = %.4g\n',fitStats.Pvalue);
 
 
 % Raw log data plots
