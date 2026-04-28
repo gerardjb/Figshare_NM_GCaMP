@@ -1,7 +1,7 @@
-function figure1_K_code
+function figure1_N_code
 %%%
 % Utility that fits a single spike response from the 6f bouton dataset as
-% in the referenced figure.
+% in current Figure 1 panel N.
 % This kernel in the convolved with pairs of spikes
 % with low ISI and compared to the actual bouton response to the same train.
 %%%

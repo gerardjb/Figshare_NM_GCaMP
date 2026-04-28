@@ -1,8 +1,9 @@
-function figure1_L_code
+function figure1_O_code
 %%%
 % Utility that fits a single spike response from the 8f bouton dataset.
 % This impulse response function is then convolved with a Poisson spike
-% train and compared to the actual bouton response to the same train.
+% train and compared to the actual bouton response in current Figure 1
+% panel O.
 %%%
 close all
 
