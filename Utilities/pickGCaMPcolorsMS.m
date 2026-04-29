@@ -50,7 +50,7 @@ fullMap = {'#808080',...neutral gray
     '#A6780C',...};%(ENS^2)
     '#007755',...%(biophys_NN)
     '#FFCC29',...%(Cascade trained with 8f),...
-    '#53338B'};% second try for 8m
+    '#53338B'};% first try for 8m
 
 lib_idx = arrayfun(@(x) contains(consts,x,'IgnoreCase',true),GCaMPlib);
 if any(lib_idx)
