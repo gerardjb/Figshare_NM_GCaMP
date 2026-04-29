@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='figure3_F_G_code',
+    name='gcamp_reproducible_plotting',
     version='0.1',
     description='Reproducible plotting scripts for the GCaMP model Figshare repository',
     packages=find_packages(exclude=['build', 'build.*']),

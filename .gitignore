@@ -1,0 +1,13 @@
+# config stuff
+.vscode/
+
+# python et al. artifacts
+__pycache__/
+*.egg-info/
+build/
+
+# results-type things
+output/
+
+# pass through
+tmp/
