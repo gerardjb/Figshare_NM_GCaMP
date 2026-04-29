@@ -1,4 +1,4 @@
-function suppfigure9_C_to_F_code
+function suppfigure10_C_to_F_code
 %%%
 % Plots of model correlations between continuous predictions and ground
 % truth convovled with progressivly larger Gaussian filters as in the

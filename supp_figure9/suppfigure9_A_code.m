@@ -1,4 +1,4 @@
-function suppfigure8_A_code
+function suppfigure9_A_code
 %%%
 % Plots comparing correlations of CASCADE trained on the jGCaMP8f dataset
 % or original Global_exc dataset compared to ground truth as in the

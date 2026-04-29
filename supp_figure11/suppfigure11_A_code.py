@@ -1,6 +1,6 @@
 """ 
     Plots for the distribution of STA and SNA bias and uncertainty for the Janelia8f dataset as detected using
-    the methods studied here and shown in supplementary figure 10.
+    the methods studied here and shown in supplementary figure 11.
 """
 
 import pandas as pd
