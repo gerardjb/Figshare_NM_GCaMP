@@ -13,7 +13,7 @@ sf_data = fullfile(d,"..","Shared_data","stoppedFlowTraces.mat");
 bouton_data = fullfile(d,"..","Shared_data","gDbase.mat");
 f_s = ["best_G6f_params.json",...
     "best_jG7f_params.json",...
-    "best_jG8f_params.json"];
+    "best_jG8f_slice_params.json"];
 consts = ["GCaMP6f","jGCaMP7f","jGCaMP8f"];
 
 % Figure setups
