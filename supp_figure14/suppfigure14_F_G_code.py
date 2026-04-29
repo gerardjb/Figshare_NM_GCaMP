@@ -1,0 +1,176 @@
+"""Standalone plotting script for supplementary figure 14 panels F and G."""
+
+from __future__ import annotations
+
+import argparse
+import atexit
+import shutil
+import stat
+import sys
+from pathlib import Path
+
+try:
+    from SharedUtilities.trialwise_plots import (
+        ensure_matplotlib_cache_dir,
+        load_trace_panel_data,
+        plot_corr_vs_sigma,
+        plot_trace_panel,
+    )
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from SharedUtilities.trialwise_plots import (  # type: ignore
+        ensure_matplotlib_cache_dir,
+        load_trace_panel_data,
+        plot_corr_vs_sigma,
+        plot_trace_panel,
+    )
+
+
+HERE = Path(__file__).resolve().parent
+DEFAULT_CSV = HERE / "trialwise_correlations_jG8m.csv"
+DEFAULT_TRACE = HERE / "jG8m_compare_out.npz"
+DEFAULT_OUTPUT_DIR = HERE / "output"
+TMP_DIR = HERE / "tmp"
+
+METHODS = [
+    "pgas@pgasraw",
+    "biophys_ml=ens2@cascadein_nodisc_ens2",
+    "ens2=ens2@ens2_jG8m_sweep2_best_k2_r9_s2p0_d0p45_sb19000",
+    "cascade@cascade_updated_model",
+    "mlspike@matlab_mlspike_jG8m2",
+]
+
+COLORS = {
+    "pgas@pgasraw": "#009E73",
+    "biophys_ml": "#007755",
+    "ens2": "#A6780C",
+    "cascade": "#F3AE14",
+    "mlspike": "#0072B2",
+}
+
+LABELS = {
+    "pgas@pgasraw": r"Biophys$_{SMC}$",
+    "biophys_ml": r"Biophys$_{ML}$",
+    "ens2": r"ENS$^2$",
+    "cascade": "CASCADE",
+    "mlspike": "MLspike",
+}
+
+
+def _cleanup_tmp_dir() -> None:
+    if not TMP_DIR.exists():
+        return
+    for path in sorted(TMP_DIR.rglob("*"), key=lambda p: len(p.parts), reverse=True):
+        try:
+            path.chmod(stat.S_IREAD | stat.S_IWRITE | stat.S_IEXEC)
+        except OSError:
+            pass
+    try:
+        TMP_DIR.chmod(stat.S_IREAD | stat.S_IWRITE | stat.S_IEXEC)
+    except OSError:
+        pass
+    shutil.rmtree(TMP_DIR, ignore_errors=True)
+    if not TMP_DIR.exists():
+        return
+    for path in sorted(TMP_DIR.rglob("*"), key=lambda p: len(p.parts), reverse=True):
+        try:
+            path.chmod(stat.S_IREAD | stat.S_IWRITE | stat.S_IEXEC)
+        except OSError:
+            pass
+        try:
+            if path.is_dir():
+                path.rmdir()
+            else:
+                path.unlink()
+        except OSError:
+            pass
+    try:
+        TMP_DIR.chmod(stat.S_IREAD | stat.S_IWRITE | stat.S_IEXEC)
+    except OSError:
+        pass
+    try:
+        TMP_DIR.rmdir()
+    except OSError:
+        pass
+
+
+def _canonicalize_trace_data(trace_path: Path) -> dict:
+    data = load_trace_panel_data(trace_path)
+    data["title"] = "Excitatory cell sample"
+    return data
+
+
+def build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Create supplementary figure 14 panels F and G from packaged CSV/NPZ exports."
+    )
+    parser.add_argument("--csv", type=Path, default=DEFAULT_CSV, help="jGCaMP8m trialwise correlation CSV.")
+    parser.add_argument("--trace", type=Path, default=DEFAULT_TRACE, help="Trace-panel NPZ export for panel F.")
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR, help="Directory for output figures.")
+    parser.add_argument(
+        "--format",
+        dest="formats",
+        action="append",
+        default=None,
+        choices=["pdf", "png", "svg"],
+        help="Output format. Repeat for multiple formats. Defaults to pdf.",
+    )
+    parser.add_argument("--show", action="store_true", help="Display figures interactively after saving.")
+    return parser
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = build_arg_parser().parse_args(argv)
+    ensure_matplotlib_cache_dir(TMP_DIR / "mpl_cache")
+    atexit.register(_cleanup_tmp_dir)
+
+    import matplotlib.pyplot as plt
+
+    try:
+        output_dir = args.output_dir.resolve()
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output_formats = args.formats or ["pdf"]
+
+        plt.rcParams["font.family"] = "Arial"
+        plt.rcParams["font.sans-serif"] = ["Arial"]
+        plt.rcParams["pdf.fonttype"] = 42
+        plt.rcParams["ps.fonttype"] = 42
+        plt.rcParams["text.usetex"] = False
+        plt.rcParams["mathtext.fontset"] = "custom"
+        plt.rcParams["mathtext.rm"] = "Arial"
+        plt.rcParams["mathtext.it"] = "Arial:italic"
+        plt.rcParams["mathtext.bf"] = "Arial:bold"
+
+        trace_data = _canonicalize_trace_data(args.trace.resolve())
+        fig_f, _, _ = plot_trace_panel(trace_data, figsize=(3.4, 4.8), ymax=7.0)
+
+        fig_g, _ = plot_corr_vs_sigma(
+            csv_path=args.csv.resolve(),
+            methods=METHODS,
+            smoothings=["raw"],
+            colors=COLORS,
+            labels=LABELS,
+            title=None,
+            ylim=(0.6, 1.0),
+            xlim=(0.0, 110.0),
+            figsize=(3.4, 2.6),
+        )
+
+        for stem, fig in [
+            ("suppfigure14_F_trace_jG8m_compare", fig_f),
+            ("suppfigure14_G_corr_vs_sigma_jG8m", fig_g),
+        ]:
+            for fmt in output_formats:
+                out_path = output_dir / f"{stem}.{fmt}"
+                fig.savefig(out_path)
+                print(f"Saved {out_path}")
+
+        if args.show:
+            plt.show()
+    finally:
+        plt.close("all")
+        _cleanup_tmp_dir()
+
+
+if __name__ == "__main__":
+    main()
