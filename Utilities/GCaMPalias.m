@@ -16,12 +16,7 @@ elseif ismember(alias,{'jG8s','j2859'})
     GCaMP = 'jGCaMP8s';
 elseif ismember(alias,{'OGB1','OGB'})
     GCaMP = 'OGB1';
-elseif ismember(alias,{'Biophys_{SMC}','Biophys_SMC'})
-    GCaMP = 'biophys_{MC';
-elseif ismember(alias,{'Biophys_{ML}','Biophys_ML'})
-    GCaMP = 'biophys_{NN';
-elseif ismember(alias,{'CASCADE'})
-    GCaMP = 'CASCADE__';
 else
+    % If already a canonical name (or an unknown label), pass through unchanged.
     GCaMP = alias;
 end
