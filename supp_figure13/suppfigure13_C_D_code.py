@@ -16,6 +16,7 @@ try:
         plot_corr_vs_sigma,
         plot_trace_panel,
     )
+    from SharedUtilities.project_paths import figure_dir
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from SharedUtilities.trialwise_plots import (  # type: ignore
@@ -24,9 +25,10 @@ except ImportError:
         plot_corr_vs_sigma,
         plot_trace_panel,
     )
+    from SharedUtilities.project_paths import figure_dir  # type: ignore
 
 
-HERE = Path(__file__).resolve().parent
+HERE = figure_dir("supp_figure13", __file__)
 DEFAULT_CSV = HERE / "trialwise_correlations_jG8f_param_comparison.csv"
 DEFAULT_TRACE = HERE / "param_compare_out.npz"
 DEFAULT_OUTPUT_DIR = HERE / "output"

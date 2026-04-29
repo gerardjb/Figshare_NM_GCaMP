@@ -8,6 +8,14 @@ import matplotlib
 import seaborn as sns
 import ptitprince as pt
 import os
+import sys
+from pathlib import Path
+
+try:
+    from SharedUtilities.project_paths import figure_dir
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from SharedUtilities.project_paths import figure_dir  # type: ignore
 
 # Suppress FutureWarnings related to the 'observed' parameter in Seaborn - groan
 import warnings
@@ -87,7 +95,7 @@ def main():
     # -----
 
     # File path to the data
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = figure_dir("figure4", __file__)
     file_path_sta = os.path.join(script_dir,'matched_bias_uncert.csv')
     file_path_sna = os.path.join(script_dir,'sna_matching_trials.csv')
 

@@ -9,8 +9,16 @@ indicated figure
 # Import required libraries
 import matplotlib.pyplot as plt
 import os
+import sys
+from pathlib import Path
 import scipy.io as sio
 import numpy as np
+
+try:
+    from SharedUtilities.project_paths import figure_dir
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from SharedUtilities.project_paths import figure_dir  # type: ignore
 
 """
 Functions used for working with PGAS output
@@ -75,7 +83,7 @@ def unroll_dat_files(dat_file):
 def main():
     #Getting the file information
     # Get the directory where the script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = figure_dir("figure3", __file__)
     data_stub = [ "test_exc.mat","test_inh.mat"]
     sim_stub = ["traj_samples_default_janelia_sample_excitatory.dat","traj_samples_default_janelia_sample_inhibitory2.dat"]
     pgbar_stub = ["traj_samples_experiment4_exc_AR2.dat","traj_samples_inhibitory_AR2.dat"]
