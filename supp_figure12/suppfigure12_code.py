@@ -4,18 +4,20 @@ from __future__ import annotations
 
 import argparse
 import shutil
+import sys
 from pathlib import Path
 from typing import Iterable
 
 try:
-    from .trialwise_plots import (
+    from SharedUtilities.trialwise_plots import (
         ensure_matplotlib_cache_dir,
         load_trace_panel_data,
         plot_raincloud_by_downsample,
         plot_trace_panel,
     )
-except ImportError:  # Allow direct execution from this directory.
-    from trialwise_plots import (  # type: ignore
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from SharedUtilities.trialwise_plots import (  # type: ignore
         ensure_matplotlib_cache_dir,
         load_trace_panel_data,
         plot_raincloud_by_downsample,
