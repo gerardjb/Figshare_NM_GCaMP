@@ -1,0 +1,79 @@
+﻿% Auto-generated from: Table2/Table2_cell_parameters.csv
+% Requires: \\usepackage{booktabs}
+% Requires: \\usepackage{xcolor}
+% Requires: \\usepackage{array}
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.35}
+\caption{Single-cell model parameter values.}
+\label{tab:single-cell-parameters}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\begin{tabular}{L{0.30\linewidth} C{0.14\linewidth} C{0.14\linewidth} L{0.34\linewidth}}
+\toprule
+\textbf{Parameter (units)} & \textbf{Cell Type} & \textbf{Value} & \textbf{References} \\
+\midrule
+\addlinespace[0.45em]
+\multicolumn{4}{c}{\textbf{GCaMP Parameters}} \\
+\addlinespace[0.15em]
+$[GCaMP]$ ($\mu M$) & Both & 50 & Zariwala et al., 2012; Huber et al., 2012; Rose et al., 2014 \\
+$R_f$ (unitless) & Both & 5 & This study \\
+\addlinespace[0.45em]
+\multicolumn{4}{c}{\textbf{Calcium Handling}} \\
+\addlinespace[0.15em]
+$\Delta Ca_{spike}$ ($\mu M$) & Both & 70 & Helmchen and Tank, 2015 \\
+$ca_0$ ($\mu M$) & Both & 0.05 & Maravall et al., 2000 \\
+$\gamma$ ($s^{-1}$) & Both & 1800 & Brenowitz and Regehr, 2007 \\
+\addlinespace[0.45em]
+\multicolumn{4}{c}{\textbf{Endogenous Buffer}} \\
+\addlinespace[0.15em]
+$Buffer_{Endo}$ ($\mu M$) & Both & 12000 & This study \\
+$k_{on, Endo}$ ($\mu M^{-1}\,s^{-1}$) & Both & 12000 & Xu et al., 1997 \\
+$k_{off, Endo}$ ($s^{-1}$) & Both & 10000 & Xu et al., 1997 \\
+\addlinespace[0.45em]
+\multicolumn{4}{c}{\textbf{ATP $Ca^{2+}$ Binding and Concentration}} \\
+\addlinespace[0.15em]
+$[ATP]$ ($\mu M$) & Both & 2000 & Rebola et al., 2019 \\
+$k_{on, ATP}$ ($\mu M^{-1}\,s^{-1}$) & Both & 500 & Naraghi \& Neher, 1997 \\
+$k_{off, ATP}$ ($s^{-1}$) & Both & 100000 & Naraghi \& Neher, 1997 \\
+\addlinespace[0.45em]
+\multicolumn{4}{c}{\textbf{Parvalbumin $Ca^{2+}$ Binding Properties}} \\
+\addlinespace[0.15em]
+$[Parv]$ ($\mu M$) & Interneuron & 1000 & Eggermann and Jonas, 2012 \\
+$k_{on, Parv, Ca^{2+}}$ ($\mu M^{-1}\,s^{-1}$) & Interneuron & 400 & Mueller et al., 2007 \\
+$k_{off, Parv, Ca^{2+}}$ ($s^{-1}$) & Interneuron & 4 & Mueller et al., 2007 \\
+$k_{on, Parv, Mg^{2+}}$ ($\mu M^{-1}\,s^{-1}$) & Interneuron & 1 & Mueller et al., 2007 \\
+$k_{off, Parv, Mg^{2+}}$ ($s^{-1}$) & Interneuron & 30 & Mueller et al., 2007 \\
+$mg_0$ ($\mu M$) & Interneuron & 700 & Romani and Scarpa, 1992 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Bracket commands for description labels (avoids `]` inside \item[...] optional args).
+\providecommand{\lbrack}{[}
+\providecommand{\rbrack}{]}
+
+\noindent\textbf{Parameter definitions.}
+\begin{description}
+\setlength{\itemsep}{0.25em}
+\item[$\lbrack GCaMP\rbrack$] Total intracellular indicator concentration used in the model.
+\item[$R_f$] Apparent fluorescence dynamic range (scaling factor mapping indicator state to measured $\Delta F/F$).
+\item[$\Delta Ca_{spike}$] Per-spike calcium increment delivered to the modeled compartment.
+\item[$ca_0$] Basal intracellular calcium concentration.
+\item[$\gamma$] Effective first-order calcium clearance rate constant.
+\item[$Buffer_{Endo}$] Total endogenous calcium buffer concentration.
+\item[$k_{on, Endo}$] Calcium binding on-rate to the endogenous buffer.
+\item[$k_{off, Endo}$] Calcium unbinding off-rate from the endogenous buffer.
+\item[$\lbrack ATP\rbrack$] Total ATP concentration.
+\item[$k_{on, ATP}$] Calcium binding on-rate to the ATP buffer.
+\item[$k_{off, ATP}$] Calcium unbinding off-rate from the ATP buffer.
+\item[$\lbrack Parv\rbrack$] Total parvalbumin concentration.
+\item[$k_{on, Parv, Ca^{2+}}$] Calcium binding on-rate to the parvalbumin buffer.
+\item[$k_{off, Parv, Ca^{2+}}$] Calcium unbinding off-rate from the parvalbumin buffer.
+\item[$k_{on, Parv, Mg^{2+}}$] Magnesium binding on-rate to the parvalbumin buffer.
+\item[$k_{off, Parv, Mg^{2+}}$] Magnesium unbinding off-rate from the parvalbumin buffer.
+\item[$mg_0$] Basal intracellular magnesium concentration.
+\end{description}
+
