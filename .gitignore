@@ -9,6 +9,11 @@ build/
 
 # results-type things
 output/
+table*.pdf
+gcamp_*.pdf
 
 # pass through
 tmp/
+
+# logs
+*.log

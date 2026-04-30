@@ -35,7 +35,7 @@ For MATLAB, run scripts from the repository root or from their figure directory 
 - `supp_figure3`: magnesium and ionic-strength effects on steady-state fluorescence and kinetics across sensors.
 - `supp_figure4`: stopped-flow decay traces, biexponential fits, and decay-component summaries.
 - `supp_figure5`: clustered parameter-set summaries used during GCaMP model parameter selection.
-- `supp_figure6`: model fits, model-state plots, and parameter summary tables. `make_gcamp_params_table.py` and the PowerShell render helper generate the included table assets.
+- `supp_figure6`: model fits and model-state plots using the parameter JSON files stored with Table 3.
 - `supp_figure9`: legacy/additional jGCaMP8f correlation analyses. Current Figure 4 analyses use `figure4/correlation_tbl_jG8f.mat`.
 - `supp_figure10`: example high/low SNR spike predictions and discrete spike timing metrics.
 - `supp_figure11`: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f detections. Run with `run_supp_figure11_A_code`.
@@ -43,7 +43,7 @@ For MATLAB, run scripts from the repository root or from their figure directory 
 - `supp_figure13`: jGCaMP8f Janelia-parameter comparison. `suppfigure13_A_B_code.m` uses `janelia_model_selection_data_jG8f.mat`; `run_supp_figure13_C_D_code` plots trace and correlation-vs-sigma comparisons.
 - `supp_figure14`: jGCaMP8m analyses. `suppfigure14_A_B_C_code.m` uses `decay_v_spikeNum.mat` for quiescent binning; `suppfigure14_D_E_code.m` uses `janelia_model_selection_data_jG8m.mat`; `run_supp_figure14_F_G_code` plots trace and correlation-vs-sigma comparisons.
 
-`Table2` and `Table3` contain CSV, TeX, PDF, and render scripts for manuscript parameter tables.
+`Table2`, `Table3`, and `Table4` contain CSV, TeX, PDF, and render scripts for manuscript parameter tables. `Table3` contains the GCaMP kinetic parameter table and the JSON parameter files also used by `supp_figure6`.
 
 ## Python entry points
 
