@@ -43,7 +43,7 @@ For MATLAB, run scripts from the repository root or from their figure directory 
 - `supp_figure13`: jGCaMP8f Janelia-parameter comparison. `suppfigure13_A_B_code.m` uses `janelia_model_selection_data_jG8f.mat`; `run_supp_figure13_C_D_code` plots trace and correlation-vs-sigma comparisons.
 - `supp_figure14`: jGCaMP8m analyses. `suppfigure14_A_B_C_code.m` uses `decay_v_spikeNum.mat` for quiescent binning; `suppfigure14_D_E_code.m` uses `janelia_model_selection_data_jG8m.mat`; `run_supp_figure14_F_G_code` plots trace and correlation-vs-sigma comparisons.
 
-`Table2`, `Table3`, and `Table4` contain CSV, TeX, PDF, and render scripts for manuscript parameter tables. `Table3` contains the GCaMP kinetic parameter table and the JSON parameter files also used by `supp_figure6`.
+`Table1`, `Table2`, `Table3`, and `Table4` contain CSV, TeX, PDF, and render scripts for manuscript tables. `Table1` contains the spike inference precision, recall, F-score, accuracy, bias, and uncertainty summary. `Table3` contains the GCaMP kinetic parameter table and the JSON parameter files also used by `supp_figure6`. The PowerShell table render helpers regenerate TeX from the CSV inputs before compiling PDFs and require `pdflatex`; Python-backed helpers should be run from an activated environment or passed the appropriate Python executable where supported.
 
 ## Python entry points
 
