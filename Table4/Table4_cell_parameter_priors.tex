@@ -1,0 +1,55 @@
+﻿% Auto-generated from: Table4/Table4_cell_parameter_priors.csv
+% Requires: \\usepackage{booktabs}
+% Requires: \\usepackage{xcolor}  % for colored sensor labels in cells
+% Requires: \\usepackage{array}   % for column formatting
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.35}
+\caption{Cell-parameter prior means and approximate ranges.}
+\label{tab:cell-parameter-priors}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\begin{tabular}{L{0.24\linewidth} C{0.10\linewidth} C{0.14\linewidth} C{0.18\linewidth} L{0.34\linewidth}}
+\toprule
+\textbf{Parameter (units)} & \textbf{Fixed/Free} & \textbf{Mean} & \textbf{Approximate range} & \textbf{References} \\
+\midrule
+\addlinespace[0.45em]
+\multicolumn{5}{c}{\textbf{GCaMP Parameters}} \\
+\addlinespace[0.15em]
+$[GCaMP]$ ($\mu M$) & Free & 60 & 1-150 & Zariwala et al., 2012; Huber et al., 2012; Rose et al., 2014 \\
+$R_f$ (unitless) & Free & \shortstack[c]{5 (\textcolor[HTML]{9E0142}{jGCaMP8f})\\\\[-0.3ex]10 (\textcolor[HTML]{53338B}{jGCaMP8m})} & \shortstack[c]{3-7 (\textcolor[HTML]{9E0142}{jGCaMP8f})\\\\[-0.3ex]8-12 (\textcolor[HTML]{53338B}{jGCaMP8m})} & This study \\
+\addlinespace[0.45em]
+\multicolumn{5}{c}{\textbf{Calcium Handling}} \\
+\addlinespace[0.15em]
+$\Delta Ca_{spike}$ ($\mu M$) & Free & 15 & 1-100 & Helmchen and Tank, 2015 \\
+$ca_0$ ($\mu M$) & Fixed & 0.05 &  & Maravall et al., 2000 \\
+$\gamma$ ($s^{-1}$) & Free & 750 & 200-2500 & Brenowitz and Regehr, 2007 \\
+$\gamma_{in}$ ($s^{-1}$) & Free & 5 & 0.5-50 & This study \\
+$\gamma_{out}$ ($s^{-1}$) & Free & 5 & 0.5-50 & This study \\
+\addlinespace[0.45em]
+\multicolumn{5}{c}{\textbf{Linearized Endogenous Buffer}} \\
+\addlinespace[0.15em]
+$\kappa_{B}$ (unitless) & Fixed & 40 &  & Rebola et al., 2019 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Bracket commands for description labels (avoids `]` inside \item[...] optional args).
+\providecommand{\lbrack}{[}
+\providecommand{\rbrack}{]}
+
+\noindent\textbf{Parameter definitions.}
+\begin{description}
+\setlength{\itemsep}{0.25em}
+\item[$\lbrack GCaMP\rbrack$] Total intracellular indicator concentration used in the model.
+\item[$R_f$] Apparent fluorescence dynamic range (scaling factor mapping indicator state to measured $\Delta F/F$).
+\item[$\Delta Ca_{spike}$] Per-spike calcium increment delivered to the modeled compartment.
+\item[$ca_0$] Basal intracellular calcium concentration.
+\item[$\gamma$] Effective first-order calcium clearance rate constant.
+\item[$\gamma_{in}$] Rate constant governing calcium influx/exchange into the modeled intracellular compartment.
+\item[$\gamma_{out}$] Rate constant governing calcium efflux/exchange out of the modeled intracellular compartment.
+\item[$\kappa_{B}$] Linearized endogenous buffering factor applied to intracellular calcium dynamics.
+\end{description}
+
