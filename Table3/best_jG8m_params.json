@@ -1,0 +1,68 @@
+{
+  "indicator": {
+    "Gparams": [
+      3.2323036675687753E-7,
+      110.66944202603871,
+      1.60514275749295,
+      1.3877150837678737E-7,
+      0.91646095869096289,
+      1.7733171573009852,
+      142.16283220004368,
+      96.420710041293859,
+      3.3665402867588455E-6,
+      83.903734252170779,
+      996.727403863637,
+      132.5298259846567,
+      11.276119862784354,
+      0.99024166758044418
+    ],
+    "fluorescence_states": [
+      3,
+      4,
+      6,
+      7,
+      9
+    ],
+    "G_tot": 1.2E-5
+  },
+  "bouton_params": {
+    "G_tot": [],
+    "gamma": [],
+    "DCaT": [],
+    "Rf": [],
+    "error": null
+  },
+  "t1_2_10_params": {
+    "G_tot": [],
+    "gamma": [],
+    "DCaT": [],
+    "Rf": [],
+    "error": null
+  },
+  "pois_params": {
+    "G_tot": [],
+    "gamma": [],
+    "DCaT": [],
+    "Rf": [],
+    "pois_t_rise": [],
+    "error": null
+  },
+  "buffer": {
+    "koff_B": 10000,
+    "kon_B": 1.0E+8,
+    "B_tot": 0.004
+  },
+  "Fluorescence": {
+    "Gsat": 0.01,
+    "Rf": 5
+  },
+  "parameter_set": {
+    "file_number": "995",
+    "cluster_number": 2
+  },
+  "meta_data": {
+    "gen_date": "04-Jan-2026 12:50:17",
+    "data_dir": "C:\\Users\\gerardjb\\OneDrive - Princeton University\\Desktop\\20220610 - FullGlobalFitRuns\\jG8m_simple6_run2",
+    "version": "C:\\Users\\gerardjb\\OneDrive - Princeton University\\Desktop\\NewCommit\\GCaMPmodel_fit\\AccessFitFiles_Janelia"
+  }
+}

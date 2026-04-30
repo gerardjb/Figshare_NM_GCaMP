@@ -11,9 +11,10 @@ close all
 d = fileparts(mfilename("fullpath"));
 sf_data = fullfile(d,"..","Shared_data","stoppedFlowTraces.mat");
 bouton_data = fullfile(d,"..","Shared_data","gDbase.mat");
-f_s = ["best_G6f_params.json",...
+table3_dir = fullfile(d,"..","Table3");
+f_s = fullfile(table3_dir,["best_G6f_params.json",...
     "best_jG7f_params.json",...
-    "best_jG8f_slice_params.json"];
+    "best_jG8f_slice_params.json"]);
 consts = ["GCaMP6f","jGCaMP7f","jGCaMP8f"];
 
 % Figure setups
@@ -101,7 +102,7 @@ load(bouton_data,"gData");
 
 for i_const = 1:3
     % Set GCaMP parameters
-    json_out = jsondecode(fileread(fullfile(d,f_s(i_const))));
+    json_out = jsondecode(fileread(f_s(i_const)));
     Gparams = json_out.indicator.Gparams;
     const_idx = find({processedTraces{1}.const}==consts(i_const));
 
