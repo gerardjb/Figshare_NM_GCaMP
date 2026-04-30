@@ -63,5 +63,3 @@ The supplementary Python scripts accept `--output-dir`, `--format`, and `--show`
 ## Shared data and utilities
 
 `Shared_data` contains common MATLAB data sources such as stopped-flow traces and the GCaMP database. `Utilities` contains shared MATLAB helpers, including `AccessFitFiles_Janelia.m`, `GCaMPalias.m`, and color utilities. `SharedUtilities` contains shared Python helpers, including `trialwise_plots.py` and project path resolution used by installed console scripts.
-
-The model-selection intermediates in `supp_figure13` and `supp_figure14` intentionally contain only the fit information needed for model selection and plotting. The panel scripts do not require the original raw fit-cache infrastructure from the analysis repository.
