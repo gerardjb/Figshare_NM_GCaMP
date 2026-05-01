@@ -36,6 +36,7 @@ For MATLAB, run scripts from the repository root or from their figure directory 
 - `supp_figure4`: stopped-flow decay traces, biexponential fits, and decay-component summaries.
 - `supp_figure5`: clustered parameter-set summaries used during GCaMP model parameter selection.
 - `supp_figure6`: model fits and model-state plots using the parameter JSON files stored with Table 3.
+- `supp_figure8`: explicit-buffer simulations and Biophys SMC inference on simulated pyramidal-like and interneuron-like cells. Run with `run_supp_figure8_code`; the script uses compact processed CSV exports for the plotted trajectories and posterior spike summaries.
 - `supp_figure9`: legacy/additional jGCaMP8f correlation analyses. Current Figure 4 analyses use `figure4/correlation_tbl_jG8f.mat`.
 - `supp_figure10`: example high/low SNR spike predictions and discrete spike timing metrics.
 - `supp_figure11`: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f detections. Run with `run_supp_figure11_A_code`.
@@ -52,6 +53,7 @@ After `pip install -e .`, available console scripts include:
 ```powershell
 run_figure3_F_G_code
 run_figure4_E_code
+run_supp_figure8_code
 run_supp_figure11_A_code
 run_supp_figure12_code
 run_supp_figure13_C_D_code
