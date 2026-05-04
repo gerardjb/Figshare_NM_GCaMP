@@ -44,6 +44,8 @@ def create_raincloud(ax, data, x, y, orient='h', palette='Set2',bw=0.1,color_map
     - color_mapping: Dictionary mapping categories to hex colors for boxplot and stripplot.
     - stripplot_shift: Float value to shift the stripplot along the x-axis.
     """
+    palette = _ordered_palette(data, y, palette)
+
     # Create the half-violin (density) plot
     pt.half_violinplot(x=x, y=y, data=data, palette=palette, bw=bw, ax=ax,width=0.95,
                        linewidth=0.1, orient=orient,gridsize=5000,
@@ -81,6 +83,17 @@ def create_raincloud(ax, data, x, y, orient='h', palette='Set2',bw=0.1,color_map
         offsets = coll.get_offsets()
         offsets[:, 1] += boxplot_shift
         coll.set_offsets(offsets)
+
+
+def _ordered_palette(data, category_col, palette):
+    if not isinstance(palette, dict):
+        return palette
+    categories = data[category_col]
+    if hasattr(categories, "cat"):
+        order = [cat for cat in categories.cat.categories if cat in set(categories.dropna())]
+    else:
+        order = list(pd.unique(categories.dropna()))
+    return [palette[category] for category in order]
 
 """
     Plotting the distribution of bias (STA) and uncertainty (SNA) for the Janelia8f dataset as detected using 
