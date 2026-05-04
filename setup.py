@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'matplotlib>=3.4.3,<3.8.8; python_version < "3.12"',
-        'matplotlib>=3.8.0,<3.9.0; python_version >= "3.12"',
+        'matplotlib>=3.9.0,<4.0.0; python_version >= "3.12"',
         'numpy>=1.18.0,<2.0.0; python_version < "3.12"',
         'numpy>=1.26.0,<2.0.0; python_version >= "3.12"',
         'scipy>=1.4.0,<2.0.0; python_version < "3.12"',
