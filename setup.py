@@ -5,6 +5,11 @@ setup(
     version='0.1',
     description='Reproducible plotting scripts for the GCaMP model Figshare repository',
     packages=find_packages(exclude=['build', 'build.*']),
+    classifiers=[
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+    ],
     package_data={
         'SharedUtilities': ['*.py'],
         'figure3': ['*.mat', '*.dat'],
@@ -42,6 +47,6 @@ setup(
             'run_supp_figure14_F_G_code=supp_figure14.suppfigure14_F_G_code:main',
         ],
     },
-    python_requires='>=3.10',
+    python_requires='>=3.10,<3.13',
     zip_safe=False,
 )
