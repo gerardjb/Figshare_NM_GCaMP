@@ -36,8 +36,8 @@ TMP_DIR = HERE / "tmp"
 
 METHODS = [
     "pgas@pgasraw",
-    "biophys_ml=ens2@cascadein_nodisc_ens2",
-    "ens2=ens2@ens2_jG8m_sweep2_best_k2_r9_s2p0_d0p45_sb19000",
+    "biophys_ml=ens2@ens2_jG8m_sweep2_best_k2_r9_s2p0_d0p45_sb19000",
+    "ens2=ens2@cascadein_nodisc_ens2",
     "cascade@cascade_updated_model",
     "mlspike@matlab_mlspike_jG8m2",
 ]
