@@ -19,7 +19,14 @@ pip install -e .
 
 Conda works equivalently after activating the target environment. Python entry points resolve data and output paths back to this project checkout, not to the environment's `site-packages` directory. If launching from an unusual working directory, set `GCAMP_FIGSHARE_ROOT` or `FIGSHARE_PROJECT_DIR` to the repository root.
 
-For MATLAB, run scripts from the repository root or from their figure directory after adding the repository and `Utilities` to the MATLAB path. Outputs are written to the figure directory or its `output` subdirectory when saving is enabled.
+For MATLAB, add the full checkout to the path before running figure scripts:
+
+```matlab
+repoRoot = 'C:\path\to\Figshare';
+addpath(genpath(repoRoot));
+```
+
+After that, run scripts from the repository root or from their figure directory. Outputs are written to the figure directory or its `output` subdirectory when saving is enabled.
 
 ## Main figure contents
 

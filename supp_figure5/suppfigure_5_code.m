@@ -9,12 +9,37 @@ close all
 
 % Collect data files
 d = fileparts(mfilename("fullpath"));
+addpath(d);
 sfDataFile = fullfile(d,'..','Shared_data','stoppedFlowTraces.mat');
 boutonDataFile = fullfile(d,'..','Shared_data','gDbase.mat');
 summaryFile = fullfile(d,'ParallelizedSummary.mat');
 
 % Get summary from all fits
 load(summaryFile);
+requiredSummaryVars = {'t_all','bouton_params_all','PoisG_params_all'};
+for iReq = 1:numel(requiredSummaryVars)
+    if ~exist(requiredSummaryVars{iReq},'var')
+        error('suppfigure_5_code:missingSummaryVariable',...
+            'ParallelizedSummary.mat is missing %s. Rebuild the appended summary inputs before running.',...
+            requiredSummaryVars{iReq});
+    end
+end
+tPoisG = tPoisG(:);
+stubs = stubs(:);
+t_all = t_all(:);
+nFits = numel(stubs);
+output_params_all = asFitRows(output_params_all,nFits,'output_params_all');
+bouton_params_all = asFitRows(bouton_params_all,nFits,'bouton_params_all');
+PoisG_params_all = asFitRows(PoisG_params_all,nFits,'PoisG_params_all');
+resnorm_all = asFitColumn(resnorm_all,nFits,'resnorm_all');
+resnormB_all = asFitColumn(resnormB_all,nFits,'resnormB_all');
+resnorm1_2_10_all = asFitColumn(resnorm1_2_10_all,nFits,'resnorm1_2_10_all');
+resnormPoisG_all = asFitColumn(resnormPoisG_all,nFits,'resnormPoisG_all');
+poistRise = asFitColumn(poistRise,nFits,'poistRise');
+if numel(t_all) ~= nFits
+    error('suppfigure_5_code:summaryShapeMismatch',...
+        't_all has %d entries but stubs has %d entries.',numel(t_all),nFits);
+end
 
 %Get rid of inf values for resnorm vectors
 resnormB_all(~isfinite(resnormB_all)) = nan;
@@ -53,14 +78,11 @@ clust2plot = [1,5,9];
 bbs = {};
 nClusters = 9;
 kID = kmeans(z,nClusters);
+
 %Sorting by residuals then clusters
-if any(strcmp(const,{'jG7f','G6f'}))
-    normed_all_res = [10*resnorm_all,resnormB_all];
-else
-    all_res = [resnorm_all,resnormB_all,resnorm1_2_10_all,resnormPoisG_all];
-    all_mins = repmat(min(all_res,[],1).*[1,1,1,4],size(all_res,1),1);
-    normed_all_res = all_res./all_mins;
-end
+all_res = [resnorm_all,resnormB_all,resnorm1_2_10_all,resnormPoisG_all];
+all_mins = repmat(min(all_res,[],1).*[1,1,1,4],size(all_res,1),1);
+normed_all_res = all_res./all_mins;
 
 [sortkID,firstSort] = sortrows([sum(normed_all_res,2),kID],[1,2]);%resnormPoisG_all
 %Resort clusters by lowest residual score in each
@@ -146,9 +168,18 @@ for iId = 1:nClusters
     end
     clear til
     %Select the file with minimized bouton res for this cluster
-    thisFile = stubs(sortCluster(find(sortkID==iId,1))).name;
-    load(fullfile(d,'Fits',thisFile),...
-        'normfit','t','dff_hat','output_params');
+    fitIdx = sortCluster(find(sortkID==iId,1));
+    thisFile = getStubName(stubs,fitIdx);
+    output_params = real(output_params_all(fitIdx,:));
+    bouton_params = real(bouton_params_all(fitIdx,:));
+    PoisG_params = real(PoisG_params_all(fitIdx,:));
+    t = t_all{fitIdx};
+    t = t(:);
+    if any(~isfinite([bouton_params,PoisG_params]))
+        error('suppfigure_5_code:missingFitParameters',...
+            'Selected fit %s has incomplete bouton or Poisson parameters in ParallelizedSummary.mat.',...
+            thisFile);
+    end
     
     %Set up plot tiles
     sizer = [8,2.6];
@@ -165,10 +196,11 @@ for iId = 1:nClusters
     til = tiledlayout(f,height,wid,'tilespacing','compact');
     
     %Get, prep, and plot data with fits for SF
-    load(sfDataFile)
+    load(sfDataFile,'processedTraces')
     thisConst = nominal({processedTraces{1}.const})==GCaMPalias(const);
     goodFits = {1:9,10:11};
     kinType = {'(on kinetics)','(off kinetics)'};
+    normfit = rebuildStoppedFlowFit(processedTraces,thisConst,output_params);
     for i = 1:length(processedTraces)
         Time = processedTraces{i}(thisConst).time(processedTraces{i}(thisConst).logSelectPts,:);
         datasets = processedTraces{i}(thisConst).traces(processedTraces{i}(thisConst).logSelectPts,:);
@@ -199,9 +231,8 @@ for iId = 1:nClusters
     %Get, prep, and plot data with fits for boutons
     spikes = {[0],[0,0.01],[0,0.02],[0,0.05],[0,0.1]};
     idxs_2_show = [1,2];
-    load(fullfile(d,'Fits',thisFile),...
-        'dff_hat','t','bouton_params')
     [DFF,time] = prepPPRdata(boutonDataFile,const);
+    dff_hat = GCaMPboutonSim6L_2state({bouton_params,spikes,output_params},t);
     maxY = max(DFF(:))+0.05*max(DFF(:));
     DFF = reshape(DFF,[],length(spikes));
     t = reshape(t,[],length(spikes));
@@ -244,8 +275,7 @@ for iId = 1:nClusters
     %Add tile for Poisson stim
     [DFF,spikes] = prepPoisGdata(boutonDataFile,const);
     idxs_2_show = 2;
-    load(fullfile(d,'Fits',thisFile),...
-        'dff_hatPoisG','tPoisG','PoisG_params')
+    dff_hatPoisG = GCaMPboutonSim6L_2state({PoisG_params,spikes,output_params},tPoisG);
     
     maxY = max(DFF(:))+0.05*max(DFF(:));
     %DFF = reshape(DFF,[],length(spikes));
@@ -344,6 +374,58 @@ end%iId
 end
 
 %% function block
+function X = asFitRows(X,nFits,varName)
+    X = real(X);
+    if size(X,1) ~= nFits && size(X,2) == nFits
+        X = X';
+    end
+    if size(X,1) ~= nFits
+        error('suppfigure_5_code:summaryShapeMismatch',...
+            '%s has %d rows but expected %d rows.',varName,size(X,1),nFits);
+    end
+end
+
+function x = asFitColumn(x,nFits,varName)
+    x = real(x(:));
+    if numel(x) ~= nFits
+        error('suppfigure_5_code:summaryShapeMismatch',...
+            '%s has %d entries but expected %d entries.',varName,numel(x),nFits);
+    end
+end
+
+function thisFile = getStubName(stubs,fitIdx)
+    if iscell(stubs)
+        thisStub = stubs{fitIdx};
+    else
+        thisStub = stubs(fitIdx);
+    end
+    thisFile = thisStub.name;
+end
+
+function normfit = rebuildStoppedFlowFit(processedTraces,thisConst,Gparams)
+    fitBlocks = cell(1,numel(processedTraces));
+    for iTrace = 1:numel(processedTraces)
+        traceData = processedTraces{iTrace}(thisConst);
+        Time = traceData.time(traceData.logSelectPts,:);
+        calcium = traceData.calcium(:)' * 1e-9 * Gparams(end);
+        try
+            traceType = lower(string(traceData.type));
+        catch
+            traceType = "";
+        end
+        isOffKinetics = contains(traceType,"off") || numel(calcium) == 2;
+        if isOffKinetics
+            caPairs = [repmat(1e-3,1,numel(calcium)); calcium];
+        else
+            caPairs = [repmat(calcium(1),1,numel(calcium)); calcium];
+        end
+        fitBlocks{iTrace} = cell2mat(arrayfun(@(iCa) ...
+            Fitting_function_eig_WD_simple6(caPairs(:,iCa),Gparams,Time(:,iCa)')', ...
+            1:size(Time,2),'UniformOutput',false));
+    end
+    normfit = [fitBlocks{:}];
+end
+
 function [normF,t] = prepPPRdata(fname,const)
     %load data, select relevant construct
     load(fname);
