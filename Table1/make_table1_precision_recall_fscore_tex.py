@@ -11,6 +11,7 @@ import pandas as pd
 
 METHOD_COLORS = {
     "Biophys_{SMC}": "009E73",
+    "PGBAR": "4A4A4A",
     "MLspike": "0072B2",
     "Biophys_{ML}": "007755",
     "CASCADE": "F3AE14",
