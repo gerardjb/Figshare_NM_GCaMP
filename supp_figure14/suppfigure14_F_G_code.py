@@ -9,23 +9,17 @@ import stat
 import sys
 from pathlib import Path
 
-try:
-    from SharedUtilities.trialwise_plots import (
-        ensure_matplotlib_cache_dir,
-        load_trace_panel_data,
-        plot_corr_vs_sigma,
-        plot_trace_panel,
-    )
-    from SharedUtilities.project_paths import figure_dir
-except ImportError:
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from SharedUtilities.trialwise_plots import (  # type: ignore
-        ensure_matplotlib_cache_dir,
-        load_trace_panel_data,
-        plot_corr_vs_sigma,
-        plot_trace_panel,
-    )
-    from SharedUtilities.project_paths import figure_dir  # type: ignore
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from SharedUtilities.trialwise_plots import (  # noqa: E402
+    ensure_matplotlib_cache_dir,
+    load_trace_panel_data,
+    plot_corr_vs_sigma,
+    plot_trace_panel,
+)
+from SharedUtilities.project_paths import figure_dir  # noqa: E402
 
 
 HERE = figure_dir("supp_figure14", __file__)
@@ -40,6 +34,7 @@ METHODS = [
     "ens2=ens2@cascadein_nodisc_ens2",
     "cascade@cascade_updated_model",
     "mlspike@matlab_mlspike_jG8m2",
+    "pgbar@pgbar_janelia_8m",
 ]
 
 COLORS = {
@@ -48,6 +43,7 @@ COLORS = {
     "ens2": "#A6780C",
     "cascade": "#F3AE14",
     "mlspike": "#0072B2",
+    "pgbar": "#4A4A4A",
 }
 
 LABELS = {
@@ -56,6 +52,7 @@ LABELS = {
     "ens2": r"ENS$^2$",
     "cascade": "CASCADE",
     "mlspike": "MLspike",
+    "pgbar": "PGBAR",
 }
 
 
@@ -144,7 +141,9 @@ def main(argv: list[str] | None = None) -> None:
         plt.rcParams["mathtext.bf"] = "Arial:bold"
 
         trace_data = _canonicalize_trace_data(args.trace.resolve())
-        fig_f, _, _ = plot_trace_panel(trace_data, figsize=(3.4, 4.8), ymax=7.0)
+        method_count = len(trace_data["method_traces"])
+        trace_height = 4.8 + 0.7 * max(0, method_count - 5)
+        fig_f, _, _ = plot_trace_panel(trace_data, figsize=(3.4, trace_height))
 
         fig_g, _ = plot_corr_vs_sigma(
             csv_path=args.csv.resolve(),
@@ -155,7 +154,8 @@ def main(argv: list[str] | None = None) -> None:
             title=None,
             ylim=(0.6, 1.0),
             xlim=(0.0, 110.0),
-            figsize=(3.4, 2.6),
+            figsize=(7.2, 2.8),
+            match_c_spikes_axes=True,
         )
 
         for stem, fig in [

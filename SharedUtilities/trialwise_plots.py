@@ -29,6 +29,7 @@ DEFAULT_COLORS: dict[str, str] = {
     "cascade_published": "#F3AE14",
     "mlspike": "#0072B2",
     "mlspike_matlab_reference": "#0072B2",
+    "pgbar": "#4A4A4A",
 }
 
 DEFAULT_LABELS: dict[str, str] = {
@@ -42,6 +43,7 @@ DEFAULT_LABELS: dict[str, str] = {
     "cascade_published": "CASCADE",
     "mlspike": "MLspike",
     "mlspike_matlab_reference": "MLspike",
+    "pgbar": "PGBAR",
 }
 
 
@@ -181,31 +183,79 @@ def _place_right_labels(
     min_sep: float,
     fontsize: float = 12,
     sort_by_y: bool = True,
+    transform: Any = None,
+    pad_px: float = 2.0,
+    bbox_expand_y: float = 1.08,
 ) -> None:
     ys = [float(y) for y in y_positions]
     if sort_by_y:
-        order = np.argsort([-y if np.isfinite(y) else np.inf for y in ys])
+        order = np.argsort([-y if np.isfinite(y) else np.inf for y in ys]).tolist()
     else:
-        order = np.arange(len(ys))
-    placed: list[float] = []
-    for idx in order:
-        y = ys[idx]
+        order = list(range(len(ys)))
+
+    ordered_ys = [ys[index] for index in order]
+    ordered_labels = [labels[index] for index in order]
+    ordered_colors = [colors[index] for index in order]
+    for index in range(1, len(ordered_ys)):
+        if not np.isfinite(ordered_ys[index - 1]) or not np.isfinite(ordered_ys[index]):
+            continue
+        if ordered_ys[index - 1] - ordered_ys[index] < min_sep:
+            ordered_ys[index] = ordered_ys[index - 1] - min_sep
+
+    if transform is None:
+        transform = ax.transData
+
+    texts = []
+    for y, label, color in zip(ordered_ys, ordered_labels, ordered_colors):
         if not np.isfinite(y):
             continue
-        if sort_by_y and placed and placed[-1] - y < min_sep:
-            y = placed[-1] - min_sep
-        placed.append(y)
-        ax.text(
-            x,
-            y,
-            labels[idx],
-            color=colors[idx],
-            fontsize=fontsize,
-            fontweight="bold",
-            ha="left",
-            va="center",
-            clip_on=False,
+        texts.append(
+            ax.text(
+                x,
+                y,
+                label,
+                color=color,
+                fontsize=fontsize,
+                fontweight="bold",
+                ha="left",
+                va="center",
+                clip_on=False,
+                transform=transform,
+            )
         )
+
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    pad_px = max(0.0, float(pad_px))
+    bbox_expand_y = max(1.0, float(bbox_expand_y))
+    previous_bbox = None
+    for text in texts:
+        bbox = text.get_window_extent(renderer=renderer).expanded(1.0, bbox_expand_y)
+        while previous_bbox is not None and bbox.overlaps(previous_bbox):
+            shift_px = float(bbox.y1 - previous_bbox.y0 + pad_px)
+            x_display, y_display = transform.transform(text.get_position())
+            _, new_y = transform.inverted().transform((x_display, y_display - shift_px))
+            text.set_position((x, float(new_y)))
+            fig.canvas.draw()
+            bbox = text.get_window_extent(renderer=renderer).expanded(1.0, bbox_expand_y)
+        previous_bbox = bbox
+
+    axes_bbox = ax.get_window_extent(renderer=renderer)
+    if texts:
+        bboxes = [text.get_window_extent(renderer=renderer) for text in texts]
+        top = max(bbox.y1 for bbox in bboxes)
+        bottom = min(bbox.y0 for bbox in bboxes)
+        shift_up = 0.0
+        if top > axes_bbox.y1:
+            shift_up = axes_bbox.y1 - top
+        if bottom + shift_up < axes_bbox.y0:
+            shift_up = axes_bbox.y0 - bottom
+        if shift_up:
+            for text in texts:
+                x_display, y_display = transform.transform(text.get_position())
+                _, new_y = transform.inverted().transform((x_display, y_display + shift_up))
+                text.set_position((x, float(new_y)))
+
     fig.canvas.draw_idle()
 
 
@@ -244,6 +294,17 @@ def plot_corr_vs_sigma(
     ylim: tuple[float, float] = (0.6, 1.0),
     figsize: tuple[float, float] = (5.0, 2.5),
     dpi: int = 200,
+    match_c_spikes_axes: bool = False,
+    right_label_x_offset_frac: float = 0.08,
+    right_label_xlim_frac: float = 0.22,
+    right_label_pad_px: float = 4.0,
+    right_label_bbox_expand_y: float = 1.10,
+    grid_x_step_ms: float = 20.0,
+    grid_y_step_corr: float = 0.1,
+    grid_color: str = "#808080",
+    grid_alpha: float = 0.3,
+    grid_linewidth: float = 1.0,
+    axis_linewidth: float = 1.0,
     ax: Any = None,
     colors: Optional[Mapping[str, str]] = None,
     labels: Optional[Mapping[str, str]] = None,
@@ -255,6 +316,7 @@ def plot_corr_vs_sigma(
 
     ensure_matplotlib_cache_dir()
     import matplotlib.pyplot as plt
+    from matplotlib.ticker import MultipleLocator
 
     df = _filter_trialwise(read_trialwise_csv(csv_path), smoothings=smoothings, datasets=datasets, runs=runs)
     if df.empty:
@@ -269,6 +331,14 @@ def plot_corr_vs_sigma(
         fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
     else:
         fig = ax.figure
+    if match_c_spikes_axes:
+        plt.rcParams.update({"font.size": 12})
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    if match_c_spikes_axes:
+        ax.spines["left"].set_linewidth(float(axis_linewidth))
+        ax.spines["bottom"].set_linewidth(float(axis_linewidth))
+        ax.tick_params(axis="both", which="both", width=float(axis_linewidth))
 
     label_rows: list[tuple[str, str, float]] = []
     for spec in specs:
@@ -300,7 +370,8 @@ def plot_corr_vs_sigma(
         err = np.asarray(y_errs)[order]
         color = _series_color(spec, colors_map)
         label = _series_label(df, spec, labels_map)
-        ax.plot(x, y, color=color, linewidth=2, linestyle=_series_linestyle(spec, linestyles_map))
+        line_width = 2.5 if match_c_spikes_axes else 2.0
+        ax.plot(x, y, color=color, linewidth=line_width, linestyle=_series_linestyle(spec, linestyles_map))
         ax.fill_between(x, y - err, y + err, color=color, alpha=0.18, linewidth=0)
         label_rows.append((label, color, float(y[-1])))
 
@@ -310,26 +381,62 @@ def plot_corr_vs_sigma(
     ax.set_ylim(*ylim)
     if title:
         ax.set_title(title)
-    ax.grid(True, color="#808080", alpha=0.25, linewidth=1)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    if match_c_spikes_axes:
+        ax.xaxis.set_major_locator(MultipleLocator(float(grid_x_step_ms)))
+        ax.yaxis.set_major_locator(MultipleLocator(float(grid_y_step_corr)))
+        ax.grid(
+            True,
+            which="major",
+            color=str(grid_color),
+            alpha=float(grid_alpha),
+            linewidth=float(grid_linewidth),
+        )
+        ax.tick_params(which="major", length=6)
+    else:
+        ax.grid(True, color="#808080", alpha=0.25, linewidth=1)
 
     if label_rows:
         y_min, y_max = ax.get_ylim()
-        x_min, x_max = ax.get_xlim()
-        _place_right_labels(
-            ax,
-            fig,
-            x=x_max + 0.03 * (x_max - x_min),
-            y_positions=[r[2] for r in label_rows],
-            labels=[r[0] for r in label_rows],
-            colors=[r[1] for r in label_rows],
-            min_sep=0.08 * (y_max - y_min),
-            fontsize=11,
-        )
-        ax.set_xlim(x_min, x_max + 0.22 * (x_max - x_min))
+        if match_c_spikes_axes:
+            ranked_rows = sorted(
+                label_rows,
+                key=lambda row: (-(row[2] if np.isfinite(row[2]) else -1e9), row[0]),
+            )
+            _place_right_labels(
+                ax,
+                fig,
+                x=1.0 + float(right_label_x_offset_frac),
+                y_positions=[row[2] for row in ranked_rows],
+                labels=[row[0] for row in ranked_rows],
+                colors=[row[1] for row in ranked_rows],
+                min_sep=0.09 * (y_max - y_min),
+                fontsize=14,
+                sort_by_y=False,
+                transform=ax.get_yaxis_transform(),
+                pad_px=float(right_label_pad_px),
+                bbox_expand_y=float(right_label_bbox_expand_y),
+            )
+        else:
+            x_min, x_max = ax.get_xlim()
+            _place_right_labels(
+                ax,
+                fig,
+                x=x_max + 0.03 * (x_max - x_min),
+                y_positions=[row[2] for row in label_rows],
+                labels=[row[0] for row in label_rows],
+                colors=[row[1] for row in label_rows],
+                min_sep=0.08 * (y_max - y_min),
+                fontsize=11,
+            )
+            ax.set_xlim(x_min, x_max + 0.22 * (x_max - x_min))
 
-    fig.tight_layout()
+    if match_c_spikes_axes:
+        rect_right = 1.0 - float(right_label_xlim_frac)
+        if not np.isfinite(rect_right) or rect_right <= 0.2:
+            rect_right = 1.0
+        fig.tight_layout(rect=(0.0, 0.0, rect_right, 1.0))
+    else:
+        fig.tight_layout()
     if out_path is not None:
         out_path = _to_path(out_path)
         out_path.parent.mkdir(parents=True, exist_ok=True)
