@@ -88,12 +88,11 @@ function makeTSscaleBar(pHand, kwargs)
         yEnd = yStart + kwargs.yVal;
     end
 
-    % Draw the two segments of the L-shaped scale bar.
+    % Draw the scale bar as one polyline so the two segments share an exact
+    % corner even after vector export or rasterization.
     hold(pHand, 'on');
-    % Horizontal segment:
-    plot(pHand, [xStart, xEnd], [yStart, yStart], 'Color', kwargs.color, 'LineWidth', kwargs.linWidth);
-    % Vertical segment:
-    plot(pHand, [xStart, xStart], [yStart, yEnd], 'Color', kwargs.color, 'LineWidth', kwargs.linWidth);
+    plot(pHand, [xEnd, xStart, xStart], [yStart, yStart, yEnd], ...
+        'Color', kwargs.color, 'LineWidth', kwargs.linWidth);
 
     % Compute label offsets in data units.
     xOffset = xRange * kwargs.xPush;

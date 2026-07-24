@@ -22,7 +22,7 @@ add_spikes = true;%For including discrete spike count
 
 %General
 sizer = [8.5,5.5];
-text_x_pad_ratio = 0.15;%pad for bringing text out from figure
+text_x_pad_ratio = 0.41;%pad for bringing text out from figure
 pad_bottom = 0.02;%For plot spacing - otherwise bottom of trace gets clipped
 gt_wid = 0.4;%Width of ground truth line indicators
 
@@ -39,6 +39,8 @@ set(f,'Paperunits','inches',...
     'Units','inches',...
     'Position',[1,1,sizer]);
 outer_tile = tiledlayout(1,2,"TileSpacing","compact");
+outer_tile.OuterPosition = [0.11,0,0.85,1];
+exc_method_axes = gobjects(6,1);
 
 % Loop over cell types for plots
 for j = fliplr(1:length(cell_types))
@@ -117,7 +119,7 @@ for j = fliplr(1:length(cell_types))
     yText = [num2str(yspan),' \DeltaF/F'];
     xspan = round((p_window(2)-p_window(1))/8,1);
     xText = [num2str(xspan),' s'];
-    makeTSscaleBar(ax,'xFrac',7/8,'yFrac',2/3,'yVal',yspan,'yText',yText,...
+    makeTSscaleBar(ax,'xFrac',1,'yFrac',1,'yVal',yspan,'yText',yText,...
         'xVal',xspan,'xText',xText,...
         'lefty',0,'upsidedown',1);
     if j==1
@@ -168,6 +170,9 @@ for j = fliplr(1:length(cell_types))
             'color',colores{1},'fontweight','bold');
     end
     ax=gca;ax.YAxis.Visible = 'off';ax.XAxis.Visible = 'off';
+    if j==1
+        exc_method_axes(1) = ax;
+    end
     set(gca,'xlim',p_window,'box','off','ylim',[ylims(1)-yspan*pad_bottom,ylims(2)*1.3]);
     arrayfun(@(x) plot([x,x],ylim,'k:','linewidth',gt_wid),data.events_AP(good_aps));
     %add predicted spikes
@@ -180,7 +185,8 @@ for j = fliplr(1:length(cell_types))
     %add prediction correlation to gt
     pred_filt = gaussfilt(time,spike_prob,sig1);
     pred_corr = corrcoef(pred_filt(1:length(filtered1)),filtered1,'rows','complete');
-    text(p_window(2),2*(ylims(2)-ylims(1))/3,['r = ',num2str(pred_corr(1,2),'%0.2f')],...
+    xlims = xlim; x_span = xlims(2)-xlims(1);
+    text(xlims(2) - x_span*0.05,2*(ylims(2)-ylims(1))/3,['r = ',num2str(pred_corr(1,2),'%0.2f')],...
         'color',colores{1},'FontWeight','bold');
     
     %Now nexttile;hold on;open the corresponding Cascade fits, plot, and do correlations
@@ -205,6 +211,9 @@ for j = fliplr(1:length(cell_types))
                 'color',colores{i},'fontweight','bold');
         end
         ax=gca;ax.YAxis.Visible = 'off';ax.XAxis.Visible = 'off';
+        if j==1
+            exc_method_axes(i) = ax;
+        end
         set(gca,'xlim',p_window,'box','off','ylim',[ylims(1)-yspan*pad_bottom,ylims(2)*1.3]);
         arrayfun(@(x) plot([x,x],ylim,'k:','linewidth',gt_wid),data.events_AP(good_aps));
         %add predicted spikes
@@ -216,9 +225,47 @@ for j = fliplr(1:length(cell_types))
         end
         %Add correlation to gt
         pred_corr = corrcoef(pred_filt,filtered1,'rows','complete');
-        text(p_window(2),(ylims(2)-ylims(1))/2,['r = ',num2str(pred_corr(1,2),'%0.2f')],...
+        xlims = xlim; x_span = xlims(2)-xlims(1); 
+        text(xlims(2) - x_span*0.05,(ylims(2)-ylims(1))/2,...
+            ['r = ',num2str(pred_corr(1,2),'%0.2f')],...
             'color',colores{i},'fontweight','bold');
     end
     title(til,[cell_title{j},' cell sample'])
 end%j
 
+drawnow;
+group_label_axes = axes(f,'Position',[0,0,1,1],'Visible','off', ...
+    'XLim',[0,1],'YLim',[0,1],'HitTest','off','HandleVisibility','off');
+add_method_group_bracket(f,group_label_axes,exc_method_axes(1:3),"Unsupervised methods");
+add_method_group_bracket(f,group_label_axes,exc_method_axes(4:6),"Supervised methods");
+
+end
+
+function add_method_group_bracket(fig_handle,label_axes,method_axes,label_text)
+% Add a square bracket and rotated group label using finalized axes geometry.
+fig_pixels = getpixelposition(fig_handle);
+positions = zeros(numel(method_axes),4);
+for i_ax = 1:numel(method_axes)
+    ax_pixels = getpixelposition(method_axes(i_ax),true);
+    positions(i_ax,:) = [ ...
+        ax_pixels(1)/fig_pixels(3),ax_pixels(2)/fig_pixels(4), ...
+        ax_pixels(3)/fig_pixels(3),ax_pixels(4)/fig_pixels(4)];
+end
+
+group_padding = 0.004;
+group_bottom = min(positions(:,2)) + group_padding;
+group_top = max(positions(:,2)+positions(:,4)) - group_padding;
+bracket_x = 0.175;% centered within the reserved left annotation margin
+tick_length = 0.012;
+
+annotation(fig_handle,'line',[bracket_x,bracket_x], ...
+    [group_bottom,group_top],'Color','k','LineWidth',1.5);
+annotation(fig_handle,'line',[bracket_x,bracket_x+tick_length], ...
+    [group_top,group_top],'Color','k','LineWidth',1.5);
+annotation(fig_handle,'line',[bracket_x,bracket_x+tick_length], ...
+    [group_bottom,group_bottom],'Color','k','LineWidth',1.5);
+text(label_axes,bracket_x-0.035,mean([group_bottom,group_top]), ...
+    cellstr(split(label_text)),'Rotation',90, ...
+    'HorizontalAlignment','center','VerticalAlignment','middle', ...
+    'FontWeight','normal','FontName','Arial','FontSize',10);
+end
