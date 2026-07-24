@@ -10,14 +10,28 @@ close all
 
 % Collect data files
 d = fileparts(mfilename("fullpath"));
-unmatched_file = 'pred_and_gt_spike_table.mat';
+unmatched_file = 'pred_and_gt_spk_tbl.mat';
 matched_file = 'matched_tbl_full.mat';
 janelia_summary_file = '8fCellTableSummary.csv';
 
 % Load tables
 janelia_tbl = readtable(fullfile(d,janelia_summary_file));
 load(fullfile(d,unmatched_file),"spike_pred_tbl");
-load(fullfile(d,matched_file),"T_high","T_low");
+matched_data = load(fullfile(d,matched_file),"tbl");
+T_low = matched_data.tbl(matched_data.tbl.cost==0.01,:);
+T_high = matched_data.tbl(matched_data.tbl.cost==0.1,:);
+
+% Map source method labels to the manuscript naming convention.
+source_method_names = ["Biophys_CASCADE_exc","CASCADE_exc","ForBiophys",...
+    "ForENS2","ForMLspike","pgbar"];
+display_method_names = ["Biophys_{ML}","CASCADE","Biophys_{SMC}",...
+    "ENS^2","MLspike","PGBAR"];
+spike_pred_tbl.method = replace(string(spike_pred_tbl.method),...
+    source_method_names,display_method_names);
+T_low.method = replace(string(T_low.method),...
+    source_method_names,display_method_names);
+T_high.method = replace(string(T_high.method),...
+    source_method_names,display_method_names);
 
 % Prep the tables for updated method names, etc.
 % Janelia
@@ -58,7 +72,8 @@ T_low_g.BaseID = regexprep(T_low_g.cell_epoch, {'_ \d+$','_\d+$'}, '');% for mat
 T_low_g.medianSNR = janelia_tbl.MedianActionPotentialSignal_to_noiseRatio(loc);
 
 % Loop over methods for plotting effects of SNR on discrete predictions
-uni_meth = ["Biophys_{SMC}","MLspike","Biophys_{ML}","CASCADE","ENS^2"];%unique(T_low_g.method);
+uni_meth = ["Biophys_{SMC}","PGBAR","MLspike",...
+    "Biophys_{ML}","CASCADE","ENS^2"];%unique(T_low_g.method);
 metrics = ["precision","recall","f1"];
 f = figure;
 sizer = [8.5,5];
@@ -83,9 +98,29 @@ for i_meth = 1:length(uni_meth)
     fps = sum(T_low_g.fp(mask));
     fns = sum(T_low_g.fn(mask));
     disp(strcat(uni_meth(i_meth)," ",num2str(tps+fps)));
-    donutchart(categorical(T_low.classification_outcome(T_low.method==uni_meth(i_meth))),...
+    do = donutchart(categorical(T_low.classification_outcome(T_low.method==uni_meth(i_meth))),...
         "Labels",["fn","fp","tp"]);
-    title({uni_meth(i_meth),[num2str(tps+fps),'(tp + fp)/',num2str(5817),'(gt)']});
+    title(do,{'','',''});
+    
+    %donut has no proper title properties, so placed manually as text
+    c_ax = gca;
+    if i_meth == 1
+        tile_1_height = c_ax.Position(4);
+        tile_1_bottom = c_ax.Position(2);
+    else
+        this_tile_height = c_ax.Position(4);
+    end
+
+    tile_position = [c_ax.Position(1),tile_1_bottom,c_ax.Position(3),tile_1_height];
+    
+    axOverlay = axes('Position', tile_position, ...
+        'Visible', 'off', ...
+        'Color', 'none');
+    text(axOverlay, 0.5, 1.95, {uni_meth(i_meth), [num2str(tps+fps),'(tp+fp)/'], [num2str(5817),'(gt)']}, ...
+        'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'top', ... 
+        'FontWeight', 'bold', ...
+        'FontSize', 10);
 end
 
 for i_metric = 1:length(metrics)

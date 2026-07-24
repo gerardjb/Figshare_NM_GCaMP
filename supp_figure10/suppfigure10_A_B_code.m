@@ -10,11 +10,11 @@ close all
 
 % Collect data files
 d = fileparts(mfilename("fullpath"));
-ds_pred = ["ForBiophys","ForMLspike","Biophys_CASCADE_exc",...
+ds_pred = ["ForBiophys","ForPGBAR","ForMLspike","Biophys_CASCADE_exc",...
     "CASCADE_exc","ForENS2"];
-meth_names = ["Biophys_{SMC}","MLspike","Biophys_{ML}",...
+meth_names = ["Biophys_{SMC}","PGBAR","MLspike","Biophys_{ML}",...
     "CASCADE","ENS^2"];
-prefixes = ["biophysd","MLspiked","Cascaded","Cascaded","ens2d"];
+prefixes = ["biophysd","pgbard","MLspiked","Cascaded","Cascaded","ens2d"];
 % Sample cell
 sample_files = ["jGCaMP8f_ANM471994_cell01.mat","jGCaMP8f_ANM478411_cell04.mat"];
 % File for the matched/unmatched table
@@ -37,7 +37,7 @@ class_types = ["false negatives","false positives","true positives"];
 pred_ylim = [-0.02,class_edges(end)+0.2];
 gt_ylim = [-0.02,class_edges(end)-0.2];
 % Method and panel naming conventions
-method_names = ["Biophys_{SMC}","MLspike","Biophys_{ML}","CASCADE","ENS^2"];
+method_names = ["Biophys_{SMC}","PGBAR","MLspike","Biophys_{ML}","CASCADE","ENS^2"];
 panel_names = ["High SNR example", "Low SNR example"];
 % figure particulars
 f = figure;%hold on;
@@ -51,8 +51,14 @@ outer_tile = tiledlayout(1,length(windows),"TileSpacing","loose");
 height_dff = 1;% relative height of dff trace
 height = height_dff+length(method_names)+1;% full tile height
 
-% Get table of pred-gt spike times and subset
-load(fullfile(d,"matched_tbl_full.mat"),"T_low");
+% Get low-cost table of pred-gt spike times and subset
+matched_data = load(fullfile(d,"matched_tbl_full.mat"),"tbl");
+T_low = matched_data.tbl(matched_data.tbl.cost==0.01,:);
+T_low.method = replace(string(T_low.method),...
+    ["Biophys_CASCADE_exc","CASCADE_exc","ForBiophys",...
+    "ForENS2","ForMLspike","pgbar"],...
+    ["Biophys_{ML}","CASCADE","Biophys_{SMC}",...
+    "ENS^2","MLspike","PGBAR"]);
 T = T_low(contains(T_low.cell,strtok(sample_files,'.')),:);%
 
 % Windows placed per horizontal outer tile
