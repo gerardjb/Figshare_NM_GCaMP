@@ -51,12 +51,20 @@ def create_raincloud(ax, data, x, y, orient='h', palette='Set2',bw=0.1,color_map
                        linewidth=0.1, orient=orient,gridsize=5000,
                        offset=0.1-stripplot_shift,scale="width") #high gridsize because STA plots too coarse without this
     
+    # Seaborn 0.13+ requires an explicit hue when a palette is supplied.
+    # Keep the legacy call compatible with the Seaborn 0.11 environment branch.
+    boxplot_kwargs = {'palette': palette}
+    seaborn_version = tuple(int(part) for part in sns.__version__.split('.')[:2])
+    if seaborn_version >= (0, 13):
+        boxplot_kwargs.update(hue=y, legend=False)
+
     # Add and color-code the boxplot
     box = sns.boxplot(
         x=x, y=y, data=data, width=0.12, ax=ax, orient=orient, showcaps=False,
         boxprops={'linewidth':1},
         medianprops={'color': 'white', 'linewidth': 1.5},
-        showfliers=False, whiskerprops={'linewidth':1},dodge=True, palette=palette,
+        showfliers=False, whiskerprops={'linewidth':1}, dodge=False,
+        **boxplot_kwargs,
     )
     if color_mapping:
         for patch, method_label in zip(box.artists, box.get_yticklabels()):
@@ -90,9 +98,14 @@ def _ordered_palette(data, category_col, palette):
         return palette
     categories = data[category_col]
     if hasattr(categories, "cat"):
-        order = [cat for cat in categories.cat.categories if cat in set(categories.dropna())]
+        # Retain every declared category so palette length stays aligned with
+        # the categorical axis even when a panel has no observations for one.
+        order = list(categories.cat.categories)
     else:
         order = list(pd.unique(categories.dropna()))
+    missing_colors = [category for category in order if category not in palette]
+    if missing_colors:
+        raise ValueError(f"Missing colors for categories: {missing_colors}")
     return [palette[category] for category in order]
 
 """
@@ -119,7 +132,7 @@ def main():
 
     # Methods to include in the plots. Set to None to include all.
     selected_methods = ['CASCADE', 'Biophys_{ML}',
-    'Biophys_{SMC}', 'ENS^2', 'MLspike'] #
+    'Biophys_{SMC}', 'ENS^2', 'MLspike', 'PGBAR'] #
 
     # Types to include in the plots. Set to None to include all.
     selected_types = []  # was for exc or inh, but not used in this version
@@ -127,7 +140,7 @@ def main():
     # Axis properties
     conversion_factor = 1000 # for ms
     sta_x_limits = (xlims[0][0]*conversion_factor, xlims[0][1]*conversion_factor) # for bias
-    sna_x_limits = (0, 100) # for recall
+    performance_x_limits = (0, 100) # for precision and recall
     
     # Plot aesthetics/typeogrpahy
     sns.set(style="whitegrid")
@@ -167,18 +180,21 @@ def main():
         'Biophys_{ML}': r'$\mathbf{Biophys}_{\mathbf{ML}}$',
         'Biophys_{SMC}': r'$\mathbf{Biophys}_{\mathbf{SMC}}$',
         'ENS^2': r'$\mathbf{ENS}^{\mathbf{2}}$',
-        'MLspike': r'$\mathbf{MLspike}$'
+        'MLspike': r'$\mathbf{MLspike}$',
+        'PGBAR': r'$\mathbf{PGBAR}$'
     }
     method_colors = {
         r'$\mathbf{CASCADE}$': '#F3AE14',
         r'$\mathbf{Biophys}_{\mathbf{SMC}}$': '#009E73',
         r'$\mathbf{Biophys}_{\mathbf{ML}}$': '#007755',
         r'$\mathbf{ENS}^{\mathbf{2}}$': '#A6780C',
-        r'$\mathbf{MLspike}$': '#0072B2' 
+        r'$\mathbf{MLspike}$': '#0072B2',
+        r'$\mathbf{PGBAR}$': '#4A4A4A'
     }
     df_sta['method'] = df_sta['method'].map(method_aliases)
     df_sna['method'] = df_sna['method'].map(method_aliases)
     desired_order = [r'$\mathbf{Biophys}_{\mathbf{SMC}}$',
+                    r'$\mathbf{PGBAR}$',
                     r'$\mathbf{MLspike}$',
                     r'$\mathbf{Biophys}_{\mathbf{ML}}$',
                     r'$\mathbf{CASCADE}$',
@@ -190,8 +206,8 @@ def main():
     # Creating the Plots
     # -----
 
-    # Create a figure with two subplots (SNA and STA)
-    fig, axes = plt.subplots(1, 2, figsize=(4, 3.4), sharey=True)
+    # Create a figure with bias, precision, and recall subplots
+    fig, axes = plt.subplots(1, 3, figsize=(6, 3.4), sharey=True)
 
     # ----
     # Plot for STA
@@ -205,21 +221,30 @@ def main():
     axes[0].set_xlabel('Bias,\n '+x_label+' (ms)',ha='center',fontsize=10)
     axes[0].set_xlim(sta_x_limits)
     axes[0].yaxis.label.set_fontweight('bold')
-    axes[1].set_xticks([0,sta_x_limits[1]/2,sta_x_limits[1]])
 
     # ----
-    # Plot for SNA
+    # Plot for precision
     # ----
 
-    # Create raincloud plot for SNA
-    df_sna['sna_like'] = df_sna['sna_like']*100 + 100 # scale to percentage
-    create_raincloud(axes[1], df_sna, x='sna_like', y='method', orient='h', palette=method_colors,bw=0.15,color_mapping=method_colors)
+    df_sna['precision'] = df_sna['precision']*100 # scale to percentage
+    create_raincloud(axes[1], df_sna, x='precision', y='method', orient='h', palette=method_colors,bw=0.15,color_mapping=method_colors)
 
-    # Customize the SNA plot
-    axes[1].set_xlabel('Recall (Ground \ntruth detection rate)',ha='center',fontsize=10)
+    axes[1].set_xlabel('Precision',ha='center',fontsize=10)
     axes[1].set_ylabel('')
-    axes[1].set_xlim(sna_x_limits)
+    axes[1].set_xlim(performance_x_limits)
     axes[1].set_xticks([0, 50, 100])
+
+    # ----
+    # Plot for recall
+    # ----
+
+    df_sna['sna_like'] = df_sna['sna_like']*100 + 100 # scale to percentage
+    create_raincloud(axes[2], df_sna, x='sna_like', y='method', orient='h', palette=method_colors,bw=0.15,color_mapping=method_colors)
+
+    axes[2].set_xlabel('Recall (Ground \ntruth detection rate)',ha='center',fontsize=10)
+    axes[2].set_ylabel('')
+    axes[2].set_xlim(performance_x_limits)
+    axes[2].set_xticks([0, 50, 100])
 
     # ----
     # Final figure adjustments
@@ -245,9 +270,9 @@ def main():
         # adjust vertical plot edges
         ax.set_ylim(new_ymin, new_ymax)
 
-    # add in a 0 indicator line for both plots
-    axes[0].axvline(x=0, color='black', linestyle='--', linewidth=1)
-    axes[1].axvline(x=0, color='black', linestyle='--', linewidth=1)
+    # add in a 0 indicator line for all plots
+    for ax in axes:
+        ax.axvline(x=0, color='black', linestyle='--', linewidth=1)
 
     plt.show()
 
