@@ -23,7 +23,8 @@ GCaMPlib = {'blank',...
     'ENS',...
     'biophys_{NN',...
     'CASCADE_{jG8f}',...
-    'jGCaMP8m'};
+    'jGCaMP8m',...
+    'PGBAR'};
 
 %Convert nominal to cell
 
@@ -50,7 +51,8 @@ fullMap = {'#808080',...neutral gray
     '#A6780C',...};%(ENS^2)
     '#007755',...%(biophys_NN)
     '#FFCC29',...%(Cascade trained with 8f),...
-    '#53338B'};% first try for 8m
+    '#53338B',...% first try for 8m
+    '#4A4A4A'};% PGBAR
 
 lib_idx = arrayfun(@(x) contains(consts,x,'IgnoreCase',true),GCaMPlib);
 if any(lib_idx)

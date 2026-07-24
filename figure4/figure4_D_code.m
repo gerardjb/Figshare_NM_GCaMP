@@ -118,21 +118,23 @@ panelDStats.response_transform = "Fisher Z transform of correlation";
 panelDStats.formula = "Z ~ Method*Width + (1|SubjectID)";
 panelDStats.dummy_var_coding = "reference";
 panelDStats.df_method = "Satterthwaite";
+panelDStats.subject_id_definition = ...
+    "Normalized Cell plus Epoch; inhibitory PGBAR epochs 3/4 map to legacy epochs 1.1/2.1.";
 panelDStats.reference_methods = ["Biophys_SMC","Biophys_ML"];
-panelDStats.comparison_methods = ["CASCADE","ENS^2","MLspike"];
+panelDStats.comparison_methods = ["CASCADE","ENS^2","MLspike","PGBAR"];
 panelDStats.smoothing = "raw";
 panelDStats.cell_types = unique(tbl_panel.cell_type);
 panelDStats.methods = unique(tbl_panel.Method);
 panelDStats.bin_widths = sort(unique(tbl_panel.Width));
 panelDStats.n_rows = height(tbl_panel);
-panelDStats.n_subjects = numel(unique(string(tbl_panel.Cell)+"_"+string(tbl_panel.Epoch)));
+panelDStats.n_subjects = numel(unique(build_panel_D_subject_ids(tbl_panel)));
 panelDStats.summary = summarize_panel_D_table(tbl_panel);
 
 cell_stats = cell(numel(panelDStats.cell_types),1);
 for i_cell = 1:numel(panelDStats.cell_types)
     cell_type = panelDStats.cell_types(i_cell);
     T = tbl_panel(tbl_panel.cell_type==cell_type,:);
-    T.SubjectID = categorical(string(T.Cell)+"_"+string(T.Epoch));
+    T.SubjectID = categorical(build_panel_D_subject_ids(T));
     T.Method = categorical(T.Method);
     T.Width = categorical(T.Width);
     T.Z = atanh(T.Correlation);
@@ -143,6 +145,8 @@ for i_cell = 1:numel(panelDStats.cell_types)
     this_stats.n_subjects = numel(categories(T.SubjectID));
     this_stats.methods = categories(T.Method);
     this_stats.width_levels = categories(T.Width);
+    this_stats.comparison_methods = panelDStats.comparison_methods( ...
+        ismember(panelDStats.comparison_methods,string(categories(T.Method))));
     this_stats.lme_by_reference = {};
 
     for i_ref = 1:numel(panelDStats.reference_methods)
@@ -174,7 +178,8 @@ for i_cell = 1:numel(panelDStats.cell_types)
         ref_stats.anova = anova(lme,"DFMethod",panelDStats.df_method);
         ref_stats.random_effects = randomEffects(lme);
         ref_stats.covariance_parameters = covarianceParameters(lme);
-        ref_stats.comparison_tests = build_reference_tests(lme,ref_method,panelDStats.comparison_methods);
+        ref_stats.comparison_tests = build_reference_tests( ...
+            lme,ref_method,this_stats.comparison_methods);
 
         this_stats.lme_by_reference{end+1} = ref_stats;
     end
@@ -189,7 +194,7 @@ function summary_tbl = summarize_panel_D_table(tbl_panel)
 G = groupsummary(tbl_panel,["cell_type","Method","Width"],["mean","std"],"Correlation");
 group_labels = findgroups(tbl_panel(:,["cell_type","Method","Width"]));
 group_n = splitapply(@numel,tbl_panel.Correlation,group_labels);
-subject_ids = string(tbl_panel.Cell)+"_"+string(tbl_panel.Epoch);
+subject_ids = build_panel_D_subject_ids(tbl_panel);
 group_subjects = splitapply(@(x) numel(unique(x)),subject_ids,group_labels);
 G.N = group_n;
 G.NSubjects = group_subjects;
@@ -208,11 +213,10 @@ for i_cmp = 1:numel(comparison_methods)
     comparison_tests(i_cmp).comparison_method = cmp_method;
 
     main_term = "Method_" + cmp_method;
-    interaction_term = "Method_" + cmp_method + ":Width_";
-
     L_main = double(coef_names == main_term);
-    L_interaction = double(startsWith(coef_names,interaction_term));
-    L_any = double((coef_names == main_term) | startsWith(coef_names,interaction_term));
+    interaction_mask = get_method_interaction_mask(coef_names,cmp_method);
+    L_interaction = double(interaction_mask);
+    L_any = double((coef_names == main_term) | interaction_mask);
 
     comparison_tests(i_cmp).main_effect = run_coef_test(lme,L_main);
     comparison_tests(i_cmp).interaction = run_coef_test(lme,L_interaction);
@@ -269,8 +273,10 @@ if width_label == "0.01"
     return;
 end
 
-interaction_term = "Method_" + cmp_method + ":Width_" + width_label;
-interaction_idx = find(coef_names == interaction_term,1);
+method_first_term = "Method_" + cmp_method + ":Width_" + width_label;
+width_first_term = "Width_" + width_label + ":Method_" + cmp_method;
+interaction_idx = find( ...
+    coef_names == method_first_term | coef_names == width_first_term,1);
 if ~isempty(interaction_idx)
     diff_at_width = diff_at_width + beta(interaction_idx);
 end
@@ -278,7 +284,8 @@ end
 
 function width_levels = get_width_levels_from_coefficients(coef_names)
 width_levels = "0.01";
-width_tokens = extractAfter(coef_names(startsWith(coef_names,"Width_")),"Width_");
+width_main_mask = startsWith(coef_names,"Width_") & ~contains(coef_names,":");
+width_tokens = extractAfter(coef_names(width_main_mask),"Width_");
 if ~isempty(width_tokens)
     width_levels = [width_levels; width_tokens(:)];
 end
@@ -287,10 +294,29 @@ end
 
 function H_average = build_average_width_contrast(coef_names,cmp_method,n_widths)
 main_term = "Method_" + cmp_method;
-interaction_term = "Method_" + cmp_method + ":Width_";
 H_average = zeros(1,numel(coef_names));
 H_average(coef_names == main_term) = 1;
-H_average(startsWith(coef_names,interaction_term)) = 1 / n_widths;
+H_average(get_method_interaction_mask(coef_names,cmp_method)) = 1 / n_widths;
+end
+
+function interaction_mask = get_method_interaction_mask(coef_names,cmp_method)
+method_term = "Method_" + cmp_method;
+interaction_mask = ...
+    startsWith(coef_names,method_term + ":Width_") | ...
+    (startsWith(coef_names,"Width_") & endsWith(coef_names,":" + method_term));
+end
+
+function subject_ids = build_panel_D_subject_ids(T)
+cell_ids = regexprep(string(T.Cell),"^jGCaMP8f_","");
+epoch_ids = string(T.Epoch);
+
+% The inhibitory legacy table concatenates two two-epoch batches as
+% 1,2,1.1,2.1. PGBAR labels the same four recordings as 1,2,3,4.
+is_inhibitory_pgbar = string(T.cell_type)=="inh" & string(T.Method)=="PGBAR";
+epoch_ids(is_inhibitory_pgbar & T.Epoch==3) = "1.1";
+epoch_ids(is_inhibitory_pgbar & T.Epoch==4) = "2.1";
+
+subject_ids = cell_ids + "_" + epoch_ids;
 end
 
 function test_stats = run_coef_test(lme,L)
