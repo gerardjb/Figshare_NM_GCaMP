@@ -74,6 +74,8 @@ T_low_g.medianSNR = janelia_tbl.MedianActionPotentialSignal_to_noiseRatio(loc);
 % Loop over methods for plotting effects of SNR on discrete predictions
 uni_meth = ["Biophys_{SMC}","PGBAR","MLspike",...
     "Biophys_{ML}","CASCADE","ENS^2"];%unique(T_low_g.method);
+method_colors = ["#009E73","#4A4A4A","#0072B2",...
+    "#007755","#F3AE14","#A6780C"];
 metrics = ["precision","recall","f1"];
 f = figure;
 sizer = [8.5,5];
@@ -119,6 +121,7 @@ for i_meth = 1:length(uni_meth)
     text(axOverlay, 0.5, 1.95, {uni_meth(i_meth), [num2str(tps+fps),'(tp+fp)/'], [num2str(5817),'(gt)']}, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'top', ... 
+        'Color', hex2rgb(char(method_colors(i_meth))), ...
         'FontWeight', 'bold', ...
         'FontSize', 10);
 end
@@ -156,7 +159,7 @@ for i_metric = 1:length(metrics)
         % insert scatter/regression to left 2 tiles
         nexttile(til,[1,2]);hold on;
         scatter(mdl_x,mdl_y,...
-            5,hex2rgb(pickGCaMPcolorsMS(uni_meth(i_meth))));
+            5,hex2rgb(char(method_colors(i_meth))));
         plot(x_range,...
             mdl.Coefficients.Estimate(1)+mdl.Coefficients.Estimate(2)*x_range,...
             'k','LineWidth',1);
@@ -169,11 +172,11 @@ for i_metric = 1:length(metrics)
 
         % insert raincloud-like plot to last 1
         nexttile(til,[1,1]);hold on;
-        patch(f_patch,x_patch,hex2rgb(pickGCaMPcolorsMS(uni_meth(i_meth))));
+        patch(f_patch,x_patch,hex2rgb(char(method_colors(i_meth))));
         % and add the boxplot
         wid = -0.2;bot = -0.1;mid = bot + wid/2;top = bot + wid;
         box_x = [bot,top,top,bot];box_y = [q1,q1,q3,q3];
-        patch(box_x,box_y,hex2rgb(pickGCaMPcolorsMS(uni_meth(i_meth))),'EdgeColor','k');
+        patch(box_x,box_y,hex2rgb(char(method_colors(i_meth))),'EdgeColor','k');
         plot([mid,mid],[lower_whisker,q1],'k','LineWidth',1);
         plot([mid,mid],[q3,upper_whisker],'k','LineWidth',1);
         plot([bot,top],[q2,q2],'w','LineWidth',1.3);
