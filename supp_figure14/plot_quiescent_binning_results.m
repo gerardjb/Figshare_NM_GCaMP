@@ -366,7 +366,8 @@ set(findobj(ax, 'Tag', 'Lower Adjacent Value'), 'Visible', 'off');
 
 set(ax, 'TickDir', 'out', 'LineWidth', 1, 'Box', 'off');
 ylabel(ax, yLab);
-annotateTrendStats(ax, stats);
+% Keep the statistics in the returned/saved output without obscuring the
+% compact supplementary-figure panels with an on-axes text overlay.
 end
 
 function stats = computeTrendStats(events, fieldName, snrMin, snrMax)

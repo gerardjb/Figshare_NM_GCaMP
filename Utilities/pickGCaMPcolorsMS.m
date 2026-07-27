@@ -35,6 +35,15 @@ nConst = length(consts);
 %Handle aliases
 for iConst = 1:nConst
     consts{iConst} = GCaMPalias(consts{iConst});
+    % Map the current manuscript display labels to the historical keys used
+    % by this color library.
+    if any(strcmpi(consts{iConst},{'Biophys_{SMC}','Biophys_SMC'}))
+        consts{iConst} = 'biophys_{MC';
+    elseif any(strcmpi(consts{iConst},{'Biophys_{ML}','Biophys_ML'}))
+        consts{iConst} = 'biophys_{NN';
+    elseif strcmpi(consts{iConst},'CASCADE')
+        consts{iConst} = 'CASCADE__';
+    end
 end
 %% Make the mapping
 %If on list, pass back the corresponding color
@@ -48,7 +57,7 @@ fullMap = {'#808080',...neutral gray
     '#CC5F09',...(jGCaMP7f pressentations), dark orange
     '#9E0142',...(jGCaMP8f presentations), dark red
     '#0F1C79',...(GCaMP6f presentations)
-    '#A6780C',...};%(ENS^2)
+    '#A6780C',...%(ENS^2)
     '#007755',...%(biophys_NN)
     '#FFCC29',...%(Cascade trained with 8f),...
     '#53338B',...% first try for 8m
