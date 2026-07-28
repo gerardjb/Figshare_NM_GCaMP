@@ -143,7 +143,13 @@ def main(argv: list[str] | None = None) -> None:
         trace_data = _canonicalize_trace_data(args.trace.resolve())
         method_count = len(trace_data["method_traces"])
         trace_height = 4.8 + 0.7 * max(0, method_count - 5)
-        fig_f, _, _ = plot_trace_panel(trace_data, figsize=(3.4, trace_height))
+        fig_f, _, _ = plot_trace_panel(
+            trace_data,
+            figsize=(4.4, trace_height),
+            fluorescence_linewidth=1.35,
+            ground_truth_linewidth=1.45,
+            method_linewidth=1.55,
+        )
 
         fig_g, _ = plot_corr_vs_sigma(
             csv_path=args.csv.resolve(),
@@ -164,7 +170,7 @@ def main(argv: list[str] | None = None) -> None:
         ]:
             for fmt in output_formats:
                 out_path = output_dir / f"{stem}.{fmt}"
-                fig.savefig(out_path)
+                fig.savefig(out_path, bbox_inches="tight", pad_inches=0.02)
                 print(f"Saved {out_path}")
 
         if args.show:

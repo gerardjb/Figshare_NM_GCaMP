@@ -134,8 +134,27 @@ addScaleBar(axTop, xLen, yLen);
 
 if ~isempty(lineHandles)
     lg = legend(axTop, lineHandles, lineLabels);
-    set(lg, 'Box', 'off', 'Interpreter', 'none', 'Location', 'southeast', 'Visible', 'on');
+    set(lg, 'Box', 'off', 'Interpreter', 'none', 'Location', 'southeast', ...
+        'Visible', 'on', 'FontSize', 7, 'NumColumns', 2);
+    % A short two-column legend preserves the reference figure's upper-right
+    % placement without extending through the trace baseline.
+    try
+        lg.ItemTokenSize = [9, 3];
+    catch
+    end
     lg.Title.String = 'Spike #';
+    lg.Title.FontSize = 8;
+    drawnow;
+    try
+        % Pin the legend above the nearly flat trace tails and below the
+        % scale annotation rather than letting MATLAB stretch it downward.
+        lg.Units = 'normalized';
+        legendPos = lg.Position;
+        legendPos(1) = axTop.Position(1) + axTop.Position(3) - legendPos(3) - 0.01;
+        legendPos(2) = axTop.Position(2) + 0.120;
+        lg.Position = legendPos;
+    catch
+    end
     
 end
 
@@ -729,7 +748,8 @@ if dx <= 0 || dy <= 0
 end
 
 padX = 0.20 * dx;
-padY = 0.12 * dy;
+% Leave a deliberate gap below the title and above the compact legend.
+padY = 0.14 * dy;
 x1 = xl(2) - padX;
 x0 = x1 - xLen;
 y1 = yl(2) - padY;
@@ -739,7 +759,7 @@ y0 = y1 - yLen;
 line('Parent', ax, 'XData', [x0 x1], 'YData', [y1 y1], 'Color', 'k', 'LineWidth', 2);
 line('Parent', ax, 'XData', [x1 x1], 'YData', [y0 y1], 'Color', 'k', 'LineWidth', 2);
 
-text('Parent', ax, 'Position', [x0 + xLen/2, y1 + 0.04 * dy, 0], 'String', sprintf('%d ms', round(1000 * xLen)), ...
+text('Parent', ax, 'Position', [x0 + xLen/2, y1 + 0.025 * dy, 0], 'String', sprintf('%d ms', round(1000 * xLen)), ...
     'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', ...
     'Color', 'k', 'FontSize', 11, 'Interpreter', 'none', 'Clipping', 'off');
 text('Parent', ax, 'Position', [x1 + 0.02 * dx, y0 + yLen/2, 0], 'String', sprintf('%.2g \\DeltaF/F', yLen), ...
@@ -758,13 +778,14 @@ if dx <= 0 || dy <= 0
 end
 
 padX = 0.2 * dx;
-padY = 0.12 * dy;
+% Keep the bar and its label visibly separated from the subplot title.
+padY = 0.14 * dy;
 x1 = xl(2) - padX;
 x0 = x1 - xLen;
 y1 = yl(2) - padY;
 
 line('Parent', ax, 'XData', [x0 x1], 'YData', [y1 y1], 'Color', 'k', 'LineWidth', 2);
-text('Parent', ax, 'Position', [x0 + xLen/2, y1 + 0.04 * dy, 0], 'String', sprintf('%d ms', round(1000 * xLen)), ...
+text('Parent', ax, 'Position', [x0 + xLen/2, y1 + 0.025 * dy, 0], 'String', sprintf('%d ms', round(1000 * xLen)), ...
     'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', ...
     'Color', 'k', 'FontSize', 11, 'Interpreter', 'none', 'Clipping', 'off');
 end

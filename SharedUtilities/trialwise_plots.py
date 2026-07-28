@@ -634,6 +634,9 @@ def plot_trace_panel(
     ymax: Optional[float] = None,
     figsize: tuple[float, float] = (3.4, 5.2),
     dpi: int = 250,
+    fluorescence_linewidth: float = 1.1,
+    ground_truth_linewidth: float = 1.2,
+    method_linewidth: float = 1.3,
 ) -> tuple[Any, Any, dict[str, Any]]:
     """Render a trace panel from exported arrays, with no c-spikes cache dependency.
 
@@ -690,8 +693,13 @@ def plot_trace_panel(
     scalebar_dff = float(_as_scalar(data.get("scale_bar_dff", scalebar_dff), scalebar_dff))
 
     fluor = fluorescence - np.nanmedian(fluorescence[: max(3, min(20, fluorescence.size))])
-    ax.plot(t, fluor + y_fluor, color="black", linewidth=1.1)
-    ax.plot(t, _normalize_0_1(ground_truth) * 0.7 + y_gt, color="black", linewidth=1.2)
+    ax.plot(t, fluor + y_fluor, color="black", linewidth=float(fluorescence_linewidth))
+    ax.plot(
+        t,
+        _normalize_0_1(ground_truth) * 0.7 + y_gt,
+        color="black",
+        linewidth=float(ground_truth_linewidth),
+    )
 
     for st in spike_times[np.isfinite(spike_times)] - t0:
         if xlim[0] <= st <= xlim[1]:
@@ -701,7 +709,7 @@ def plot_trace_panel(
         y = _normalize_0_1(method_traces[i]) * 0.85 + y_methods[i]
         color = method_colors[i] if i < len(method_colors) else "#333333"
         linestyle = method_linestyles[i] if i < len(method_linestyles) else "-"
-        ax.plot(t, y, color=color, linewidth=1.3, linestyle=linestyle)
+        ax.plot(t, y, color=color, linewidth=float(method_linewidth), linestyle=linestyle)
         if show_method_labels:
             label = method_labels[i] if i < len(method_labels) else method_keys[i]
             ax.text(xlim[0], y_methods[i] + 0.45, label, color=color, fontweight="bold", ha="left", va="center")

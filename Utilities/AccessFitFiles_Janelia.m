@@ -1,4 +1,4 @@
-function modelSelectionData = AccessFitFiles_Janelia(intermediateFile,outputDir,construct,outputStem)
+function modelSelectionData = AccessFitFiles_Janelia(intermediateFile,outputDir,construct,outputStem,figureSizeCm)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % AccessFitFiles_Janelia
 %
@@ -13,6 +13,7 @@ function modelSelectionData = AccessFitFiles_Janelia(intermediateFile,outputDir,
 %   outputDir: plot output directory.
 %   construct: plotting construct, e.g. 'jGCaMP8f' or 'jGCaMP8m'.
 %   outputStem: base filename for PNG/PDF outputs.
+%   figureSizeCm: optional [width height] override; defaults to [19.17 6.74].
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 scriptDir = fileparts(mfilename('fullpath'));
@@ -35,6 +36,9 @@ if nargin < 3
 end
 if nargin < 4 || isempty(outputStem)
     outputStem = 'janelia_global_best_fit';
+end
+if nargin < 5 || isempty(figureSizeCm)
+    figureSizeCm = [19.17,6.74];
 end
 
 if ~isfolder(outputDir); mkdir(outputDir); end
@@ -60,7 +64,7 @@ end
 load(sfDataFile,'processedTraces');
 load(gdbFile,'gData');
 
-plotBestFit(modelSelectionData,processedTraces,gData,outputDir,construct,outputStem);
+plotBestFit(modelSelectionData,processedTraces,gData,outputDir,construct,outputStem,figureSizeCm);
 
 fprintf('Selected %s with combined score %.6g. Outputs saved to %s\n', ...
     modelSelectionData.bestFit.sourceFileName, ...
@@ -99,7 +103,7 @@ if isfield(modelSelectionData,'fname_list')
 end
 end
 
-function plotBestFit(modelSelectionData,processedTraces,gData,outputDir,construct,outputStem)
+function plotBestFit(modelSelectionData,processedTraces,gData,outputDir,construct,outputStem,figureSizeCm)
 bestFit = modelSelectionData.bestFit;
 if nargin < 5 || isempty(construct)
     const = char(bestFit.const);
@@ -109,10 +113,10 @@ end
 
 f = figure('Name','Janelia global best fit', ...
     'PaperUnits','centimeters', ...
-    'PaperPosition',[5,5,19.17,6.74], ...
-    'PaperSize',[19.17,6.74], ...
+    'PaperPosition',[0,0,figureSizeCm], ...
+    'PaperSize',figureSizeCm, ...
     'Units','centimeters', ...
-    'Position',[5,5,19.17,6.74]);
+    'Position',[5,5,figureSizeCm]);
 tlo = tiledlayout(1,4,'TileSpacing','compact','Padding','compact');
 
 dataHex = pickGCaMPcolorsMS(const);
