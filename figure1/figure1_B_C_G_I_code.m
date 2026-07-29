@@ -10,6 +10,9 @@ close all
 d = fileparts(mfilename("fullpath"));
 load(fullfile(d,"figure1_C_G_data.mat"),"OGB5N");
 load(fullfile(d,"..","Shared_data","gDbase.mat"),"gData");
+gData = selectConstructRecords(gData, ...
+    ["GCaMP6f","jGCaMP7f","jGCaMP8f"],mfilename);
+gData(strcmp({gData.const},'jGCaMP8m')) = [];
 
 %% Plots for panels B and C
 % Panel B
@@ -99,3 +102,5 @@ for i = 1:2
             'Color',hex2rgb(pickGCaMPcolorsMS(const_names(i)))+0.35);
     end
 end
+
+saveFigureOutputs("figure1","figure1_B_C_G_I");

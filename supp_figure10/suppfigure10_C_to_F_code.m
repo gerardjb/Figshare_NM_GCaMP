@@ -186,3 +186,5 @@ for i_metric = 1:length(metrics)
     end % i_meth
 
 end % i_metric
+
+saveFigureOutputs("supp_figure10","suppfigure10_C_to_F");

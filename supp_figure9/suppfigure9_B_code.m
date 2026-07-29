@@ -88,3 +88,5 @@ for i_fig = 1:length(uniMethod)
     
 
 end
+
+saveFigureOutputs("supp_figure9","suppfigure9_B");

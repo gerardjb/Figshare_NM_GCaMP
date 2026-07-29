@@ -15,7 +15,7 @@ try:
         plot_raincloud_by_downsample,
         plot_trace_panel,
     )
-    from SharedUtilities.project_paths import figure_dir
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from SharedUtilities.trialwise_plots import (  # type: ignore
@@ -24,12 +24,12 @@ except ImportError:
         plot_raincloud_by_downsample,
         plot_trace_panel,
     )
-    from SharedUtilities.project_paths import figure_dir  # type: ignore
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir  # type: ignore
 
 
 HERE = figure_dir("supp_figure12", __file__)
 DEFAULT_CSV = HERE / "trialwise_correlations_jG8f.csv"
-DEFAULT_OUTPUT_DIR = HERE / "output"
+DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure12", __file__)
 DEFAULT_TRACE_DIR = HERE / "trace_panel_exports"
 TMP_DIR = HERE / "tmp"
 

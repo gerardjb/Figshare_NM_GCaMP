@@ -80,4 +80,5 @@ ylabel(tile_outer,'Normalized fluorescence','fontname','arial','fontsize',10)
 xlabel(tile_outer,'Time (ms)','fontname','arial','fontsize',10)
 title(tile_outer,'Model fits (--) to stopped flow','fontname','arial','fontsize',12);
 
+saveFigureOutputs("figure3","figure3_B");
 end

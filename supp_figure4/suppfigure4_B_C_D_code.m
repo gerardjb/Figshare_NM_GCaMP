@@ -10,6 +10,8 @@ close all
 d = fileparts(mfilename("fullpath"));
 load(fullfile(d,'..','Shared_data','stoppedFlowTraces.mat'),'processedTraces');
 processedTraces = processedTraces{1};
+processedTraces = selectConstructRecords(processedTraces, ...
+    ["OGB1","GCaMP6f","jGCaMP7f","jGCaMP8f"],mfilename);
 
 % Plot setup
 cmap = zeros(length(processedTraces),3);
@@ -424,3 +426,5 @@ for i = 1:length(processedTraces)
     
 end
 xlabel(tH,'[Ca^{2+}] (\muM)')
+
+saveFigureOutputs("supp_figure4","suppfigure4_B_C_D");

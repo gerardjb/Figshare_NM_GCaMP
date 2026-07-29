@@ -9,17 +9,17 @@ import sys
 from pathlib import Path
 
 try:
-    from SharedUtilities.project_paths import figure_dir
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir
     from SharedUtilities.trialwise_plots import ensure_matplotlib_cache_dir
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from SharedUtilities.project_paths import figure_dir  # type: ignore
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir  # type: ignore
     from SharedUtilities.trialwise_plots import ensure_matplotlib_cache_dir  # type: ignore
 
 
 HERE = figure_dir("supp_figure8", __file__)
 PROCESSED_DIR = HERE / "processed"
-DEFAULT_OUTPUT_DIR = HERE / "output"
+DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure8", __file__)
 TMP_DIR = HERE / "tmp"
 
 BIOPHYS_SMC = "#009E73"

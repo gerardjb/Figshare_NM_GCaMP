@@ -162,3 +162,5 @@ for i = 2:length(model_names)
         'color',colores{i},'fontweight','bold');
 end
 title(til,[cell_title{1},' cell sample'])
+
+saveFigureOutputs("supp_figure9","suppfigure9_A");

@@ -59,6 +59,7 @@ plot_tau_fast_panel(results,colors,axM);
 xlabel(tileM,'Spikes');
 
 setFigureFont(f,'Arial');
+saveFigureOutputs("figure1","figure1_K_L_M",f);
 end
 
 function plot_event_panel(results,eventIdx,ax,const)

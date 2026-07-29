@@ -9,6 +9,10 @@ close all
 % Open file
 d = fileparts(mfilename('fullpath'));
 load(fullfile(d,"..","Shared_data","stoppedFlowTraces.mat"));
+legacyConstructs = ["OGB1","GCaMP6f","jGCaMP7f","jGCaMP8f"];
+processedTraces = cellfun( ...
+    @(records) selectConstructRecords(records,legacyConstructs,mfilename), ...
+    processedTraces,'UniformOutput',false);
 
 % Hold on for off
 xx = processedTraces;
@@ -172,3 +176,5 @@ for i = 1:length(processedTraces)
 end
 
 xlabel(tH,'time (ms)','fontname','arial');
+
+saveFigureOutputs("figure2","figure2_C_D");

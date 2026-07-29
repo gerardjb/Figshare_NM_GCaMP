@@ -102,3 +102,5 @@ for i = 1:length(sample_const)
     xlabel('Time (ms)');
     title({'Sample exponential','analysis'});
 end
+
+saveFigureOutputs("figure2","figure2_J");

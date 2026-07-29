@@ -15,10 +15,10 @@ import scipy.io as sio
 import numpy as np
 
 try:
-    from SharedUtilities.project_paths import figure_dir
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from SharedUtilities.project_paths import figure_dir  # type: ignore
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir  # type: ignore
 
 """
 Functions used for working with PGAS output
@@ -84,6 +84,7 @@ def main():
     #Getting the file information
     # Get the directory where the script is located
     script_dir = figure_dir("figure3", __file__)
+    output_dir = figure_output_dir("figure3", __file__)
     data_stub = [ "test_exc.mat","test_inh.mat"]
     sim_stub = ["traj_samples_default_janelia_sample_excitatory.dat","traj_samples_default_janelia_sample_inhibitory2.dat"]
     pgbar_stub = ["traj_samples_experiment4_exc_AR2.dat","traj_samples_inhibitory_AR2.dat"]
@@ -140,7 +141,10 @@ def main():
 
     #Plots
     #For saving
-    save_names = ['main_fig3_panelsI-J.pdf','main_fig3_panelsK-L.pdf']
+    save_names = [
+        "figure3_F_excitatory_simulation",
+        "figure3_G_inhibitory_simulation",
+    ]
 
     #Stuff for labels
     x_len = 0.2# in s
@@ -285,7 +289,9 @@ def main():
         plt.tight_layout()
         fig.suptitle(titles[i], fontsize=12)
         plt.subplots_adjust(top=0.85)
-        #plt.savefig(save_names[i],format='pdf',dpi=300)
+        output_stem = save_names[i]
+        fig.savefig(output_dir / f"{output_stem}.png",dpi=300,bbox_inches="tight")
+        fig.savefig(output_dir / f"{output_stem}.pdf",bbox_inches="tight")
 
         plt.show(block=False)
 

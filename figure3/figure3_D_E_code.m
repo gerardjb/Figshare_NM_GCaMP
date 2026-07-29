@@ -154,3 +154,5 @@ for i_exp = 1:length(exps)
 
 end
 
+saveFigureOutputs("figure3","figure3_D_E");
+

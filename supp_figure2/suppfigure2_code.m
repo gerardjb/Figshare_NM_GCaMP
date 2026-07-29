@@ -143,6 +143,8 @@ for i = 1:length(bType)
     set(gca,'tickdir','out','xticklabelrotation',0);
 end
 
+saveFigureOutputs("supp_figure2","suppfigure2");
+
 %% Open and plot EGTA and BAPTA jG8f data
 % Set up for jG8f plots
 thiscol = 1;

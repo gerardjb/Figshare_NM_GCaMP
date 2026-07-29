@@ -79,3 +79,5 @@ for i = 1:length(Kfiles)
 %     set(gcf,'Units','points');
 %     set(gcf,'Position',[0,0,240,180]);
 end
+
+saveFigureOutputs("supp_figure3","suppfigure3_F");

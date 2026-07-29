@@ -84,3 +84,5 @@ for i = 1:length(idx_to_show)
 end
 
 title(tl,'GCaMP6f','color',cols{1},'fontsize',12)
+
+saveFigureOutputs("figure1","figure1_N");

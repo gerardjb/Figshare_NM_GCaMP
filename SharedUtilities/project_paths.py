@@ -56,6 +56,15 @@ def figure_dir(name: str, module_file: str | os.PathLike[str] | None = None) -> 
     return candidate
 
 
+def figure_output_dir(
+    name: str, module_file: str | os.PathLike[str] | None = None
+) -> Path:
+    """Return and create the canonical ``output/<figure name>`` directory."""
+    output = project_root(module_file) / "output" / name
+    output.mkdir(parents=True, exist_ok=True)
+    return output
+
+
 def _find_project_root(start: Path) -> Path | None:
     candidate = start.expanduser().resolve()
     if candidate.is_file():

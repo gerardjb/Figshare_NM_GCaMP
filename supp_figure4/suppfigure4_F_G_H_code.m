@@ -10,6 +10,8 @@ close all
 d = fileparts(mfilename("fullpath"));
 load(fullfile(d,'..','Shared_data','stoppedFlowTraces.mat'),'processedTraces');
 processedTraces = processedTraces{2};
+processedTraces = selectConstructRecords(processedTraces, ...
+    ["OGB1","GCaMP6f","jGCaMP7f","jGCaMP8f"],mfilename);
 
 %% Raw trace plots
 %Different xlimits to accomodate different probe speeds
@@ -336,3 +338,5 @@ for i = 1:length(processedTraces)
     
 end
 xlabel(tH,'[Ca^{2+}] (\muM)')
+
+saveFigureOutputs("supp_figure4","suppfigure4_F_G_H");

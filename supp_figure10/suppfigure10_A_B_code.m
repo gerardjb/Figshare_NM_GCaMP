@@ -181,3 +181,5 @@ for i_win = 1:length(windows)
     title(til,panel_names(i_win));
 
 end % i_win
+
+saveFigureOutputs("supp_figure10","suppfigure10_A_B");

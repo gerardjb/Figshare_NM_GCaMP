@@ -43,3 +43,5 @@ for i_panel = 1:numel(panel_name)
     ylabel(plot_name(i_panel));
     title("Panel "+panel_name(i_panel))
 end
+
+saveFigureOutputs("figure1","figure1_D_E_F");

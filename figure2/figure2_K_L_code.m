@@ -164,6 +164,7 @@ fprintf('  intercept = %.4f (95%%%% CI [%.4f, %.4f])\n',...
 fprintf('  R^2 = %.4f, adjusted R^2 = %.4f\n',...
     mdl.Rsquared.Ordinary,mdl.Rsquared.Adjusted);
 fprintf('  model p = %.4g\n',fitStats.Pvalue);
+saveFigureOutputs("figure2","figure2_K_L");
 end
 
 function out = p_to_sig_label(p)

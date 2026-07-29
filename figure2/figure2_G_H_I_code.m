@@ -11,6 +11,8 @@ close all
 d = fileparts(mfilename("fullpath"));
 load(fullfile(d,'..','Shared_data','stoppedFlowTraces.mat'))
 processedTraces = processedTraces{1};% get rising step traces
+processedTraces = selectConstructRecords(processedTraces, ...
+    ["OGB1","GCaMP6f","jGCaMP7f","jGCaMP8f"],mfilename);
 
 
 
@@ -180,3 +182,5 @@ for i=1:2
     text(Ts{4,i},max(ylim),sample_times{i},'FontName','arial','FontSize',10,...
         'VerticalAlignment','bottom','HorizontalAlignment','right');
 end
+
+saveFigureOutputs("figure2","figure2_G_H_I");

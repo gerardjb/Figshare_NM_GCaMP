@@ -38,5 +38,5 @@ set(ff,'Paperunits','inches', ...
     'Units','inches', ...
     'Position',[4,2,sizer]);
 
+saveFigureOutputs("supp_figure1","suppfigure1_E_to_G",ff);
 end
-

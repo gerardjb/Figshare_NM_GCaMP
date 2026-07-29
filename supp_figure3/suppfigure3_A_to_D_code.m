@@ -226,3 +226,5 @@ set(gca,'xlim',[0.5,3.5],'ylim',[0,20],...
 
 ylabel('R_f')
 title('37^oC, [Mg^{2+}] 1mM')
+
+saveFigureOutputs("supp_figure3","suppfigure3_A_to_D");

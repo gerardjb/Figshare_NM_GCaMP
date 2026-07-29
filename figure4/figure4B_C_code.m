@@ -239,6 +239,7 @@ group_label_axes = axes(f,'Position',[0,0,1,1],'Visible','off', ...
 add_method_group_bracket(f,group_label_axes,exc_method_axes(1:3),"Unsupervised methods");
 add_method_group_bracket(f,group_label_axes,exc_method_axes(4:6),"Supervised methods");
 
+saveFigureOutputs("figure4","figure4_B_C",f);
 end
 
 function add_method_group_bracket(fig_handle,label_axes,method_axes,label_text)

@@ -177,6 +177,7 @@ set(gca,'TickDir','out','LineWidth',1,'TickLength',ticklengths,...
     'fontname','arial','fontsize',10)
 xlabel('spike number')
 
+saveFigureOutputs("supp_figure1","suppfigure1_A_to_D",ff);
 end
 
 function [models,gofs,maxIdx] = fitDecayForGCaMPcell2(t,F,st)

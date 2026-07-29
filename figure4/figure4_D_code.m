@@ -11,13 +11,15 @@ close all
 % Open data files
 d = fileparts(mfilename("fullpath"));
 load(fullfile(d,"correlation_tbl_jG8f.mat"),"tbl")
+outputDir = fullfile(fileparts(d),"output","figure4");
+if ~isfolder(outputDir); mkdir(outputDir); end
 
 % Panel D compares raw, non-downsampled inference for both cell classes.
 tbl_panel = tbl(tbl.smoothing=="raw" & (tbl.cell_type=="exc" | tbl.cell_type=="inh"),:);
 
 % Save the panel D mixed-effects statistics used for downstream reporting.
 panelDStats = build_panel_D_stats(tbl_panel);
-save(fullfile(d,"figure4_D_lme_stats.mat"),"panelDStats","-v7.3")
+save(fullfile(outputDir,"figure4_D_lme_stats.mat"),"panelDStats","-v7.3")
 
 %% Summary plots
 %Ordering of table entries
@@ -106,6 +108,7 @@ for i_fig = 1:length(uniMethod)
 
 end
 
+saveFigureOutputs("figure4","figure4_D");
 end
 
 function panelDStats = build_panel_D_stats(tbl_panel)

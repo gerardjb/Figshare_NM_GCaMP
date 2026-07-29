@@ -371,6 +371,7 @@ for iId = 1:nClusters
     
 end%iId
 
+saveFigureOutputs("supp_figure5","suppfigure5");
 end
 
 %% function block

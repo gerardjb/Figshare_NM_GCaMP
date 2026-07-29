@@ -120,3 +120,5 @@ makeTSscaleBar(hA2,'xVal',xval,'xText',[num2str(xval*1000),' ms'],...
             'lefty',0,'upsidedown',1,'fontsize',10);
 axis off
 title(tl,'jGCaMP8f','color',cols{1},'fontsize',12)
+
+saveFigureOutputs("figure1","figure1_O");

@@ -12,10 +12,10 @@ import sys
 from pathlib import Path
 
 try:
-    from SharedUtilities.project_paths import figure_dir
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir
 except ImportError:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from SharedUtilities.project_paths import figure_dir  # type: ignore
+    from SharedUtilities.project_paths import figure_dir, figure_output_dir  # type: ignore
 
 # Suppress FutureWarnings related to the 'observed' parameter in Seaborn - groan
 import warnings
@@ -274,6 +274,9 @@ def main():
     for ax in axes:
         ax.axvline(x=0, color='black', linestyle='--', linewidth=1)
 
+    output_dir = figure_output_dir("figure4", __file__)
+    fig.savefig(output_dir / "figure4_E_F_G.png",dpi=300,bbox_inches="tight")
+    fig.savefig(output_dir / "figure4_E_F_G.pdf",bbox_inches="tight")
     plt.show()
 
 if __name__ == "__main__":

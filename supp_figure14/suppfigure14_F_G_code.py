@@ -19,13 +19,13 @@ from SharedUtilities.trialwise_plots import (  # noqa: E402
     plot_corr_vs_sigma,
     plot_trace_panel,
 )
-from SharedUtilities.project_paths import figure_dir  # noqa: E402
+from SharedUtilities.project_paths import figure_dir, figure_output_dir  # noqa: E402
 
 
 HERE = figure_dir("supp_figure14", __file__)
 DEFAULT_CSV = HERE / "trialwise_correlations_jG8m.csv"
 DEFAULT_TRACE = HERE / "jG8m_compare_out.npz"
-DEFAULT_OUTPUT_DIR = HERE / "output"
+DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure14", __file__)
 TMP_DIR = HERE / "tmp"
 
 METHODS = [

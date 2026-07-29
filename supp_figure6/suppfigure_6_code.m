@@ -254,3 +254,5 @@ title(tile_outer_bouton_states,{'Model states,','Paired protocol'},'FontSize',12
 xlabel(tile_outer_bouton_states,'Time (ms)',"fontname",'arial','fontsize',10);
 ylabel(tile_outer_bouton_states,'State occupancy',"fontname",'arial','fontsize',10);
 
+saveFigureOutputs("supp_figure6","suppfigure6");
+
