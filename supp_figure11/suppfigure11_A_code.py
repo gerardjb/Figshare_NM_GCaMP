@@ -53,12 +53,20 @@ def create_raincloud(ax, data, x, y, orient='h', palette='Set2',bw=0.1,color_map
                        linewidth=0.1, orient=orient,gridsize=5000,
                        offset=0.1-stripplot_shift,scale="width") #high gridsize because STA plots too coarse without this
     
+    # Seaborn 0.13+ requires an explicit hue when a palette is supplied.
+    # Keep the legacy call compatible with the Seaborn 0.11 environment branch.
+    boxplot_kwargs = {'palette': palette}
+    seaborn_version = tuple(int(part) for part in sns.__version__.split('.')[:2])
+    if seaborn_version >= (0, 13):
+        boxplot_kwargs.update(hue=y, legend=False)
+
     # Add and color-code the boxplot
     box = sns.boxplot(
         x=x, y=y, data=data, width=0.12, ax=ax, orient=orient, showcaps=False,
         boxprops={'linewidth':1},
         medianprops={'color': 'white', 'linewidth': 1.5},
-        showfliers=False, whiskerprops={'linewidth':1},dodge=True, palette=palette,
+        showfliers=False, whiskerprops={'linewidth':1}, dodge=False,
+        **boxplot_kwargs,
     )
     if color_mapping:
         for patch, method_label in zip(box.artists, box.get_yticklabels()):
@@ -92,9 +100,14 @@ def _ordered_palette(data, category_col, palette):
         return palette
     categories = data[category_col]
     if hasattr(categories, "cat"):
-        order = [cat for cat in categories.cat.categories if cat in set(categories.dropna())]
+        # Retain every declared category so palette length stays aligned with
+        # the categorical axis even when a panel has no observations for one.
+        order = list(categories.cat.categories)
     else:
         order = list(pd.unique(categories.dropna()))
+    missing_colors = [category for category in order if category not in palette]
+    if missing_colors:
+        raise ValueError(f"Missing colors for categories: {missing_colors}")
     return [palette[category] for category in order]
 
 """
@@ -102,53 +115,37 @@ def _ordered_palette(data, category_col, palette):
     the methods studied here and shown in figure 4E.
 """
 
-def main():
-    # Call the main function to create the plots
-    # -----
-    # Handle arg inputs
-    # -----
-    parser = argparse.ArgumentParser(description="Toggle between matched and unmatched plots.")
-    parser.add_argument('--matched','-m', action='store_true',
-                        help="If set, plot matched distributions; otherwise, use plot unmatched.")
-    args = parser.parse_args()
+METHOD_ALIASES = {
+    'CASCADE': r'$\mathbf{CASCADE}$',
+    'Biophys_{ML}': r'$\mathbf{Biophys}_{\mathbf{ML}}$',
+    'Biophys_{SMC}': r'$\mathbf{Biophys}_{\mathbf{SMC}}$',
+    'ENS^2': r'$\mathbf{ENS}^{\mathbf{2}}$',
+    'MLspike': r'$\mathbf{MLspike}$',
+    'PGBAR': r'$\mathbf{PGBAR}$',
+}
 
-    # -----
-    # Configuration Parameters
-    # -----
+METHOD_COLORS = {
+    r'$\mathbf{CASCADE}$': '#F3AE14',
+    r'$\mathbf{Biophys}_{\mathbf{SMC}}$': '#009E73',
+    r'$\mathbf{Biophys}_{\mathbf{ML}}$': '#007755',
+    r'$\mathbf{ENS}^{\mathbf{2}}$': '#A6780C',
+    r'$\mathbf{MLspike}$': '#0072B2',
+    r'$\mathbf{PGBAR}$': '#4A4A4A',
+}
 
-    # File path to the data
-    script_dir = figure_dir("supp_figure11", __file__)
-    if args.matched:
-        # Set the file to read
-        file_path_sta = os.path.join(script_dir,'matched_bias_uncert.csv')
+METHOD_ORDER = [
+    r'$\mathbf{Biophys}_{\mathbf{SMC}}$',
+    r'$\mathbf{PGBAR}$',
+    r'$\mathbf{MLspike}$',
+    r'$\mathbf{Biophys}_{\mathbf{ML}}$',
+    r'$\mathbf{CASCADE}$',
+    r'$\mathbf{ENS}^{\mathbf{2}}$',
+]
 
-        # x axis label, limits, and kde bw
-        x_label = 'matched'
-        xlims = [[-0.05, 0.05],[-0.0005, 0.03]]
-        bws = [0.05,0.1]
-    else:
-        # Set the file to read
-        file_path_sta = os.path.join(script_dir,'unmatched_bias_uncert.csv')
-
-        # x axis label and limits, and kde bw
-        x_label = 'unmatched'
-        xlims = [[-0.05, 0.05],[-0.001, 0.1]]
-        bws = [0.005,0.01]
+SELECTED_METHODS = list(METHOD_ALIASES)
 
 
-    # Methods to include in the plots. Set to None to include all.
-    selected_methods = ['CASCADE', 'Biophys_{ML}',
-    'Biophys_{SMC}', 'ENS^2', 'MLspike'] #
-
-    # Types to include in the plots. Set to None to include all.
-    selected_types = []  # was for exc or inh, but not used in this version
-
-    # Axis properties
-    conversion_factor = 1000 # for ms
-    sta_x_limits = (xlims[0][0]*conversion_factor, xlims[0][1]*conversion_factor) # for bias
-    sna_x_limits = (xlims[1][0]*conversion_factor, xlims[1][1]*conversion_factor)  # for uncertainty
-    
-    # Plot aesthetics/typeogrpahy
+def _configure_plot_style():
     sns.set(style="whitegrid")
     plt.rcParams['font.family'] = 'Arial'
     plt.rcParams['font.sans-serif'] = ['Arial']
@@ -163,105 +160,122 @@ def main():
     plt.rcParams['mathtext.it'] = 'Arial:italic'
     plt.rcParams['mathtext.bf'] = 'Arial:bold'
 
-    # -----
-    # Data Loading and Filtering
-    # -----
 
-    # Load the data
-    df_sta = pd.read_csv(file_path_sta)
+def _load_distribution(script_dir, mode):
+    if mode == 'matched':
+        filename = 'matched_bias_uncert.csv'
+        x_limits = ((-50, 50), (-0.5, 30))
+        bandwidths = (0.05, 0.1)
+    elif mode == 'unmatched':
+        filename = 'unmatched_bias_uncert.csv'
+        x_limits = ((-50, 50), (-1, 100))
+        bandwidths = (0.005, 0.01)
+    else:
+        raise ValueError(f"Unknown Supplementary Figure 11 mode: {mode}")
 
-    # Filter by selected methods and cell type if specified
-    if selected_methods:
-        df_sta = df_sta[df_sta['method'].isin(selected_methods)]
-    # Cell types
-    if selected_types:
-        df_sta = df_sta[df_sta['type'].isin(selected_types)]
+    data = pd.read_csv(os.path.join(script_dir, filename))
+    data = data[data['method'].isin(SELECTED_METHODS)].copy()
+    data['method'] = data['method'].map(METHOD_ALIASES)
+    data['method'] = pd.Categorical(
+        data['method'], categories=METHOD_ORDER, ordered=True
+    )
+    return data, x_limits, bandwidths
 
-    # Map and order the methods by dictionary
-    method_aliases = {
-        'CASCADE': r'$\mathbf{CASCADE}$',
-        'Biophys_{ML}': r'$\mathbf{Biophys}_{\mathbf{ML}}$',
-        'Biophys_{SMC}': r'$\mathbf{Biophys}_{\mathbf{SMC}}$',
-        'ENS^2': r'$\mathbf{ENS}^{\mathbf{2}}$',
-        'MLspike': r'$\mathbf{MLspike}$'
-    }
-    method_colors = {
-        r'$\mathbf{CASCADE}$': '#F3AE14',
-        r'$\mathbf{Biophys}_{\mathbf{SMC}}$': '#009E73',
-        r'$\mathbf{Biophys}_{\mathbf{ML}}$': '#007755',
-        r'$\mathbf{ENS}^{\mathbf{2}}$': '#A6780C',
-        r'$\mathbf{MLspike}$': '#0072B2' 
-    }
-    df_sta['method'] = df_sta['method'].map(method_aliases)
-    desired_order = [r'$\mathbf{Biophys}_{\mathbf{SMC}}$',
-                    r'$\mathbf{MLspike}$',
-                    r'$\mathbf{Biophys}_{\mathbf{ML}}$',
-                    r'$\mathbf{CASCADE}$',
-                    r'$\mathbf{ENS}^{\mathbf{2}}$']
-    df_sta['method'] = pd.Categorical(df_sta['method'], categories=desired_order, ordered=True)
 
-    # -----
-    # Creating the Plots
-    # -----
+def _plot_distribution_pair(axes, data, mode, x_limits, bandwidths):
+    data = data.copy()
+    data['bias'] *= 1000
+    data['uncertainty'] *= 1000
 
-    # Create a figure with two subplots (bias and uncertainty)
-    fig, axes = plt.subplots(1, 2, figsize=(4, 3.4), sharey=True)
-
-    # ----
-    # Plot for STA
-    # ----
-
-    # Create raincloud plot for STA
-    df_sta['bias'] = df_sta['bias']*conversion_factor
-    create_raincloud(axes[0], df_sta, x='bias', y='method', orient='h', palette=method_colors,bw=bws[0],color_mapping=method_colors)
-
-    # Plot labels
-    axes[0].set_xlabel('Bias,\n '+x_label+' (ms)',ha='center',fontsize=10)
-    axes[0].set_xlim(sta_x_limits)
+    create_raincloud(
+        axes[0], data, x='bias', y='method', orient='h',
+        palette=METHOD_COLORS, bw=bandwidths[0],
+        color_mapping=METHOD_COLORS,
+    )
+    axes[0].set_xlabel(f'Bias,\n{mode} (ms)', ha='center', fontsize=10)
+    axes[0].set_xlim(x_limits[0])
+    axes[0].set_xticks([-50, 0, 50])
     axes[0].yaxis.label.set_fontweight('bold')
-    axes[1].set_xticks([0,sta_x_limits[1]/2,sta_x_limits[1]])
 
-    # ----
-    # Plot for SNA
-    # ----
-
-    # Create raincloud plot for SNA
-    df_sta['uncertainty'] = df_sta['uncertainty']*conversion_factor# scale to percentage
-    create_raincloud(axes[1], df_sta, x='uncertainty', y='method', orient='h', palette=method_colors,bw=bws[1],color_mapping=method_colors)
-
-    # Customize the SNA plot
-    axes[1].set_xlabel('Uncertainty,\n '+x_label+' (ms)',ha='center',fontsize=10)
+    create_raincloud(
+        axes[1], data, x='uncertainty', y='method', orient='h',
+        palette=METHOD_COLORS, bw=bandwidths[1],
+        color_mapping=METHOD_COLORS,
+    )
+    axes[1].set_xlabel(
+        f'Uncertainty,\n{mode} (ms)', ha='center', fontsize=10
+    )
     axes[1].set_ylabel('')
-    axes[1].set_xlim(sna_x_limits)
-    axes[1].set_xticks([0,sna_x_limits[1]/2,sna_x_limits[1]])
+    axes[1].set_xlim(x_limits[1])
+    axes[1].set_xticks([0, x_limits[1][1] / 2, x_limits[1][1]])
+    axes[1].tick_params(axis='y', labelleft=False)
 
-    # ----
-    # Final figure adjustments
-    # ----
-
-    # Iterate through the y-axis tick labels on axes[0] for coloring method names
     for label in axes[0].get_yticklabels():
         method = label.get_text()
-        color = method_colors.get(method, '#000000')  # Default to black if method not found
+        color = METHOD_COLORS.get(method, '#000000')
         label.set_color(color)
-        label.set_rotation(0)  # Ensure labels are horizontal
-    axes[0].set_ylabel('') 
+        label.set_rotation(0)
+    axes[0].set_ylabel('')
 
-    # Handling the spacing and positioning of plot elements
-    plt.tight_layout()
     current_ymin, current_ymax = axes[0].get_ylim()
-    delta_y = current_ymax - current_ymin
-    translation_percentage = 0.02
-    translation_amount = delta_y * translation_percentage
+    translation_amount = (current_ymax - current_ymin) * 0.02
     new_ymin = current_ymin + translation_amount
     new_ymax = current_ymax + translation_amount
     for ax in axes:
-        # adjust vertical plot edges
         ax.set_ylim(new_ymin, new_ymax)
+        ax.axvline(x=0, color='black', linestyle='--', linewidth=1)
 
-    # add in a 0 indicator line for both plots
-    axes[0].axvline(x=0, color='black', linestyle='--', linewidth=1)
-    axes[1].axvline(x=0, color='black', linestyle='--', linewidth=1)
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Plot matched (A) and unmatched (B) bias/uncertainty."
+    )
+    panel_group = parser.add_mutually_exclusive_group()
+    panel_group.add_argument(
+        '--matched', '-m', action='store_true',
+        help="Render only the matched distributions.",
+    )
+    panel_group.add_argument(
+        '--unmatched', '-u', action='store_true',
+        help="Render only the unmatched distributions.",
+    )
+    args = parser.parse_args(argv)
+
+    script_dir = figure_dir("supp_figure11", __file__)
+    _configure_plot_style()
+
+    if args.matched or args.unmatched:
+        mode = 'matched' if args.matched else 'unmatched'
+        fig, axes = plt.subplots(1, 2, figsize=(4, 3.4), sharey=True)
+        data, x_limits, bandwidths = _load_distribution(script_dir, mode)
+        _plot_distribution_pair(axes, data, mode, x_limits, bandwidths)
+        fig.tight_layout()
+    else:
+        # Keep the two within-panel axes compact while reserving enough room
+        # for the repeated method labels at the left of both A and B.
+        fig = plt.figure(figsize=(8.2, 3.4))
+        axes_a = [
+            fig.add_axes([0.15, 0.18, 0.14, 0.75]),
+            fig.add_axes([0.33, 0.18, 0.14, 0.75]),
+        ]
+        axes_b = [
+            fig.add_axes([0.65, 0.18, 0.14, 0.75]),
+            fig.add_axes([0.83, 0.18, 0.14, 0.75]),
+        ]
+        for axes, mode in ((axes_a, 'matched'), (axes_b, 'unmatched')):
+            data, x_limits, bandwidths = _load_distribution(script_dir, mode)
+            _plot_distribution_pair(
+                axes, data, mode, x_limits, bandwidths
+            )
+
+        fig.text(
+            0.015, 0.985, 'A', ha='left', va='top',
+            family='Arial', fontsize=16, fontweight='normal',
+        )
+        fig.text(
+            0.515, 0.985, 'B', ha='left', va='top',
+            family='Arial', fontsize=16, fontweight='normal',
+        )
 
     plt.show()
 
