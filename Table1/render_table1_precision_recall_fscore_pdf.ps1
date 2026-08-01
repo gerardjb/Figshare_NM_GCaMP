@@ -1,4 +1,6 @@
 param(
+    [string]$SnaPath = "figure4/sna_matching_trials.csv",
+    [string]$MatchedPath = "figure4/matched_bias_uncert.csv",
     [string]$CsvPath = "Table1/table1_precision_recall_fscore.csv",
     [string]$TablePath = "Table1/table1_precision_recall_fscore.tex",
     [string]$OutputPdf = "Table1/table1_precision_recall_fscore.pdf",
@@ -17,13 +19,23 @@ if (-not (Get-Command pdflatex -ErrorAction SilentlyContinue)) {
     throw "pdflatex not found. Install MiKTeX/TeX Live to render PDF."
 }
 
-$makeScript = Join-Path $PSScriptRoot "make_table1_precision_recall_fscore_tex.py"
-if (-not (Test-Path -LiteralPath $makeScript)) {
-    throw "Missing generator script: $makeScript"
+$makeCsvScript = Join-Path $PSScriptRoot "make_table1_precision_recall_fscore_csv.py"
+$makeTexScript = Join-Path $PSScriptRoot "make_table1_precision_recall_fscore_tex.py"
+if (-not (Test-Path -LiteralPath $makeCsvScript)) {
+    throw "Missing statistics generator script: $makeCsvScript"
+}
+if (-not (Test-Path -LiteralPath $makeTexScript)) {
+    throw "Missing TeX generator script: $makeTexScript"
 }
 
-# Always regenerate the .tex from CSV so PDF stays in sync.
-& $PythonExe $makeScript --csv $CsvPath --output-tex $TablePath | Out-Null
+# Always regenerate the summary CSV from the Figure 4 artifacts, then use that
+# CSV to regenerate the TeX so every downstream representation stays in sync.
+& $PythonExe $makeCsvScript --sna $SnaPath --matched $MatchedPath --output-csv $CsvPath | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    throw "Failed to calculate Table 1 statistics from the Figure 4 artifacts."
+}
+
+& $PythonExe $makeTexScript --csv $CsvPath --output-tex $TablePath | Out-Null
 if ($LASTEXITCODE -ne 0) {
     throw "Failed to generate Table 1 TeX from CSV."
 }
