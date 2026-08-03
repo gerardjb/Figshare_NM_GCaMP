@@ -1,6 +1,6 @@
 """ 
     Plots for the distribution of STA and SNA bias and uncertainty for the Janelia8f dataset as detected using
-    the methods studied here and shown in supplementary figure 11.
+    the methods studied here and shown in supplementary figure 12.
 """
 
 import pandas as pd
@@ -171,7 +171,7 @@ def _load_distribution(script_dir, mode):
         x_limits = ((-50, 50), (-1, 100))
         bandwidths = (0.005, 0.01)
     else:
-        raise ValueError(f"Unknown Supplementary Figure 11 mode: {mode}")
+        raise ValueError(f"Unknown Supplementary Figure 12 mode: {mode}")
 
     data = pd.read_csv(os.path.join(script_dir, filename))
     data = data[data['method'].isin(SELECTED_METHODS)].copy()
@@ -241,7 +241,7 @@ def main(argv=None):
     )
     args = parser.parse_args(argv)
 
-    script_dir = figure_dir("supp_figure11", __file__)
+    script_dir = figure_dir("supp_figure12", __file__)
     _configure_plot_style()
 
     if args.matched or args.unmatched:
@@ -277,13 +277,13 @@ def main(argv=None):
             family='Arial', fontsize=16, fontweight='normal',
         )
 
-    output_dir = figure_output_dir("supp_figure11", __file__)
+    output_dir = figure_output_dir("supp_figure12", __file__)
     if args.matched:
-        output_stem = "suppfigure11_A_matched"
+        output_stem = "suppfigure12_A_matched"
     elif args.unmatched:
-        output_stem = "suppfigure11_B_unmatched"
+        output_stem = "suppfigure12_B_unmatched"
     else:
-        output_stem = "suppfigure11_A_B"
+        output_stem = "suppfigure12_A_B"
     fig.savefig(output_dir / f"{output_stem}.png",dpi=300,bbox_inches="tight")
     fig.savefig(output_dir / f"{output_stem}.pdf",bbox_inches="tight")
     plt.show()

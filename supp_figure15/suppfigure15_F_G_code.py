@@ -1,4 +1,4 @@
-"""Standalone plotting script for supplementary figure 14 panels F and G."""
+"""Standalone plotting script for supplementary figure 15 panels F and G."""
 
 from __future__ import annotations
 
@@ -22,10 +22,10 @@ from SharedUtilities.trialwise_plots import (  # noqa: E402
 from SharedUtilities.project_paths import figure_dir, figure_output_dir  # noqa: E402
 
 
-HERE = figure_dir("supp_figure14", __file__)
+HERE = figure_dir("supp_figure15", __file__)
 DEFAULT_CSV = HERE / "trialwise_correlations_jG8m.csv"
 DEFAULT_TRACE = HERE / "jG8m_compare_out.npz"
-DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure14", __file__)
+DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure15", __file__)
 TMP_DIR = HERE / "tmp"
 
 METHODS = [
@@ -101,7 +101,7 @@ def _canonicalize_trace_data(trace_path: Path) -> dict:
 
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Create supplementary figure 14 panels F and G from packaged CSV/NPZ exports."
+        description="Create supplementary figure 15 panels F and G from packaged CSV/NPZ exports."
     )
     parser.add_argument("--csv", type=Path, default=DEFAULT_CSV, help="jGCaMP8m trialwise correlation CSV.")
     parser.add_argument("--trace", type=Path, default=DEFAULT_TRACE, help="Trace-panel NPZ export for panel F.")
@@ -165,8 +165,8 @@ def main(argv: list[str] | None = None) -> None:
         )
 
         for stem, fig in [
-            ("suppfigure14_F_trace_jG8m_compare", fig_f),
-            ("suppfigure14_G_corr_vs_sigma_jG8m", fig_g),
+            ("suppfigure15_F_trace_jG8m_compare", fig_f),
+            ("suppfigure15_G_corr_vs_sigma_jG8m", fig_g),
         ]:
             for fmt in output_formats:
                 out_path = output_dir / f"{stem}.{fmt}"

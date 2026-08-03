@@ -1,6 +1,6 @@
-function h = suppfigure14_A_B_C_code
+function h = suppfigure15_A_B_C_code
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Generate supplementary figure 14 panels A-C from the packaged quiescent
+% Generate supplementary figure 15 panels A-C from the packaged quiescent
 % binning results.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -21,8 +21,8 @@ end
 
 h = plot_quiescent_binning_dashboard(loaded.results, ...
     'const','jG8m', ...
-    'outputDir',fullfile(repoRoot,'output','supp_figure14'), ...
-    'outputStem','suppfigure14_A_B_C_quiescent_binning_dashboard', ...
+    'outputDir',fullfile(repoRoot,'output','supp_figure15'), ...
+    'outputStem','suppfigure15_A_B_C_quiescent_binning_dashboard', ...
     'saveOutput',true);
 
 end

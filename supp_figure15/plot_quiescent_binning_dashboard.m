@@ -13,7 +13,7 @@ function h = plot_quiescent_binning_dashboard(results, varargin)
 %   h = plot_quiescent_binning_dashboard(results, 'const', 'jG8m');
 %   h = plot_quiescent_binning_dashboard(results, 'columnWeights', [1 1 1]); % interpreted as [left center right]
 %   h = plot_quiescent_binning_dashboard(results, 'columnWeights', [1 0.1 1 0.1 1]); % [left gutter center gutter right]
-%   h = plot_quiescent_binning_dashboard(results, 'outputDir', pwd, 'outputStem', 'suppfigure14_A_B_C', 'saveOutput', true);
+%   h = plot_quiescent_binning_dashboard(results, 'outputDir', pwd, 'outputStem', 'suppfigure15_A_B_C', 'saveOutput', true);
 %
 % Output:
 %   h.figure, h.outerLayout, h.leftLayout, h.centerLayout, h.rightLayout

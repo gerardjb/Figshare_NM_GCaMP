@@ -167,25 +167,25 @@ T*
 T*
 (- supp_figure10: example high/low SNR spike predictions and discrete spike timing metrics.) Tj
 T*
-(- supp_figure11: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f) Tj
+(- supp_figure12: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f) Tj
 T*
-(  detections. Run with run_supp_figure11_A_code.) Tj
+(  detections. Run with run_supp_figure12_A_code.) Tj
 T*
-(- supp_figure12: trialwise jGCaMP8f analyses using packaged CSV/NPZ exports. Run with) Tj
+(- supp_figure13: trialwise jGCaMP8f analyses using packaged CSV/NPZ exports. Run with) Tj
 T*
-(  run_supp_figure12_code; the script writes the raincloud panel and combined trace panels only.) Tj
+(  run_supp_figure13_code; the script writes the raincloud panel and combined trace panels only.) Tj
 T*
-(- supp_figure13: jGCaMP8f Janelia-parameter comparison. suppfigure13_A_B_code.m uses) Tj
+(- supp_figure14: jGCaMP8f Janelia-parameter comparison. suppfigure14_A_B_code.m uses) Tj
 T*
-(  janelia_model_selection_data_jG8f.mat; run_supp_figure13_C_D_code plots trace and correlation-vs-) Tj
+(  janelia_model_selection_data_jG8f.mat; run_supp_figure14_C_D_code plots trace and correlation-vs-) Tj
 T*
 (  sigma comparisons.) Tj
 T*
-(- supp_figure14: jGCaMP8m analyses. suppfigure14_A_B_C_code.m uses decay_v_spikeNum.mat for) Tj
+(- supp_figure15: jGCaMP8m analyses. suppfigure15_A_B_C_code.m uses decay_v_spikeNum.mat for) Tj
 T*
-(  quiescent binning; suppfigure14_D_E_code.m uses janelia_model_selection_data_jG8m.mat;) Tj
+(  quiescent binning; suppfigure15_D_E_code.m uses janelia_model_selection_data_jG8m.mat;) Tj
 T*
-(  run_supp_figure14_F_G_code plots trace and correlation-vs-sigma comparisons.) Tj
+(  run_supp_figure15_F_G_code plots trace and correlation-vs-sigma comparisons.) Tj
 T*
 () Tj
 T*
@@ -221,13 +221,13 @@ T*
 T*
 (    run_supp_figure8_code) Tj
 T*
-(    run_supp_figure11_A_code) Tj
+(    run_supp_figure12_A_code) Tj
 T*
-(    run_supp_figure12_code) Tj
+(    run_supp_figure13_code) Tj
 T*
-(    run_supp_figure13_C_D_code) Tj
+(    run_supp_figure14_C_D_code) Tj
 T*
-(    run_supp_figure14_F_G_code) Tj
+(    run_supp_figure15_F_G_code) Tj
 T*
 () Tj
 T*

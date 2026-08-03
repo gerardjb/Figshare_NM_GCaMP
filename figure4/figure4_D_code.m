@@ -150,6 +150,15 @@ for i_cell = 1:numel(panelDStats.cell_types)
     this_stats.width_levels = categories(T.Width);
     this_stats.comparison_methods = panelDStats.comparison_methods( ...
         ismember(panelDStats.comparison_methods,string(categories(T.Method))));
+    [this_stats.cohens_d,this_stats.cohens_d_n_pairs] = ...
+        build_panel_D_cohens_d(T,panelDStats.reference_methods, ...
+        this_stats.comparison_methods);
+    this_stats.cohens_d_type = ...
+        "Paired-samples Cohen's dz on subject-level mean Fisher-Z differences across widths";
+    this_stats.cohens_d_pairing = ...
+        "Paired by SubjectID and Width; width-level differences are averaged within SubjectID before calculating dz.";
+    this_stats.cohens_d_direction = ...
+        "Positive values indicate that the row/reference method has a larger Fisher-Z correlation than the column/comparison method.";
     this_stats.lme_by_reference = {};
 
     for i_ref = 1:numel(panelDStats.reference_methods)
@@ -193,6 +202,59 @@ end
 panelDStats.by_cell_type = cell_stats;
 end
 
+function [d_table,n_pairs_table] = build_panel_D_cohens_d(T,reference_methods,comparison_methods)
+% Calculate paired Cohen's dz because every method is evaluated on the same
+% subject at the same filter width. Rows are reference methods and columns
+% are comparison methods.
+d_values = nan(numel(reference_methods),numel(comparison_methods));
+n_pairs = zeros(numel(reference_methods),numel(comparison_methods));
+
+for i_ref = 1:numel(reference_methods)
+    ref_method = reference_methods(i_ref);
+    ref_values = T(string(T.Method)==ref_method,["SubjectID","Width","Z"]);
+    ref_values.Properties.VariableNames{"Z"} = 'ReferenceZ';
+    assert_unique_panel_D_pairs(ref_values,ref_method);
+
+    for i_cmp = 1:numel(comparison_methods)
+        cmp_method = comparison_methods(i_cmp);
+        cmp_values = T(string(T.Method)==cmp_method,["SubjectID","Width","Z"]);
+        cmp_values.Properties.VariableNames{"Z"} = 'ComparisonZ';
+        assert_unique_panel_D_pairs(cmp_values,cmp_method);
+
+        paired = innerjoin(ref_values,cmp_values,"Keys",["SubjectID","Width"]);
+        finite_pairs = isfinite(paired.ReferenceZ) & isfinite(paired.ComparisonZ);
+        paired = paired(finite_pairs,:);
+        width_differences = paired.ReferenceZ - paired.ComparisonZ;
+        subject_groups = findgroups(paired.SubjectID);
+        differences = splitapply(@mean,width_differences,subject_groups);
+        n_pairs(i_ref,i_cmp) = numel(differences);
+
+        if numel(differences) < 2
+            continue;
+        end
+        d_values(i_ref,i_cmp) = mean(differences) / std(differences,0);
+    end
+end
+
+row_names = cellstr(reference_methods);
+variable_names = cellstr(comparison_methods);
+d_table = array2table(d_values,"RowNames",row_names, ...
+    "VariableNames",variable_names);
+n_pairs_table = array2table(n_pairs,"RowNames",row_names, ...
+    "VariableNames",variable_names);
+d_table.Properties.DimensionNames{1} = 'ReferenceMethod';
+n_pairs_table.Properties.DimensionNames{1} = 'ReferenceMethod';
+end
+
+function assert_unique_panel_D_pairs(values,method)
+pair_keys = values(:,["SubjectID","Width"]);
+if height(unique(pair_keys,"rows")) ~= height(pair_keys)
+    error("figure4_D_code:DuplicateCohensDPairs", ...
+        "Method %s has duplicate SubjectID/Width rows; paired Cohen's d is ambiguous.", ...
+        method);
+end
+end
+
 function summary_tbl = summarize_panel_D_table(tbl_panel)
 G = groupsummary(tbl_panel,["cell_type","Method","Width"],["mean","std"],"Correlation");
 group_labels = findgroups(tbl_panel(:,["cell_type","Method","Width"]));
@@ -216,16 +278,27 @@ for i_cmp = 1:numel(comparison_methods)
     comparison_tests(i_cmp).comparison_method = cmp_method;
 
     main_term = "Method_" + cmp_method;
-    L_main = double(coef_names == main_term);
+    L_main = build_joint_coefficient_test(coef_names == main_term);
     interaction_mask = get_method_interaction_mask(coef_names,cmp_method);
-    L_interaction = double(interaction_mask);
-    L_any = double((coef_names == main_term) | interaction_mask);
+    L_interaction = build_joint_coefficient_test(interaction_mask);
+    L_any = build_joint_coefficient_test( ...
+        (coef_names == main_term) | interaction_mask);
 
     comparison_tests(i_cmp).main_effect = run_coef_test(lme,L_main);
     comparison_tests(i_cmp).interaction = run_coef_test(lme,L_interaction);
     comparison_tests(i_cmp).overall_method_difference = run_coef_test(lme,L_any);
     comparison_tests(i_cmp).average_across_widths = ...
         build_average_across_widths_summary(lme,cmp_method,width_levels);
+end
+end
+
+function H = build_joint_coefficient_test(coefficient_mask)
+% Give coefTest one independent restriction per selected coefficient. A
+% single row containing multiple ones would instead test only their sum.
+coefficient_indices = find(coefficient_mask);
+H = zeros(numel(coefficient_indices),numel(coefficient_mask));
+for i_coefficient = 1:numel(coefficient_indices)
+    H(i_coefficient,coefficient_indices(i_coefficient)) = 1;
 end
 end
 
@@ -323,8 +396,11 @@ subject_ids = cell_ids + "_" + epoch_ids;
 end
 
 function test_stats = run_coef_test(lme,L)
-test_stats = struct("n_terms",nnz(L),"coefficient_mask",logical(L));
-if nnz(L)==0
+test_stats = struct( ...
+    "n_terms",size(L,1), ...
+    "coefficient_mask",any(L~=0,1), ...
+    "contrast_matrix",L);
+if isempty(L)
     test_stats.p = NaN;
     test_stats.F = NaN;
     test_stats.df1 = NaN;
@@ -332,7 +408,7 @@ if nnz(L)==0
     return;
 end
 
-[p,F,df1,df2] = coefTest(lme,reshape(L,1,[]));
+[p,F,df1,df2] = coefTest(lme,L);
 test_stats.p = p;
 test_stats.F = F;
 test_stats.df1 = df1;

@@ -1,4 +1,4 @@
-"""Standalone plotting script for supplementary figure 13 panels C and D."""
+"""Standalone plotting script for supplementary figure 14 panels C and D."""
 
 from __future__ import annotations
 
@@ -28,10 +28,10 @@ except ImportError:
     from SharedUtilities.project_paths import figure_dir, figure_output_dir  # type: ignore
 
 
-HERE = figure_dir("supp_figure13", __file__)
+HERE = figure_dir("supp_figure14", __file__)
 DEFAULT_CSV = HERE / "trialwise_correlations_jG8f_param_comparison.csv"
 DEFAULT_TRACE = HERE / "param_compare_out.npz"
-DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure13", __file__)
+DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure14", __file__)
 TMP_DIR = HERE / "tmp"
 
 BIOPHYS_SMC = "#009E73"
@@ -76,7 +76,7 @@ def _canonicalize_trace_data(trace_path: Path) -> dict:
 
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Create supplementary figure 13 panels C and D from packaged CSV/NPZ exports."
+        description="Create supplementary figure 14 panels C and D from packaged CSV/NPZ exports."
     )
     parser.add_argument("--csv", type=Path, default=DEFAULT_CSV, help="Parameter-comparison CSV for panel D.")
     parser.add_argument("--trace", type=Path, default=DEFAULT_TRACE, help="Trace-panel NPZ export for panel C.")
@@ -169,8 +169,8 @@ def main(argv: list[str] | None = None) -> None:
         )
 
         for stem, fig in [
-            ("suppfigure13_C_trace_param_compare", fig_c),
-            ("suppfigure13_D_corr_vs_sigma_param_compare", fig_d),
+            ("suppfigure14_C_trace_param_compare", fig_c),
+            ("suppfigure14_D_corr_vs_sigma_param_compare", fig_d),
         ]:
             for fmt in output_formats:
                 out_path = output_dir / f"{stem}.{fmt}"

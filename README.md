@@ -46,10 +46,10 @@ After that, run scripts from the repository root or from their figure directory.
 - `supp_figure8`: explicit-buffer simulations and Biophys SMC inference on simulated pyramidal-like and interneuron-like cells. Run with `run_supp_figure8_code`; the script uses compact processed CSV exports for the plotted trajectories and posterior spike summaries.
 - `supp_figure9`: legacy/additional jGCaMP8f correlation analyses. Current Figure 4 analyses use `figure4/correlation_tbl_jG8f.mat`.
 - `supp_figure10`: example high/low SNR spike predictions and discrete spike timing metrics.
-- `supp_figure11`: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f detections. Run with `run_supp_figure11_A_code`.
-- `supp_figure12`: trialwise jGCaMP8f analyses using packaged CSV/NPZ exports. Run with `run_supp_figure12_code`; the script writes the raincloud panel and combined trace panels only.
-- `supp_figure13`: jGCaMP8f Janelia-parameter comparison. `suppfigure13_A_B_code.m` uses `janelia_model_selection_data_jG8f.mat`; `run_supp_figure13_C_D_code` plots trace and correlation-vs-sigma comparisons.
-- `supp_figure14`: jGCaMP8m analyses. `suppfigure14_A_B_C_code.m` uses `decay_v_spikeNum.mat` for quiescent binning; `suppfigure14_D_E_code.m` uses `janelia_model_selection_data_jG8m.mat`; `run_supp_figure14_F_G_code` plots trace and correlation-vs-sigma comparisons.
+- `supp_figure12`: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f detections. Run with `run_supp_figure12_A_code`.
+- `supp_figure13`: trialwise jGCaMP8f analyses using packaged CSV/NPZ exports. Run with `run_supp_figure13_code`; the script writes the raincloud panel and combined trace panels only.
+- `supp_figure14`: jGCaMP8f Janelia-parameter comparison. `suppfigure14_A_B_code.m` uses `janelia_model_selection_data_jG8f.mat`; `run_supp_figure14_C_D_code` plots trace and correlation-vs-sigma comparisons.
+- `supp_figure15`: jGCaMP8m analyses. `suppfigure15_A_B_C_code.m` uses `decay_v_spikeNum.mat` for quiescent binning; `suppfigure15_D_E_code.m` uses `janelia_model_selection_data_jG8m.mat`; `run_supp_figure15_F_G_code` plots trace and correlation-vs-sigma comparisons.
 
 `Table1`, `Table2`, `Table3`, and `Table4` contain CSV, TeX, PDF, and render scripts for manuscript tables. `Table1` calculates the spike inference precision, recall, F-score, accuracy, bias, and uncertainty summary from the Figure 4 matching artifacts before generating its CSV, TeX, and PDF. `Table3` contains the GCaMP kinetic parameter table and the JSON parameter files also used by `supp_figure6`. The PowerShell table render helpers regenerate their upstream artifacts before compiling PDFs and require `pdflatex`; Python-backed helpers should be run from an activated environment or passed the appropriate Python executable where supported.
 
@@ -61,10 +61,10 @@ After `pip install -e .`, available console scripts include:
 run_figure3_F_G_code
 run_figure4_E_code
 run_supp_figure8_code
-run_supp_figure11_A_code
-run_supp_figure12_code
-run_supp_figure13_C_D_code
-run_supp_figure14_F_G_code
+run_supp_figure12_A_code
+run_supp_figure13_code
+run_supp_figure14_C_D_code
+run_supp_figure15_F_G_code
 ```
 
 The supplementary Python scripts accept `--output-dir`, `--format`, and `--show` where applicable. Temporary Matplotlib/cache directories created by these scripts are cleaned at the end of each run.

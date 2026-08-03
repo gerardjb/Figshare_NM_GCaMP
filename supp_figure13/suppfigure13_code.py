@@ -1,4 +1,4 @@
-"""Standalone plotting script for supplementary figure 12 trialwise analyses."""
+"""Standalone plotting script for supplementary figure 13 trialwise analyses."""
 
 from __future__ import annotations
 
@@ -27,9 +27,9 @@ except ImportError:
     from SharedUtilities.project_paths import figure_dir, figure_output_dir  # type: ignore
 
 
-HERE = figure_dir("supp_figure12", __file__)
+HERE = figure_dir("supp_figure13", __file__)
 DEFAULT_CSV = HERE / "trialwise_correlations_jG8f.csv"
-DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure12", __file__)
+DEFAULT_OUTPUT_DIR = figure_output_dir("supp_figure13", __file__)
 DEFAULT_TRACE_DIR = HERE / "trace_panel_exports"
 TMP_DIR = HERE / "tmp"
 
@@ -76,7 +76,7 @@ def _write_trace_panels(trace_files: list[Path], output_dir: Path, output_format
         trace_data = load_trace_panel_data(trace_file)
         plot_trace_panel(trace_data, ax=ax)
     for fmt in output_formats:
-        out_path = output_dir / f"suppfigure12_trace_panels.{fmt}"
+        out_path = output_dir / f"suppfigure13_trace_panels.{fmt}"
         fig.savefig(out_path)
         print(f"Saved {out_path}")
     plt.close(fig)
@@ -90,7 +90,7 @@ def _cleanup_tmp_dir() -> None:
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Create the supplementary figure 12 raincloud and trace panels from "
+            "Create the supplementary figure 13 raincloud and trace panels from "
             "the packaged CSV and exported trace arrays."
         )
     )
@@ -152,7 +152,7 @@ def main(argv: list[str] | None = None) -> None:
         )
 
         for fmt in output_formats:
-            out_path = output_dir / f"suppfigure12_raincloud_downsample.{fmt}"
+            out_path = output_dir / f"suppfigure13_raincloud_downsample.{fmt}"
             fig_rain.savefig(out_path)
             print(f"Saved {out_path}")
 
