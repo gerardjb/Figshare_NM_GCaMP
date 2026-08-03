@@ -1,6 +1,6 @@
 ﻿param(
     [string]$CsvPath = "Table4/Table4_cell_parameter_priors.csv",
-    [string]$OutputTex = "Table4/Table4_cell_parameter_priors.tex",
+    [string]$OutputTex = "output/Table4/Table4_cell_parameter_priors.tex",
     [string]$Caption = "Cell-parameter prior means and approximate ranges.",
     [string]$Label = "tab:cell-parameter-priors"
 )

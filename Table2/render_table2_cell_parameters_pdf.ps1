@@ -1,7 +1,7 @@
 ﻿param(
     [string]$CsvPath = "Table2/Table2_cell_parameters.csv",
-    [string]$TablePath = "Table2/Table2_cell_parameters.tex",
-    [string]$OutputPdf = "Table2/Table2_cell_parameters.pdf",
+    [string]$TablePath = "output/Table2/Table2_cell_parameters.tex",
+    [string]$OutputPdf = "output/Table2/Table2_cell_parameters.pdf",
     [int]$TableNumber = 2,
     [switch]$KeepBuildDir,
     [switch]$ShowCompilerOutput
@@ -135,8 +135,6 @@ try {
         throw "pdflatex failed on pass 2 with exit code $LASTEXITCODE.`n$fatalSummary`nFull logs: $latexEngineLog ; $pdflatexCombinedLog"
     }
 
-    Publish-Logs -Pass1Path $pass1Out -Pass2Path $pass2Out -TexLogSource $texLogPath -PdflatexCombinedDest $pdflatexCombinedLog -LatexLogDest $latexEngineLog
-
     $builtPdf = Join-Path $buildDir "Table2_wrapper.pdf"
     if (-not (Test-Path -LiteralPath $builtPdf)) {
         throw "Compilation completed but PDF was not produced. Logs: $latexEngineLog ; $pdflatexCombinedLog"
@@ -158,4 +156,3 @@ if (-not $KeepBuildDir) {
 }
 
 Write-Output "Wrote PDF: $outputFull"
-Write-Output "Saved logs: $latexEngineLog ; $pdflatexCombinedLog"

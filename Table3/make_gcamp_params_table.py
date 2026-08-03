@@ -71,7 +71,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-prefix",
-        default="Table3/gcamp_parameter_table",
+        default="output/Table3/gcamp_parameter_table",
         help="Output prefix path (writes <prefix>.csv and <prefix>.tex).",
     )
     parser.add_argument(

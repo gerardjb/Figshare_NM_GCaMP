@@ -1,6 +1,6 @@
 ﻿param(
     [string]$TablePath = "Table2/Table2_sing_cell_param.tex",
-    [string]$OutputPdf = "Table2/Table2_sing_cell_param.pdf",
+    [string]$OutputPdf = "output/Table2/Table2_sing_cell_param.pdf",
     [switch]$KeepBuildDir,
     [switch]$ShowCompilerOutput
 )
@@ -110,8 +110,6 @@ try {
         throw "pdflatex failed on pass 2 with exit code $LASTEXITCODE.`n$fatalSummary`nFull logs: $latexEngineLog ; $pdflatexCombinedLog"
     }
 
-    Publish-Logs -Pass1Path $pass1Out -Pass2Path $pass2Out -TexLogSource $texLogPath -PdflatexCombinedDest $pdflatexCombinedLog -LatexLogDest $latexEngineLog
-
     if (-not (Test-Path -LiteralPath $builtPdf)) {
         throw "Compilation completed but PDF was not produced. Logs: $latexEngineLog ; $pdflatexCombinedLog"
     }
@@ -132,4 +130,3 @@ if (-not $KeepBuildDir) {
 }
 
 Write-Output "Wrote PDF: $outputFull"
-Write-Output "Saved logs: $latexEngineLog ; $pdflatexCombinedLog"

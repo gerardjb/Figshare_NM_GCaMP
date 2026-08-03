@@ -1,6 +1,9 @@
 param(
-    [string]$TablePath = "Table3/gcamp_parameter_table.tex",
-    [string]$OutputPdf = "Table3/gcamp_parameter_table.pdf",
+    [string]$InputGlob = "Table3/best_*_params.json",
+    [string]$OutputPrefix = "output/Table3/gcamp_parameter_table",
+    [string]$TablePath = "output/Table3/gcamp_parameter_table.tex",
+    [string]$OutputPdf = "output/Table3/gcamp_parameter_table.pdf",
+    [string]$PythonExe = "python",
     [switch]$KeepBuildDir,
     [switch]$ShowCompilerOutput
 )
@@ -10,6 +13,20 @@ $ErrorActionPreference = "Stop"
 
 if (-not (Get-Command pdflatex -ErrorAction SilentlyContinue)) {
     throw "pdflatex not found. Install MiKTeX/TeX Live to render PDF."
+}
+
+if (-not (Get-Command $PythonExe -ErrorAction SilentlyContinue)) {
+    throw "python not found at '$PythonExe'. Activate the project environment or pass -PythonExe."
+}
+
+# Always regenerate the CSV and TeX from the packaged JSON parameter files.
+$makeScript = Join-Path $PSScriptRoot "make_gcamp_params_table.py"
+if (-not (Test-Path -LiteralPath $makeScript)) {
+    throw "Missing table generator script: $makeScript"
+}
+& $PythonExe $makeScript --input-glob $InputGlob --output-prefix $OutputPrefix | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    throw "Failed to generate Table 3 CSV and TeX from the packaged JSON inputs."
 }
 
 if (-not (Test-Path -LiteralPath $TablePath)) {
@@ -123,8 +140,6 @@ try {
         throw "pdflatex failed on pass 2 with exit code $LASTEXITCODE.`n$fatalSummary`nFull logs: $latexEngineLog ; $pdflatexCombinedLog"
     }
 
-    Publish-Logs -Pass1Path $pass1Out -Pass2Path $pass2Out -TexLogSource $texLogPath -PdflatexCombinedDest $pdflatexCombinedLog -LatexLogDest $latexEngineLog
-
     $builtPdf = Join-Path $buildDir "gcamp_parameter_table_wrapper.pdf"
     if (-not (Test-Path -LiteralPath $builtPdf)) {
         throw "Compilation completed but PDF was not produced. Logs: $latexEngineLog ; $pdflatexCombinedLog"
@@ -146,4 +161,3 @@ if (-not $KeepBuildDir) {
 }
 
 Write-Output "Wrote PDF: $outputFull"
-Write-Output "Saved logs: $latexEngineLog ; $pdflatexCombinedLog"

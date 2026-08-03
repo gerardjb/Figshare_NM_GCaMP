@@ -1,6 +1,6 @@
 ﻿param(
     [string]$CsvPath = "Table2/Table2_cell_parameters.csv",
-    [string]$OutputTex = "Table2/Table2_cell_parameters.tex",
+    [string]$OutputTex = "output/Table2/Table2_cell_parameters.tex",
     [string]$Caption = "Single-cell model parameter values.",
     [string]$Label = "tab:single-cell-parameters"
 )

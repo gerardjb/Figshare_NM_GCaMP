@@ -91,6 +91,7 @@ def build_table_tex(csv_path: Path) -> str:
 
 def main() -> None:
     script_dir = Path(__file__).resolve().parent
+    output_dir = script_dir.parent / "output" / "Table1"
     parser = argparse.ArgumentParser(
         description="Generate the standalone LaTeX document for Table 1."
     )
@@ -103,7 +104,7 @@ def main() -> None:
     parser.add_argument(
         "--output-tex",
         type=Path,
-        default=script_dir / "table1_precision_recall_fscore.tex",
+        default=output_dir / "table1_precision_recall_fscore.tex",
         help="Output standalone LaTeX document.",
     )
     args = parser.parse_args()

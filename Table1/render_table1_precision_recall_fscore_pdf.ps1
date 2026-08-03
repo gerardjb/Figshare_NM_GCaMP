@@ -2,8 +2,8 @@ param(
     [string]$SnaPath = "figure4/sna_matching_trials.csv",
     [string]$MatchedPath = "figure4/matched_bias_uncert.csv",
     [string]$CsvPath = "Table1/table1_precision_recall_fscore.csv",
-    [string]$TablePath = "Table1/table1_precision_recall_fscore.tex",
-    [string]$OutputPdf = "Table1/table1_precision_recall_fscore.pdf",
+    [string]$TablePath = "output/Table1/table1_precision_recall_fscore.tex",
+    [string]$OutputPdf = "output/Table1/table1_precision_recall_fscore.pdf",
     [string]$PythonExe = "python",
     [switch]$KeepBuildDir,
     [switch]$ShowCompilerOutput
@@ -161,8 +161,6 @@ try {
         throw "pdflatex failed on pass 2 with exit code $pass2ExitCode.`n$fatalSummary`nFull logs: $latexEngineLog ; $pdflatexCombinedLog"
     }
 
-    Publish-Logs -Pass1Path $pass1Out -Pass2Path $pass2Out -TexLogSource $texLogPath -PdflatexCombinedDest $pdflatexCombinedLog -LatexLogDest $latexEngineLog
-
     $builtPdf = Join-Path $buildDir "table1_precision_recall_fscore.pdf"
     if (-not (Test-Path -LiteralPath $builtPdf)) {
         throw "Compilation completed but PDF was not produced. Logs: $latexEngineLog ; $pdflatexCombinedLog"
@@ -179,4 +177,3 @@ finally {
 }
 
 Write-Output "Wrote PDF: $outputFull"
-Write-Output "Saved logs: $latexEngineLog ; $pdflatexCombinedLog"
