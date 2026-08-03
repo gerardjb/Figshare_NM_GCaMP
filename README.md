@@ -46,6 +46,7 @@ After that, run scripts from the repository root or from their figure directory.
 - `supp_figure8`: explicit-buffer simulations and Biophys SMC inference on simulated pyramidal-like and interneuron-like cells. Run with `run_supp_figure8_code`; the script uses compact processed CSV exports for the plotted trajectories and posterior spike summaries.
 - `supp_figure9`: legacy/additional jGCaMP8f correlation analyses. Current Figure 4 analyses use `figure4/correlation_tbl_jG8f.mat`.
 - `supp_figure10`: example high/low SNR spike predictions and discrete spike timing metrics.
+- `supp_figure11`: spike-history effects on false-positive and false-negative inference errors for Biophys SMC, MLspike, and PGBAR. `suppfigure11_code.m` uses the packaged plotting summaries; `suppfigure11_stats.m` reruns the panel B/C generalized mixed-effects analyses from packaged cell-epoch contributions.
 - `supp_figure12`: STA/SNA bias and uncertainty distributions for matched or unmatched jGCaMP8f detections. Run with `run_supp_figure12_A_code`.
 - `supp_figure13`: trialwise jGCaMP8f analyses using packaged CSV/NPZ exports. Run with `run_supp_figure13_code`; the script writes the raincloud panel and combined trace panels only.
 - `supp_figure14`: jGCaMP8f Janelia-parameter comparison. `suppfigure14_A_B_code.m` uses `janelia_model_selection_data_jG8f.mat`; `run_supp_figure14_C_D_code` plots trace and correlation-vs-sigma comparisons.
