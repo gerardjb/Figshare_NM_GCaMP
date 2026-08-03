@@ -6,8 +6,6 @@ setup(
     description='Reproducible plotting scripts for the GCaMP model Figshare repository',
     packages=find_packages(exclude=['build', 'build.*']),
     classifiers=[
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
     ],
     package_data={
@@ -22,19 +20,12 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        'matplotlib>=3.4.3,<3.8.8; python_version < "3.12"',
-        'matplotlib>=3.9.0,<4.0.0; python_version >= "3.12"',
-        'numpy>=1.18.0,<2.0.0; python_version < "3.12"',
-        'numpy>=1.26.0,<2.0.0; python_version >= "3.12"',
-        'scipy>=1.4.0,<2.0.0; python_version < "3.12"',
-        'scipy>=1.11.0,<2.0.0; python_version >= "3.12"',
-        'pandas>=1.0.0,<2.0.0; python_version < "3.12"',
-        'pandas>=2.2.0,<3.0.0; python_version >= "3.12"',
-        'seaborn>=0.11.0,<0.12.0; python_version < "3.12"',
-        'seaborn>=0.13.0,<0.14.0; python_version >= "3.12"',
-        'ptitprince>=0.2.6,<0.3.0; python_version < "3.12"',
-        'ptitprince>=0.3.1,<0.4.0; python_version >= "3.12"',
-        'importlib-metadata>=4; python_version < "3.8"',
+        'matplotlib==3.8.4',
+        'numpy==1.26.4',
+        'scipy==1.14.1',
+        'pandas==1.5.3',
+        'seaborn==0.11.0',
+        'ptitprince==0.2.7',
     ],
     entry_points={
         'console_scripts': [
@@ -47,6 +38,6 @@ setup(
             'run_supp_figure15_F_G_code=supp_figure15.suppfigure15_F_G_code:main',
         ],
     },
-    python_requires='>=3.10,<3.13',
+    python_requires='>=3.12,<3.13',
     zip_safe=False,
 )
