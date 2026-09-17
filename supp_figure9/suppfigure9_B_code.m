@@ -9,16 +9,16 @@ close all
 
 % Collect data file directories
 d = fileparts(mfilename("fullpath"));
-load(fullfile(d,"..","figure4","correlation_tbl_jG8f.mat"),"tbl")
+load(fullfile(d,"correlation_analysis_tbl.mat"),"tbl_out")
 
-% Updated excitatory analyses use the jGCaMP8f table. Panel B uses raw,
-% non-downsampled inference only.
-tbl_panel = tbl(tbl.cell_type=="exc" & tbl.smoothing=="raw",:);
+% Panel B compares the original global excitatory CASCADE model with the
+% version trained specifically on jGCaMP8f data.
+tbl_panel = tbl_out(tbl_out.("Cell type")=="exc",:);
 
 %% Summary plots
 %Ordering of table entries
-uniMethod = unique(tbl_panel.Method);
-uniBins = unique(tbl_panel.Width);
+uniMethod = unique(tbl_panel.Model);
+uniBins = unique(tbl_panel.("Bin width"));
 % This was to handle tables that contain the jG8f datasets
 uniMethod = {uniMethod};
 
@@ -42,17 +42,17 @@ for i_fig = 1:length(uniMethod)
     for i_mod = 1:length(uniMethod{i_fig})
         this_method = uniMethod{i_fig}(i_mod);
         method_str = string(this_method);
-        test = tbl_panel.Correlation(tbl_panel.Width==0.01 &...
-            tbl_panel.Method==this_method);
+        test = tbl_panel.Correlation(tbl_panel.("Bin width")==0.01 &...
+            tbl_panel.Model==this_method);
         if isempty(test)
             continue;
         end
         %Getting mean and sem for each model
-        this_means = arrayfun(@(x) mean(tbl_panel.Correlation(tbl_panel.Width==x &...
-            tbl_panel.Method==this_method)), uniBins);
+        this_means = arrayfun(@(x) mean(tbl_panel.Correlation(tbl_panel.("Bin width")==x &...
+            tbl_panel.Model==this_method)), uniBins);
         
-        this_sems = arrayfun(@(x) sem(tbl_panel.Correlation(tbl_panel.Width==x &...
-            tbl_panel.Method==this_method)), uniBins);
+        this_sems = arrayfun(@(x) sem(tbl_panel.Correlation(tbl_panel.("Bin width")==x &...
+            tbl_panel.Model==this_method)), uniBins);
         
         %Make the plot for this model
         shadedErrorBar(uniBins*1000,this_means,this_sems,...
