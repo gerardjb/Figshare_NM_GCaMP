@@ -60,7 +60,44 @@ LINESTYLES = {
 }
 
 
-def _canonicalize_trace_data(trace_path: Path, spike_path: Path = DEFAULT_SPIKES) -> dict:
+def _full_epoch_correlations(correlation_path: Path, time: np.ndarray, method_keys: list[str]) -> list[float]:
+    """Read panel C's full-epoch coefficients; the plotted traces are a 9-s crop."""
+    table = pd.read_csv(correlation_path)
+    selected = table.loc[
+        table["dataset"].eq("jGCaMP8f_ANM471994_cell05")
+        & table["trial"].eq(1)
+        & table["smoothing"].eq("raw")
+        & np.isclose(table["corr_sigma_ms"], 30.0)
+    ]
+    correlations = []
+    epoch_bounds = None
+    for key in method_keys:
+        method, run = key.split("@", 1)
+        matches = selected.loc[selected["method"].eq(method) & selected["run"].eq(run)]
+        if len(matches) != 1:
+            raise ValueError(
+                f"Expected one full-epoch correlation for {key} "
+                f"(jGCaMP8f_ANM471994_cell05, trial 1, raw, 30 ms); found {len(matches)}."
+            )
+        row = matches.iloc[0]
+        bounds = np.array([row["start_s"], row["end_s"]], dtype=float)
+        correlation = float(row["correlation"])
+        if not np.all(np.isfinite(bounds)) or bounds[0] >= bounds[1]:
+            raise ValueError(f"Invalid full-epoch time bounds for {key}.")
+        if not np.isfinite(correlation) or not -1.0 <= correlation <= 1.0:
+            raise ValueError(f"Invalid full-epoch correlation for {key}.")
+        if not len(time) or not np.all(np.isfinite(time)) or time.min() < bounds[0] - 1e-8 or time.max() > bounds[1] + 1e-8:
+            raise ValueError(f"Panel C's displayed trace is outside the correlation epoch for {key}.")
+        if epoch_bounds is not None and not np.allclose(bounds, epoch_bounds, rtol=0.0, atol=1e-8):
+            raise ValueError("Panel C's methods refer to different correlation epochs.")
+        epoch_bounds = bounds
+        correlations.append(correlation)
+    return correlations
+
+
+def _canonicalize_trace_data(
+    trace_path: Path, spike_path: Path = DEFAULT_SPIKES, correlation_path: Path = DEFAULT_CSV
+) -> dict:
     table = pd.read_csv(trace_path)
     # Preserve the published panel-C row order: Janelia parameters above the
     # ex-vivo parameters.
@@ -68,10 +105,11 @@ def _canonicalize_trace_data(trace_path: Path, spike_path: Path = DEFAULT_SPIKES
     columns = ["prediction_BiophysSMC_Janelia", "prediction_BiophysSMC_exvivo"]
     traces = table[columns].to_numpy(float).T
     gt = table["ground_truth_trace"].to_numpy(float)
-    correlations = [float(np.corrcoef(gt, trace)[0, 1]) for trace in traces]
+    time = table["time_s"].to_numpy(float)
+    correlations = _full_epoch_correlations(correlation_path, time, keys)
     spikes = pd.read_csv(spike_path)["spike_time_s"].to_numpy(float)
     return {
-        "time": table["time_s"].to_numpy(float),
+        "time": time,
         "fluorescence": table["fluorescence_raw_dff"].to_numpy(float),
         "fluorescence_plot": table["fluorescence_display_dff"].to_numpy(float),
         "ground_truth": gt,
@@ -90,7 +128,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Create Extended Data Figure 8 panels C and D from reviewed CSV exports."
     )
-    parser.add_argument("--csv", type=Path, default=DEFAULT_CSV, help="Parameter-comparison CSV for panel D.")
+    parser.add_argument("--csv", type=Path, default=DEFAULT_CSV, help="Epoch correlations for panel D and the full-epoch labels in panel C.")
     parser.add_argument("--trace", type=Path, default=DEFAULT_TRACE, help="Trace-panel CSV export for panel C.")
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR, help="Directory for output figures.")
     parser.add_argument(
@@ -164,7 +202,7 @@ def main(argv: list[str] | None = None) -> None:
         plt.rcParams["mathtext.it"] = "Arial:italic"
         plt.rcParams["mathtext.bf"] = "Arial:bold"
 
-        trace_data = _canonicalize_trace_data(args.trace.resolve())
+        trace_data = _canonicalize_trace_data(args.trace.resolve(), correlation_path=args.csv.resolve())
         fig_c, _, _ = plot_trace_panel(trace_data, figsize=(3.4, 4.8), ymax=4.6)
 
         fig_d, _ = plot_corr_vs_sigma(

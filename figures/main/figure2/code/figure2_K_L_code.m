@@ -97,21 +97,33 @@ disp(posthoc_out);
 load(fname2)
 load(fname3)
 
-%Calculate the contribution of components
-%Percent fast + something about decay (sf? bouton?) vs. Elongation scatter
+% Accessible slowing across the selected calcium conditions. Missing
+% fitted components are omitted, not treated as zero contributions.
 goodCa = ca>200 & ca<2000;
-a_slow = [0,cellfun(@(x,y) nansum(y(2,goodCa)./y(1,goodCa).*[1-x(goodCa)]),all_proportions1(2:end),all_taus(2:end))/sum(goodCa)];
-a_slow_iqr = [0,cellfun(@(x,y) iqr(y(2,goodCa)./y(1,goodCa).*[1-x(goodCa)]),all_proportions1(2:end),all_taus(2:end))/sum(goodCa)];
-elongs_med = [1,nanmedian(elongs,1)];
-elong_iqr = [0,iqr(elongs,1)];
-weights = 1./(a_slow_iqr.^2 + elong_iqr.^2);
-weights(1) = 1;
+a_slow_values = cellfun(@(x,y) y(2,goodCa)./y(1,goodCa).*(1-x(goodCa)),...
+    all_proportions1(2:end),all_taus(2:end),'UniformOutput',false);
+a_slow_values = cellfun(@(x) x(isfinite(x)),a_slow_values,'UniformOutput',false);
+elong_values = arrayfun(@(i) elongs(isfinite(elongs(:,i)),i),...
+    1:size(elongs,2),'UniformOutput',false);
+assert(~any(cellfun(@numel,a_slow_values)==0) && ~any(cellfun(@numel,elong_values)==0),...
+    'Panel L requires finite values for every indicator.');
 
-mdl = fitlm(a_slow,elongs_med,'Weights',weights);
+% OGB5N is the fixed reference (0,1), with no empirical interval.
+a_slow = [0,cellfun(@median,a_slow_values)];
+a_slow_q1 = [0,cellfun(@(x) prctile(x,25),a_slow_values)];
+a_slow_q3 = [0,cellfun(@(x) prctile(x,75),a_slow_values)];
+elongs_med = [1,cellfun(@median,elong_values)];
+elong_q1 = [1,cellfun(@(x) prctile(x,25),elong_values)];
+elong_q3 = [1,cellfun(@(x) prctile(x,75),elong_values)];
+
+% Descriptive, unweighted regression of the four displayed indicator
+% summaries, including the fixed OGB5N reference. IQRs describe spread
+% across calcium conditions / boutons, not sampling variances of medians.
+mdl = fitlm(a_slow(:),elongs_med(:));
 
 % Figure setup
 f = figure;hold on;set(gca,'tickdir','out');
-sizerRaw = [2.1,2.4];
+sizerRaw = [2.8,2.4];
 ticklengths = [0.04,0.02];
 set(f,'Paperunits','inches',...
     'Papersize',sizerRaw,...
@@ -125,25 +137,26 @@ elongs = [ones(size(elongs,1),1),elongs];
 colores = [hex2rgb(pickGCaMPcolorsMS(consts{1}));...
     colores];
 
-%right tile, rise contribution v. slowing
-xends = [0,6];
+% Median markers and true Q1-Q3 endpoints (potentially asymmetric).
+xends = [0,7];
 nexttile;hold on
-for i = 1:length(consts)
-    scatter(a_slow(i),elongs_med(i),...
-        25,hex2rgb(pickGCaMPcolorsMS(consts{i})),'filled');
-end
-% Err for Accessible slowing - IQR of dist
-arrayfun(@(y) plot([a_slow(y)-a_slow_iqr(y)/2,a_slow(y)+a_slow_iqr(y)/2],[elongs_med(y),elongs_med(y)],...
-    'color',colores(y,:),'LineWidth',1),[1,2,3,4]);
-% Err for fold slowing - IQR of dist
-arrayfun(@(x) plot([a_slow(x),a_slow(x)],[elongs_med(x)-elong_iqr(x)/2,elongs_med(x)+elong_iqr(x)/2],...
-    'color',colores(x,:),'LineWidth',1),[1,2,3,4]);
 coef_ci = coefCI(mdl);
 yfit = predict(mdl,xends');
 plot(xends,yfit,'k--')
+for i = 1:length(consts)
+    plot([a_slow_q1(i),a_slow_q3(i)],[elongs_med(i),elongs_med(i)],...
+        'color',colores(i,:),'LineWidth',1);
+    plot([a_slow(i),a_slow(i)],[elong_q1(i),elong_q3(i)],...
+        'color',colores(i,:),'LineWidth',1);
+end
+% Draw markers last so that the intervals do not obscure their centres.
+for i = 1:length(consts)
+    scatter(a_slow(i),elongs_med(i),25,colores(i,:),'filled',...
+        'Clipping','off');
+end
 ylabel({'fold slowing','(1 to 10 pulse)'})
-xlabel({'Accessible slowing','(\tau_{slow}/\tau_{fast} * proportion_{slow})'})
-set(gca,'YLim',[0,3.8],...
+xlabel({'Accessible slowing','(\tau_{slow}/\tau_{fast} \times proportion_{slow})'})
+set(gca,'XLim',xends,'YLim',[0,4.2],'XTick',[0,2,4,6,7],...
     'tickdir','out','ticklength',ticklengths,'LineWidth',1,...
     'FontName','arial','fontsize',10,'XTickLabelRotation',0);
 
@@ -155,15 +168,23 @@ text(0.97,0.03,stats_text,...
     'Units','normalized','HorizontalAlignment','right',...
     'VerticalAlignment','bottom','FontName','arial','FontSize',8);
 
-fprintf('Panel 2L linear regression: fold slowing ~ accessible slowing\n');
-fprintf('  n = %d\n',mdl.NumObservations);
-fprintf('  slope = %.4f (95%%%% CI [%.4f, %.4f])\n',...
+fprintf('Panel 2L unweighted linear regression: fold slowing ~ accessible slowing\n');
+fprintf('  Four indicator summaries, including the fixed OGB5N reference.\n');
+fprintf('  n = %d indicator summaries\n',mdl.NumObservations);
+fprintf('  slope = %.4f (95%% CI [%.4f, %.4f])\n',...
     mdl.Coefficients.Estimate(2),coef_ci(2,1),coef_ci(2,2));
-fprintf('  intercept = %.4f (95%%%% CI [%.4f, %.4f])\n',...
+fprintf('  intercept = %.4f (95%% CI [%.4f, %.4f])\n',...
     mdl.Coefficients.Estimate(1),coef_ci(1,1),coef_ci(1,2));
 fprintf('  R^2 = %.4f, adjusted R^2 = %.4f\n',...
     mdl.Rsquared.Ordinary,mdl.Rsquared.Adjusted);
 fprintf('  model p = %.4g\n',fitStats.Pvalue);
+panel_l_summary = table(string(consts(:)),a_slow(:),a_slow_q1(:),a_slow_q3(:),...
+    elongs_med(:),elong_q1(:),elong_q3(:),[0;cellfun(@numel,a_slow_values(:))],...
+    [0;cellfun(@numel,elong_values(:))],...
+    'VariableNames',{'Indicator','XMedian','XQ1','XQ3','YMedian','YQ1','YQ3',...
+    'NCalciumConditions','NBoutons'});
+disp('  Panel L medians and quartile endpoints (reference counts are zero):');
+disp(panel_l_summary);
 saveFigureOutputs("figure2","figure2_K_L");
 end
 

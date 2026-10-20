@@ -88,7 +88,7 @@ for i_panel = 1:numel(panel_name)
                 3 4 2.404516980356 2.270681839142 2.676408408238 3.5; ...
                 1 4 2.838230807977 2.704395666764 3.024386869755 2.5; ...
                 2 3 1.678089772058 1.544290102655 1.826645714651 2.5];
-            bracketLabels={'n.s.','***','***','n.s.','***','***'};
+            bracketLabels={'n.s.','***','***','***','***','***'};
     end
     for iBracket=1:size(brackets,1)
         addPublishedBracket(gca,brackets(iBracket,:),bracketLabels{iBracket});
