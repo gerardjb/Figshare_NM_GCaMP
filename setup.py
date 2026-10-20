@@ -11,6 +11,8 @@ requirements = [
 setup(
     name='gcamp_reproducible_plotting',
     version='0.1',
+    license='MIT',
+    license_files=['LICENSE', 'LICENSES/*.txt', 'THIRD_PARTY_NOTICES.md'],
     description='Reproducible plotting scripts for the GCaMP model Figshare repository',
     packages=['SharedUtilities'],
     package_dir={'SharedUtilities': 'shared/python/SharedUtilities'},

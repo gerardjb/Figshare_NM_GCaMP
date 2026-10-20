@@ -124,3 +124,24 @@ The supplementary Python scripts accept `--output-dir`, `--format`, and `--show`
 ## Shared data and utilities
 
 `shared/source_data` contains registered common source-data inputs. `shared/matlab` contains the publication MATLAB helpers, including `AccessFitFiles_Janelia.m`, `GCaMPalias.m`, path resolution, and output-writing utilities. `shared/python/SharedUtilities` contains the Python helpers and installed console-script entry points.
+
+
+## Licensing
+
+Gerard Joey Broussard's original project code and its software documentation are licensed under the [MIT License](LICENSE). Original study data, source-data tables and workbooks, and artwork are licensed under [Creative Commons Attribution 4.0 International](LICENSES/CC-BY-4.0.txt) (CC BY 4.0).
+
+Third-party code, benchmark recordings, and adapted artwork retain their respective licences and attribution requirements; they are not relicensed by these grants. [Third-party notices](THIRD_PARTY_NOTICES.md) identify the bundled helpers and external sources. MATLAB and separately installed dependencies remain subject to their own licences.
+
+## Citation
+
+Please cite both the study and its data/code record:
+
+- Broussard, G. J. et al. *Precise calcium-to-spike inference using biophysical generative models*. bioRxiv (2026), version 3, 4 June 2026. [https://doi.org/10.1101/2024.12.31.630967](https://doi.org/10.1101/2024.12.31.630967). This is the public preprint citation; use the final journal citation when available.
+- Broussard, G. J. *Precise calcium-to-spike inference using biophysical generative models*. Figshare (2026). [https://doi.org/10.6084/m9.figshare.28550441](https://doi.org/10.6084/m9.figshare.28550441).
+
+The Figshare base DOI resolves to the latest public deposit. For reproducibility, cite the version-specific DOI for the files you used and record the Git commit or release tag for the code. The base DOI is not a claim that this checkout has already been deposited. [CITATION.cff](CITATION.cff) provides the dataset record in machine-readable form.
+
+For analyses using the external benchmarks, also credit the original sources:
+
+- Rózsa, M. et al. (2022). *Simultaneous loose seal cell-attached recordings and two-photon imaging of GCaMP8 expressing mouse V1 neurons with drifting gratings visual stimuli*. [DANDI:000168](https://dandiarchive.org/dandiset/000168/draft), together with Zhang et al., *Fast and sensitive GCaMP calcium indicators for imaging neural populations*, Nature (2023), [https://doi.org/10.1038/s41586-023-05828-9](https://doi.org/10.1038/s41586-023-05828-9).
+- Rupprecht, P., Rózsa, M., Fang, X., Svoboda, K. & Helmchen, F. *Spike inference from calcium imaging data acquired with GCaMP8 indicators*. Nature Methods (2026), [https://doi.org/10.1038/s41592-026-03183-x](https://doi.org/10.1038/s41592-026-03183-x), and the [CASCADE repository](https://github.com/HelmchenLabSoftware/Cascade), the source of the jGCaMP8m benchmark.

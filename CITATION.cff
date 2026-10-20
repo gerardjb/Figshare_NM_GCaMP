@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: >-
+  Please cite the accompanying paper and the Figshare dataset. Use the
+  version-specific DOI for the files you used and record the Git commit or
+  release tag for the code. See the README for the paper citation and
+  third-party benchmark sources. The DOI below identifies the dataset record,
+  not a release of this checkout.
+type: dataset
+title: Precise calcium-to-spike inference using biophysical generative models
+authors:
+  - family-names: Broussard
+    given-names: Gerard Joey
+doi: 10.6084/m9.figshare.28550441
+url: https://doi.org/10.6084/m9.figshare.28550441
+repository-code: https://github.com/gerardjb/Figshare_NM_GCaMP
