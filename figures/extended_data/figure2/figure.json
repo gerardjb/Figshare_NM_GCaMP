@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED2",
+  "legacy_id": "supp_figure4",
+  "source_data_item": "ED2",
+  "datasets": [
+    {
+      "id": "01_rise_ogb1_traces__e0b7cf35d2a9",
+      "name": "rise_OGB1_traces",
+      "csv": "source_data/01_rise_OGB1_traces.csv"
+    },
+    {
+      "id": "02_rise_ogb1_columns__d2c014ed8af8",
+      "name": "rise_OGB1_columns",
+      "csv": "source_data/02_rise_OGB1_columns.csv"
+    },
+    {
+      "id": "03_rise_gcamp6f_traces__f5e0ebffdb73",
+      "name": "rise_GCaMP6f_traces",
+      "csv": "source_data/03_rise_GCaMP6f_traces.csv"
+    },
+    {
+      "id": "04_rise_gcamp6f_columns__38f48e3e120f",
+      "name": "rise_GCaMP6f_columns",
+      "csv": "source_data/04_rise_GCaMP6f_columns.csv"
+    },
+    {
+      "id": "05_rise_jgcamp7f_traces__6f0c708a3121",
+      "name": "rise_jGCaMP7f_traces",
+      "csv": "source_data/05_rise_jGCaMP7f_traces.csv"
+    },
+    {
+      "id": "06_rise_jgcamp7f_columns__7983c135c391",
+      "name": "rise_jGCaMP7f_columns",
+      "csv": "source_data/06_rise_jGCaMP7f_columns.csv"
+    },
+    {
+      "id": "07_rise_jgcamp8f_traces__8f2e2d170a54",
+      "name": "rise_jGCaMP8f_traces",
+      "csv": "source_data/07_rise_jGCaMP8f_traces.csv"
+    },
+    {
+      "id": "08_rise_jgcamp8f_columns__806000de9e0c",
+      "name": "rise_jGCaMP8f_columns",
+      "csv": "source_data/08_rise_jGCaMP8f_columns.csv"
+    },
+    {
+      "id": "09_decay_ogb1_traces__b6ffa33ac093",
+      "name": "decay_OGB1_traces",
+      "csv": "source_data/09_decay_OGB1_traces.csv"
+    },
+    {
+      "id": "10_decay_ogb1_columns__19c5f1b147fa",
+      "name": "decay_OGB1_columns",
+      "csv": "source_data/10_decay_OGB1_columns.csv"
+    },
+    {
+      "id": "11_decay_gcamp6f_traces__7807b7e5f296",
+      "name": "decay_GCaMP6f_traces",
+      "csv": "source_data/11_decay_GCaMP6f_traces.csv"
+    },
+    {
+      "id": "12_decay_gcamp6f_columns__c0f7c955ac18",
+      "name": "decay_GCaMP6f_columns",
+      "csv": "source_data/12_decay_GCaMP6f_columns.csv"
+    },
+    {
+      "id": "13_decay_jgcamp7f_traces__c622cf1938fd",
+      "name": "decay_jGCaMP7f_traces",
+      "csv": "source_data/13_decay_jGCaMP7f_traces.csv"
+    },
+    {
+      "id": "14_decay_jgcamp7f_columns__19490c13d951",
+      "name": "decay_jGCaMP7f_columns",
+      "csv": "source_data/14_decay_jGCaMP7f_columns.csv"
+    },
+    {
+      "id": "15_decay_jgcamp8f_traces__207f12bf2dcd",
+      "name": "decay_jGCaMP8f_traces",
+      "csv": "source_data/15_decay_jGCaMP8f_traces.csv"
+    },
+    {
+      "id": "16_decay_jgcamp8f_columns__784962ae4f79",
+      "name": "decay_jGCaMP8f_columns",
+      "csv": "source_data/16_decay_jGCaMP8f_columns.csv"
+    },
+    {
+      "id": "b_d_saved_fit_input_curves__c2347f2bc7b0",
+      "name": "B–D_saved_fit_input_curves",
+      "csv": "source_data/B–D_saved_fit_input_curves.csv"
+    },
+    {
+      "id": "f_h_saved_fit_input_curves__8b3bf7fdbaff",
+      "name": "F–H_saved_fit_input_curves",
+      "csv": "source_data/F–H_saved_fit_input_curves.csv"
+    },
+    {
+      "id": "dg_saved_fit_coefficients__e7e09663b01d",
+      "name": "DG_saved_fit_coefficients",
+      "csv": "source_data/DG_saved_fit_coefficients.csv"
+    },
+    {
+      "id": "dg_saved_fit_goodness__9fef77e4c4c9",
+      "name": "DG_saved_fit_goodness",
+      "csv": "source_data/DG_saved_fit_goodness.csv"
+    },
+    {
+      "id": "c_current_refit_plotted_curves__302043155b17",
+      "name": "C_current_refit_plotted_curves",
+      "csv": "source_data/C_current_refit_plotted_curves.csv"
+    },
+    {
+      "id": "b_current_refit_plotted_curves__51590a00bf9e",
+      "name": "B_current_refit_plotted_curves",
+      "csv": "source_data/B_current_refit_plotted_curves.csv"
+    },
+    {
+      "id": "d_current_refit_plotted_curves__459d9e0b32c1",
+      "name": "D_current_refit_plotted_curves",
+      "csv": "source_data/D_current_refit_plotted_curves.csv"
+    },
+    {
+      "id": "1_current_refit_coefficients__3f41c89a52a5",
+      "name": "1_current_refit_coefficients",
+      "csv": "source_data/1_current_refit_coefficients.csv"
+    },
+    {
+      "id": "1_current_refit_goodness__01979565f99f",
+      "name": "1_current_refit_goodness",
+      "csv": "source_data/1_current_refit_goodness.csv"
+    },
+    {
+      "id": "1_current_refit_summary__e8092fcc1f3a",
+      "name": "1_current_refit_summary",
+      "csv": "source_data/1_current_refit_summary.csv"
+    },
+    {
+      "id": "f_current_refit_plotted_curves__29c83f062ce9",
+      "name": "F_current_refit_plotted_curves",
+      "csv": "source_data/F_current_refit_plotted_curves.csv"
+    },
+    {
+      "id": "h_current_refit_plotted_curves__ddea3f633be9",
+      "name": "H_current_refit_plotted_curves",
+      "csv": "source_data/H_current_refit_plotted_curves.csv"
+    },
+    {
+      "id": "g_current_refit_plotted_curves__d3cdfb806944",
+      "name": "G_current_refit_plotted_curves",
+      "csv": "source_data/G_current_refit_plotted_curves.csv"
+    },
+    {
+      "id": "2_current_refit_coefficients__a19271180774",
+      "name": "2_current_refit_coefficients",
+      "csv": "source_data/2_current_refit_coefficients.csv"
+    },
+    {
+      "id": "2_current_refit_goodness__b98778126098",
+      "name": "2_current_refit_goodness",
+      "csv": "source_data/2_current_refit_goodness.csv"
+    },
+    {
+      "id": "2_current_refit_summary__b8365e047432",
+      "name": "2_current_refit_summary",
+      "csv": "source_data/2_current_refit_summary.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "python",
+      "script": "code/fast_ed2.py",
+      "call": "main",
+      "panels": [
+        "B",
+        "C",
+        "D",
+        "F",
+        "G",
+        "H"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED2_b_components",
+        "ED2_c_fit_traces",
+        "ED2_d_rise_constants",
+        "ED2_f_decay_traces",
+        "ED2_g_decay_constants",
+        "ED2_h_fit_traces"
+      ],
+      "stem_panels": {
+        "ED2_b_components": [
+          "B"
+        ],
+        "ED2_c_fit_traces": [
+          "C"
+        ],
+        "ED2_d_rise_constants": [
+          "D"
+        ],
+        "ED2_f_decay_traces": [
+          "F"
+        ],
+        "ED2_g_decay_constants": [
+          "G"
+        ],
+        "ED2_h_fit_traces": [
+          "H"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A",
+    "E"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryTable2",
+  "legacy_id": "Table3",
+  "source_data_item": "ST2",
+  "datasets": [
+    {
+      "id": "01_st2_existing_values__4428b6de8744",
+      "name": "ST2_existing_values",
+      "csv": "source_data/01_ST2_existing_values.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "powershell",
+      "script": "code/render_gcamp_parameter_table_pdf.ps1",
+      "call": "render",
+      "panels": [
+        "table"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "gcamp_parameter_table"
+      ],
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

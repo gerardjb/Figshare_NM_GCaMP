@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED6",
+  "legacy_id": "supp_figure11",
+  "source_data_item": "ED6",
+  "datasets": [
+    {
+      "id": "01_epoch_contributions__b3dd877d784e",
+      "name": "Epoch_contributions",
+      "csv": "source_data/01_Epoch_contributions.csv"
+    },
+    {
+      "id": "02_epoch_plot_ci__f0373132619b",
+      "name": "Epoch_plot_CI",
+      "csv": "source_data/02_Epoch_plot_CI.csv"
+    },
+    {
+      "id": "03_history_contributions__9af1e99b83d1",
+      "name": "History_contributions",
+      "csv": "source_data/03_History_contributions.csv"
+    },
+    {
+      "id": "04_history_plot_ci__7f3505826b5d",
+      "name": "History_plot_CI",
+      "csv": "source_data/04_History_plot_CI.csv"
+    },
+    {
+      "id": "05_quiescent_rate_traces__e57feafa2b7b",
+      "name": "Quiescent_rate_traces",
+      "csv": "source_data/05_Quiescent_rate_traces.csv"
+    },
+    {
+      "id": "sourcedata_extendeddatafig6_legend_statistics__95a97a98cb5d",
+      "name": "Legend_statistics",
+      "csv": "source_data/SourceData_ExtendedDataFig6_legend_statistics.csv"
+    },
+    {
+      "id": "a_fluorescence__8ac5bb53c66f",
+      "name": "A_fluorescence",
+      "csv": "source_data/A_fluorescence.csv"
+    },
+    {
+      "id": "a_smoothed_ground_truth__2c7b40fabc54",
+      "name": "A_smoothed_ground_truth",
+      "csv": "source_data/A_smoothed_ground_truth.csv"
+    },
+    {
+      "id": "a_predictions__a5eb1410bd8c",
+      "name": "A_predictions",
+      "csv": "source_data/A_predictions.csv"
+    },
+    {
+      "id": "a_ground_truth_spikes__1d982f2a81a5",
+      "name": "A_ground_truth_spikes",
+      "csv": "source_data/A_ground_truth_spikes.csv"
+    },
+    {
+      "id": "a_classified_events__93bbbabc64d1",
+      "name": "A_classified_events",
+      "csv": "source_data/A_classified_events.csv"
+    },
+    {
+      "id": "a_trace_metadata__dc034fdad383",
+      "name": "A_trace_metadata",
+      "csv": "source_data/A_trace_metadata.csv"
+    },
+    {
+      "id": "a_display_metadata__6efecac6f985",
+      "name": "A_display_metadata",
+      "csv": "source_data/A_display_metadata.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/ED6_code.m",
+      "call": "ED6_code",
+      "panels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED6"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

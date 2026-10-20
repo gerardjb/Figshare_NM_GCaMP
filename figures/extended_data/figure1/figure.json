@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED1",
+  "legacy_id": "supp_figure3",
+  "source_data_item": "ED1",
+  "datasets": [
+    {
+      "id": "01_spectral_background__874260845f63",
+      "name": "Spectral_background",
+      "csv": "source_data/01_Spectral_background.csv"
+    },
+    {
+      "id": "02_raw_spectra_file1__caa89a174a96",
+      "name": "Raw_spectra_file1",
+      "csv": "source_data/02_Raw_spectra_file1.csv"
+    },
+    {
+      "id": "03_corrected_spectra_file1__3aa72a8e0089",
+      "name": "Corrected_spectra_file1",
+      "csv": "source_data/03_Corrected_spectra_file1.csv"
+    },
+    {
+      "id": "04_integrated_counts_file1__447c199c1285",
+      "name": "Integrated_counts_file1",
+      "csv": "source_data/04_Integrated_counts_file1.csv"
+    },
+    {
+      "id": "05_raw_spectra_file2__e84f65d2f7d4",
+      "name": "Raw_spectra_file2",
+      "csv": "source_data/05_Raw_spectra_file2.csv"
+    },
+    {
+      "id": "06_corrected_spectra_file2__0cb8cbdb4a6c",
+      "name": "Corrected_spectra_file2",
+      "csv": "source_data/06_Corrected_spectra_file2.csv"
+    },
+    {
+      "id": "07_integrated_counts_file2__d649d568b888",
+      "name": "Integrated_counts_file2",
+      "csv": "source_data/07_Integrated_counts_file2.csv"
+    },
+    {
+      "id": "08_f_jg7f_i__4d8c20e418ba",
+      "name": "F_jG7f_I",
+      "csv": "source_data/08_F_jG7f_I.csv"
+    },
+    {
+      "id": "09_f_jg7f_k__c597bc6acf4b",
+      "name": "F_jG7f_K",
+      "csv": "source_data/09_F_jG7f_K.csv"
+    },
+    {
+      "id": "10_f_g6f_i__3b5140443cd6",
+      "name": "F_G6f_I",
+      "csv": "source_data/10_F_G6f_I.csv"
+    },
+    {
+      "id": "11_f_jg8f_i__584714a28610",
+      "name": "F_jG8f_I",
+      "csv": "source_data/11_F_jG8f_I.csv"
+    },
+    {
+      "id": "12_f_g6f_iplus__0a05dea7f0e1",
+      "name": "F_G6f_Iplus",
+      "csv": "source_data/12_F_G6f_Iplus.csv"
+    },
+    {
+      "id": "13_f_jg7f_iplus__efcb625adde5",
+      "name": "F_jG7f_Iplus",
+      "csv": "source_data/13_F_jG7f_Iplus.csv"
+    },
+    {
+      "id": "14_f_jg8f_iplus__121cd980d99e",
+      "name": "F_jG8f_Iplus",
+      "csv": "source_data/14_F_jG8f_Iplus.csv"
+    },
+    {
+      "id": "15_f_g6f_k__ed16d7a02149",
+      "name": "F_G6f_K",
+      "csv": "source_data/15_F_G6f_K.csv"
+    },
+    {
+      "id": "16_f_jg8f_k__d3693d3709b0",
+      "name": "F_jG8f_K",
+      "csv": "source_data/16_F_jG8f_K.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "python",
+      "script": "code/fast_ed1.py",
+      "call": "main",
+      "panels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED1_a_spectra",
+        "ED1_b_counts",
+        "ED1_c_normalized",
+        "ED1_d_dynamic_range",
+        "ED1_f_half_rise"
+      ],
+      "stem_panels": {
+        "ED1_a_spectra": [
+          "A"
+        ],
+        "ED1_b_counts": [
+          "B"
+        ],
+        "ED1_c_normalized": [
+          "C"
+        ],
+        "ED1_d_dynamic_range": [
+          "D"
+        ],
+        "ED1_f_half_rise": [
+          "F"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [
+    "E"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED9",
+  "legacy_id": "supp_figure15",
+  "source_data_item": "ED9",
+  "datasets": [
+    {
+      "id": "01_mean_decay_traces__84acb12b4b30",
+      "name": "Mean_decay_traces",
+      "csv": "source_data/01_Mean_decay_traces.csv"
+    },
+    {
+      "id": "02_epoch_correlations__fb04e2876b4d",
+      "name": "Epoch_correlations",
+      "csv": "source_data/02_Epoch_correlations.csv"
+    },
+    {
+      "id": "03_ed9f_trace_values__317bbc8181f0",
+      "name": "ED9F_trace_values",
+      "csv": "source_data/03_ED9F_trace_values.csv"
+    },
+    {
+      "id": "04_mean_sem_curves__c471d507b5cf",
+      "name": "Mean_SEM_curves",
+      "csv": "source_data/04_Mean_SEM_curves.csv"
+    },
+    {
+      "id": "sourcedata_extendeddatafig9_legend_statistics__7390acac6368",
+      "name": "Legend_statistics",
+      "csv": "source_data/SourceData_ExtendedDataFig9_legend_statistics.csv"
+    },
+    {
+      "id": "c_stored_event_parameters__8a69d3fbf46a",
+      "name": "C_stored_event_parameters",
+      "csv": "source_data/C_stored_event_parameters.csv"
+    },
+    {
+      "id": "d_stopped_flow_bestfit_curves__b4c01efd612f",
+      "name": "D_stopped_flow_bestfit_curves",
+      "csv": "source_data/D_stopped_flow_bestfit_curves.csv"
+    },
+    {
+      "id": "e_janelia_observed__aba4017ecd2d",
+      "name": "E_Janelia_observed",
+      "csv": "source_data/E_Janelia_observed.csv"
+    },
+    {
+      "id": "e_janelia_fitted__061a8ce3dbbc",
+      "name": "E_Janelia_fitted",
+      "csv": "source_data/E_Janelia_fitted.csv"
+    },
+    {
+      "id": "e_janelia_ground_truth_spikes__524b2365c763",
+      "name": "E_Janelia_ground_truth_spikes",
+      "csv": "source_data/E_Janelia_ground_truth_spikes.csv"
+    },
+    {
+      "id": "a_raw_example_traces__1eb84d365573",
+      "name": "A_raw_example_traces",
+      "csv": "source_data/A_raw_example_traces.csv"
+    },
+    {
+      "id": "a_aligned_example_traces__e29e583da0d9",
+      "name": "A_aligned_example_traces",
+      "csv": "source_data/A_aligned_example_traces.csv"
+    },
+    {
+      "id": "a_fitted_example_traces__3c27a6525c6b",
+      "name": "A_fitted_example_traces",
+      "csv": "source_data/A_fitted_example_traces.csv"
+    },
+    {
+      "id": "a_example_spikes__4f2cdd69de50",
+      "name": "A_example_spikes",
+      "csv": "source_data/A_example_spikes.csv"
+    },
+    {
+      "id": "f_ground_truth_spikes__6dfe618d7d44",
+      "name": "F_ground_truth_spikes",
+      "csv": "source_data/F_ground_truth_spikes.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/ED9_A_B_C_csv_code.m",
+      "call": "ED9_A_B_C_csv_code",
+      "panels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED9_A_B_C_quiescent_binning_dashboard"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/ED9_D_E_code.m",
+      "call": "ED9_D_E_code",
+      "panels": [
+        "D",
+        "E"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED9_D_E_global_best"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "python",
+      "script": "code/ED9_F_G_code.py",
+      "call": "main",
+      "panels": [
+        "F",
+        "G"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED9_F_trace_jG8m_compare",
+        "ED9_G_corr_vs_sigma_jG8m"
+      ],
+      "stem_panels": {
+        "ED9_F_trace_jG8m_compare": [
+          "F"
+        ],
+        "ED9_G_corr_vs_sigma_jG8m": [
+          "G"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

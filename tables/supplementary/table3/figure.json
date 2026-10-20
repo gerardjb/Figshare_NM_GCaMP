@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryTable3",
+  "legacy_id": "Table4",
+  "source_data_item": "ST3",
+  "datasets": [
+    {
+      "id": "01_st3_existing_values__565414112f07",
+      "name": "ST3_existing_values",
+      "csv": "source_data/01_ST3_existing_values.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "powershell",
+      "script": "code/render_table4_cell_parameter_priors_pdf.ps1",
+      "call": "render",
+      "panels": [
+        "table"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "Table4_cell_parameter_priors"
+      ],
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "publication_id": "Figure3",
+  "legacy_id": "figure3",
+  "source_data_item": "Figure3",
+  "datasets": [
+    {
+      "id": "01_d_pprtraces_1__612e2dc0a2c8",
+      "name": "D_PPRtraces_1",
+      "csv": "source_data/01_D_PPRtraces_1.csv"
+    },
+    {
+      "id": "02_d_pprtraces_2__fb520fa1ee9f",
+      "name": "D_PPRtraces_2",
+      "csv": "source_data/02_D_PPRtraces_2.csv"
+    },
+    {
+      "id": "03_d_pprtraces_3__f0263e43bf04",
+      "name": "D_PPRtraces_3",
+      "csv": "source_data/03_D_PPRtraces_3.csv"
+    },
+    {
+      "id": "04_d_pprtraces_4__a8e87e739c84",
+      "name": "D_PPRtraces_4",
+      "csv": "source_data/04_D_PPRtraces_4.csv"
+    },
+    {
+      "id": "05_d_pprtraces_5__75c9586b168e",
+      "name": "D_PPRtraces_5",
+      "csv": "source_data/05_D_PPRtraces_5.csv"
+    },
+    {
+      "id": "06_e_pprtraces_states1__ffd1da99d23a",
+      "name": "E_PPRtraces_states1",
+      "csv": "source_data/06_E_PPRtraces_states1.csv"
+    },
+    {
+      "id": "07_e_pprtraces_states2__029405374435",
+      "name": "E_PPRtraces_states2",
+      "csv": "source_data/07_E_PPRtraces_states2.csv"
+    },
+    {
+      "id": "08_e_pprtraces_states3__af82f872c877",
+      "name": "E_PPRtraces_states3",
+      "csv": "source_data/08_E_PPRtraces_states3.csv"
+    },
+    {
+      "id": "09_e_pprtraces_states4__98a34e86de6b",
+      "name": "E_PPRtraces_states4",
+      "csv": "source_data/09_E_PPRtraces_states4.csv"
+    },
+    {
+      "id": "10_e_pprtraces_states5__ef060e055793",
+      "name": "E_PPRtraces_states5",
+      "csv": "source_data/10_E_PPRtraces_states5.csv"
+    },
+    {
+      "id": "11_d_traces1_2__1__7ff69447071a",
+      "name": "D_traces1_2__1",
+      "csv": "source_data/11_D_traces1_2__1.csv"
+    },
+    {
+      "id": "12_d_traces1_2__2__952625fd2556",
+      "name": "D_traces1_2__2",
+      "csv": "source_data/12_D_traces1_2__2.csv"
+    },
+    {
+      "id": "13_d_traces1_2__3__7c08cb0c8296",
+      "name": "D_traces1_2__3",
+      "csv": "source_data/13_D_traces1_2__3.csv"
+    },
+    {
+      "id": "14_e_traces1_2__states1__37b275f9a100",
+      "name": "E_traces1_2__states1",
+      "csv": "source_data/14_E_traces1_2__states1.csv"
+    },
+    {
+      "id": "15_e_traces1_2__states2__53220eedc178",
+      "name": "E_traces1_2__states2",
+      "csv": "source_data/15_E_traces1_2__states2.csv"
+    },
+    {
+      "id": "16_e_traces1_2__states3__e2a2ebfbd8eb",
+      "name": "E_traces1_2__states3",
+      "csv": "source_data/16_E_traces1_2__states3.csv"
+    },
+    {
+      "id": "17_f_simulation__659493f8afa2",
+      "name": "F_simulation",
+      "csv": "source_data/17_F_simulation.csv"
+    },
+    {
+      "id": "18_f_ground_truth_spikes__d16257f182da",
+      "name": "F_ground_truth_spikes",
+      "csv": "source_data/18_F_ground_truth_spikes.csv"
+    },
+    {
+      "id": "19_g_simulation__0f3ef2dd743c",
+      "name": "G_simulation",
+      "csv": "source_data/19_G_simulation.csv"
+    },
+    {
+      "id": "20_g_ground_truth_spikes__81082345fd37",
+      "name": "G_ground_truth_spikes",
+      "csv": "source_data/20_G_ground_truth_spikes.csv"
+    },
+    {
+      "id": "f_biophyssmc_posterior_mean__06f294d4efa4",
+      "name": "F_BiophysSMC_posterior_mean",
+      "csv": "source_data/F_BiophysSMC_posterior_mean.csv"
+    },
+    {
+      "id": "f_biophyssmc_selected_posterior_spikes__79887f71cd67",
+      "name": "F_BiophysSMC_selected_posterior_spikes",
+      "csv": "source_data/F_BiophysSMC_selected_posterior_spikes.csv"
+    },
+    {
+      "id": "f_linearsmc_posterior_mean__6e93c660855d",
+      "name": "F_LinearSMC_posterior_mean",
+      "csv": "source_data/F_LinearSMC_posterior_mean.csv"
+    },
+    {
+      "id": "f_linearsmc_selected_posterior_spikes__70b7dc223d80",
+      "name": "F_LinearSMC_selected_posterior_spikes",
+      "csv": "source_data/F_LinearSMC_selected_posterior_spikes.csv"
+    },
+    {
+      "id": "g_biophyssmc_posterior_mean__46060333cd86",
+      "name": "G_BiophysSMC_posterior_mean",
+      "csv": "source_data/G_BiophysSMC_posterior_mean.csv"
+    },
+    {
+      "id": "g_biophyssmc_selected_posterior_spikes__de9b3cf457c0",
+      "name": "G_BiophysSMC_selected_posterior_spikes",
+      "csv": "source_data/G_BiophysSMC_selected_posterior_spikes.csv"
+    },
+    {
+      "id": "g_linearsmc_posterior_mean__87868c339d0c",
+      "name": "G_LinearSMC_posterior_mean",
+      "csv": "source_data/G_LinearSMC_posterior_mean.csv"
+    },
+    {
+      "id": "g_linearsmc_selected_posterior_spikes__bb483db77766",
+      "name": "G_LinearSMC_selected_posterior_spikes",
+      "csv": "source_data/G_LinearSMC_selected_posterior_spikes.csv"
+    },
+    {
+      "id": "figure3_e_pprtraces_grouped_states__e031d2a1787c",
+      "name": "Figure3_E_PPRtraces_grouped_states",
+      "csv": "source_data/Figure3_E_PPRtraces_grouped_states.csv"
+    },
+    {
+      "id": "figure3_e_traces1_2_10_grouped_states__820f30fae298",
+      "name": "Figure3_E_traces1_2_10_grouped_states",
+      "csv": "source_data/Figure3_E_traces1_2_10_grouped_states.csv"
+    },
+    {
+      "id": "figure3_c_gcamp6f_decay_stoppedflow__95e666a06e45",
+      "name": "Figure3_C_GCaMP6f_decay_stoppedflow",
+      "csv": "source_data/Figure3_C_GCaMP6f_decay_stoppedflow.csv"
+    },
+    {
+      "id": "figure3_c_gcamp6f_rise_stoppedflow__9ccb133716e5",
+      "name": "Figure3_C_GCaMP6f_rise_stoppedflow",
+      "csv": "source_data/Figure3_C_GCaMP6f_rise_stoppedflow.csv"
+    },
+    {
+      "id": "figure3_c_jgcamp7f_decay_stoppedflow__54b31928de5e",
+      "name": "Figure3_C_jGCaMP7f_decay_stoppedflow",
+      "csv": "source_data/Figure3_C_jGCaMP7f_decay_stoppedflow.csv"
+    },
+    {
+      "id": "figure3_c_jgcamp7f_rise_stoppedflow__4b7c8dd9d0e5",
+      "name": "Figure3_C_jGCaMP7f_rise_stoppedflow",
+      "csv": "source_data/Figure3_C_jGCaMP7f_rise_stoppedflow.csv"
+    },
+    {
+      "id": "figure3_c_jgcamp8f_decay_stoppedflow__f6dc712c8d32",
+      "name": "Figure3_C_jGCaMP8f_decay_stoppedflow",
+      "csv": "source_data/Figure3_C_jGCaMP8f_decay_stoppedflow.csv"
+    },
+    {
+      "id": "figure3_c_jgcamp8f_rise_stoppedflow__5c685a0e53b9",
+      "name": "Figure3_C_jGCaMP8f_rise_stoppedflow",
+      "csv": "source_data/Figure3_C_jGCaMP8f_rise_stoppedflow.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/figure3_B_code.m",
+      "call": "figure3_B_code",
+      "panels": [
+        "C"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure3_B"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure3_D_E_code.m",
+      "call": "figure3_D_E_code",
+      "panels": [
+        "D",
+        "E"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure3_D_E_01",
+        "figure3_D_E_02"
+      ],
+      "stem_panels": {
+        "figure3_D_E_01": [
+          "D"
+        ],
+        "figure3_D_E_02": [
+          "E"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "python",
+      "script": "code/figure3_F_G_code.py",
+      "call": "main",
+      "panels": [
+        "F",
+        "G"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure3_F_excitatory_simulation",
+        "figure3_G_inhibitory_simulation"
+      ],
+      "stem_panels": {
+        "figure3_F_excitatory_simulation": [
+          "F"
+        ],
+        "figure3_G_inhibitory_simulation": [
+          "G"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A",
+    "B"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

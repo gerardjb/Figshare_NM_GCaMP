@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "publication_id": "Figure1",
+  "legacy_id": "figure1",
+  "source_data_item": "Figure1",
+  "datasets": [
+    {
+      "id": "01_panel_d_points__89598be9e3d6",
+      "name": "Panel_D_points",
+      "csv": "source_data/01_Panel_D_points.csv"
+    },
+    {
+      "id": "02_panel_e_points__0c988e67563f",
+      "name": "Panel_E_points",
+      "csv": "source_data/02_Panel_E_points.csv"
+    },
+    {
+      "id": "03_panel_f_points__41b3e5d9bad1",
+      "name": "Panel_F_points",
+      "csv": "source_data/03_Panel_F_points.csv"
+    },
+    {
+      "id": "04_panel_h_ppr__4f3d2a02e166",
+      "name": "Panel_H_PPR",
+      "csv": "source_data/04_Panel_H_PPR.csv"
+    },
+    {
+      "id": "05_panel_j_half_decay__ebc4ddee746e",
+      "name": "Panel_J_half_decay",
+      "csv": "source_data/05_Panel_J_half_decay.csv"
+    },
+    {
+      "id": "06_b_g6f_trials__fefd9130e432",
+      "name": "B_G6f_trials",
+      "csv": "source_data/06_B_G6f_trials.csv"
+    },
+    {
+      "id": "07_c_g6f_mean__63bf7cfe24b2",
+      "name": "C_G6f_mean",
+      "csv": "source_data/07_C_G6f_mean.csv"
+    },
+    {
+      "id": "08_c_g6f_sem_polygon__9dae78426834",
+      "name": "C_G6f_SEM_polygon",
+      "csv": "source_data/08_C_G6f_SEM_polygon.csv"
+    },
+    {
+      "id": "09_g_g6f_single_stim__89fdb18dd823",
+      "name": "G_G6f_single_stim",
+      "csv": "source_data/09_G_G6f_single_stim.csv"
+    },
+    {
+      "id": "10_g_g6f_pp_stim__bb161cf8b5d3",
+      "name": "G_G6f_PP_stim",
+      "csv": "source_data/10_G_G6f_PP_stim.csv"
+    },
+    {
+      "id": "11_g_g6f_single_fit__aab7616c5709",
+      "name": "G_G6f_single_fit",
+      "csv": "source_data/11_G_G6f_single_fit.csv"
+    },
+    {
+      "id": "12_g_g6f_pp_fit__147baa988b1a",
+      "name": "G_G6f_PP_fit",
+      "csv": "source_data/12_G_G6f_PP_fit.csv"
+    },
+    {
+      "id": "13_i_g6f_unno_single__1b100edd526b",
+      "name": "I_G6f_unno_single",
+      "csv": "source_data/13_I_G6f_unno_single.csv"
+    },
+    {
+      "id": "14_i_g6f_unno_ten_stim__7fcc643a9510",
+      "name": "I_G6f_unno_ten_stim",
+      "csv": "source_data/14_I_G6f_unno_ten_stim.csv"
+    },
+    {
+      "id": "15_i_g6f_norm_single__f61144b04681",
+      "name": "I_G6f_norm_single",
+      "csv": "source_data/15_I_G6f_norm_single.csv"
+    },
+    {
+      "id": "16_i_g6f_norm_ten_stim__b5b00a0ad36d",
+      "name": "I_G6f_norm_ten_stim",
+      "csv": "source_data/16_I_G6f_norm_ten_stim.csv"
+    },
+    {
+      "id": "17_b_jg7f_trials__64b44e87ecf0",
+      "name": "B_jG7f_trials",
+      "csv": "source_data/17_B_jG7f_trials.csv"
+    },
+    {
+      "id": "18_c_jg7f_mean__46b7013127f3",
+      "name": "C_jG7f_mean",
+      "csv": "source_data/18_C_jG7f_mean.csv"
+    },
+    {
+      "id": "19_c_jg7f_sem_polygon__eae044ca43a4",
+      "name": "C_jG7f_SEM_polygon",
+      "csv": "source_data/19_C_jG7f_SEM_polygon.csv"
+    },
+    {
+      "id": "20_b_jg8f_trials__6ba8e5ba5715",
+      "name": "B_jG8f_trials",
+      "csv": "source_data/20_B_jG8f_trials.csv"
+    },
+    {
+      "id": "21_c_jg8f_mean__89795a24c883",
+      "name": "C_jG8f_mean",
+      "csv": "source_data/21_C_jG8f_mean.csv"
+    },
+    {
+      "id": "22_c_jg8f_sem_polygon__1abffe169b97",
+      "name": "C_jG8f_SEM_polygon",
+      "csv": "source_data/22_C_jG8f_SEM_polygon.csv"
+    },
+    {
+      "id": "23_g_jg8f_single_stim__7e11331d9c7a",
+      "name": "G_jG8f_single_stim",
+      "csv": "source_data/23_G_jG8f_single_stim.csv"
+    },
+    {
+      "id": "24_g_jg8f_pp_stim__13c30d04cee3",
+      "name": "G_jG8f_PP_stim",
+      "csv": "source_data/24_G_jG8f_PP_stim.csv"
+    },
+    {
+      "id": "25_g_jg8f_single_fit__2f2f3a6c0083",
+      "name": "G_jG8f_single_fit",
+      "csv": "source_data/25_G_jG8f_single_fit.csv"
+    },
+    {
+      "id": "26_g_jg8f_pp_fit__28373791b631",
+      "name": "G_jG8f_PP_fit",
+      "csv": "source_data/26_G_jG8f_PP_fit.csv"
+    },
+    {
+      "id": "27_i_jg8f_unno_single__31ac7341f99f",
+      "name": "I_jG8f_unno_single",
+      "csv": "source_data/27_I_jG8f_unno_single.csv"
+    },
+    {
+      "id": "28_i_jg8f_unno_ten_stim__ba9a4c72c7d3",
+      "name": "I_jG8f_unno_ten_stim",
+      "csv": "source_data/28_I_jG8f_unno_ten_stim.csv"
+    },
+    {
+      "id": "29_i_jg8f_norm_single__8ad817280336",
+      "name": "I_jG8f_norm_single",
+      "csv": "source_data/29_I_jG8f_norm_single.csv"
+    },
+    {
+      "id": "30_i_jg8f_norm_ten_stim__baa80032eb49",
+      "name": "I_jG8f_norm_ten_stim",
+      "csv": "source_data/30_I_jG8f_norm_ten_stim.csv"
+    },
+    {
+      "id": "31_c_ogb5n_observed__2834633a6963",
+      "name": "C_OGB5N_observed",
+      "csv": "source_data/31_C_OGB5N_observed.csv"
+    },
+    {
+      "id": "32_c_ogb5n_fit__9b5d88af1425",
+      "name": "C_OGB5N_fit",
+      "csv": "source_data/32_C_OGB5N_fit.csv"
+    },
+    {
+      "id": "33_g_ogb5n_single_stim__bdad1e6da76e",
+      "name": "G_OGB5N_single_stim",
+      "csv": "source_data/33_G_OGB5N_single_stim.csv"
+    },
+    {
+      "id": "34_g_ogb5n_pp_stim__544eb03a6938",
+      "name": "G_OGB5N_PP_stim",
+      "csv": "source_data/34_G_OGB5N_PP_stim.csv"
+    },
+    {
+      "id": "35_g_ogb5n_single_fit__1ad7a3e2de5d",
+      "name": "G_OGB5N_single_fit",
+      "csv": "source_data/35_G_OGB5N_single_fit.csv"
+    },
+    {
+      "id": "36_g_ogb5n_pp_fit__2280f95b94fe",
+      "name": "G_OGB5N_PP_fit",
+      "csv": "source_data/36_G_OGB5N_PP_fit.csv"
+    },
+    {
+      "id": "37_l_bin1_mean_trace__374082ca33e0",
+      "name": "L_bin1_mean_trace",
+      "csv": "source_data/37_L_bin1_mean_trace.csv"
+    },
+    {
+      "id": "38_l_bin1_sem_trace__0afc4a829766",
+      "name": "L_bin1_sem_trace",
+      "csv": "source_data/38_L_bin1_sem_trace.csv"
+    },
+    {
+      "id": "39_l_bin1_mean_trace_bgnd_s__94b1b45a39b8",
+      "name": "L_bin1_mean_trace_bgnd_s",
+      "csv": "source_data/39_L_bin1_mean_trace_bgnd_s.csv"
+    },
+    {
+      "id": "40_l_bin1_sem_trace_bgnd_s__12651648533c",
+      "name": "L_bin1_sem_trace_bgnd_s",
+      "csv": "source_data/40_L_bin1_sem_trace_bgnd_s.csv"
+    },
+    {
+      "id": "41_l_bin2_mean_trace__bf5ff35b6601",
+      "name": "L_bin2_mean_trace",
+      "csv": "source_data/41_L_bin2_mean_trace.csv"
+    },
+    {
+      "id": "42_l_bin2_sem_trace__adeae7ccd3e6",
+      "name": "L_bin2_sem_trace",
+      "csv": "source_data/42_L_bin2_sem_trace.csv"
+    },
+    {
+      "id": "43_l_bin2_mean_trace_bgnd_s__82b682c18b4c",
+      "name": "L_bin2_mean_trace_bgnd_s",
+      "csv": "source_data/43_L_bin2_mean_trace_bgnd_s.csv"
+    },
+    {
+      "id": "44_l_bin2_sem_trace_bgnd_s__dae2c772e84a",
+      "name": "L_bin2_sem_trace_bgnd_s",
+      "csv": "source_data/44_L_bin2_sem_trace_bgnd_s.csv"
+    },
+    {
+      "id": "45_l_bin3_mean_trace__96982cb4155b",
+      "name": "L_bin3_mean_trace",
+      "csv": "source_data/45_L_bin3_mean_trace.csv"
+    },
+    {
+      "id": "46_l_bin3_sem_trace__27ac0a8afecf",
+      "name": "L_bin3_sem_trace",
+      "csv": "source_data/46_L_bin3_sem_trace.csv"
+    },
+    {
+      "id": "47_l_bin3_mean_trace_bgnd_s__e06871409aa6",
+      "name": "L_bin3_mean_trace_bgnd_s",
+      "csv": "source_data/47_L_bin3_mean_trace_bgnd_s.csv"
+    },
+    {
+      "id": "48_l_bin3_sem_trace_bgnd_s__3e19f1b0cc26",
+      "name": "L_bin3_sem_trace_bgnd_s",
+      "csv": "source_data/48_L_bin3_sem_trace_bgnd_s.csv"
+    },
+    {
+      "id": "49_l_bin4_mean_trace__928f2d339caf",
+      "name": "L_bin4_mean_trace",
+      "csv": "source_data/49_L_bin4_mean_trace.csv"
+    },
+    {
+      "id": "50_l_bin4_sem_trace__1ca0f5887a93",
+      "name": "L_bin4_sem_trace",
+      "csv": "source_data/50_L_bin4_sem_trace.csv"
+    },
+    {
+      "id": "51_l_bin4_mean_trace_bgnd_s__994f8dc2821d",
+      "name": "L_bin4_mean_trace_bgnd_s",
+      "csv": "source_data/51_L_bin4_mean_trace_bgnd_s.csv"
+    },
+    {
+      "id": "52_l_bin4_sem_trace_bgnd_s__9aa31b52ed28",
+      "name": "L_bin4_sem_trace_bgnd_s",
+      "csv": "source_data/52_L_bin4_sem_trace_bgnd_s.csv"
+    },
+    {
+      "id": "53_l_bin5_mean_trace__bb2175db235a",
+      "name": "L_bin5_mean_trace",
+      "csv": "source_data/53_L_bin5_mean_trace.csv"
+    },
+    {
+      "id": "54_l_bin5_sem_trace__b7166dc74757",
+      "name": "L_bin5_sem_trace",
+      "csv": "source_data/54_L_bin5_sem_trace.csv"
+    },
+    {
+      "id": "55_l_bin5_mean_trace_bgnd_s__f635184e066f",
+      "name": "L_bin5_mean_trace_bgnd_s",
+      "csv": "source_data/55_L_bin5_mean_trace_bgnd_s.csv"
+    },
+    {
+      "id": "56_l_bin5_sem_trace_bgnd_s__523f8b2b7a22",
+      "name": "L_bin5_sem_trace_bgnd_s",
+      "csv": "source_data/56_L_bin5_sem_trace_bgnd_s.csv"
+    },
+    {
+      "id": "sourcedata_fig1_legend_statistics__797e84e50d2e",
+      "name": "Legend_statistics",
+      "csv": "source_data/SourceData_Fig1_legend_statistics.csv"
+    },
+    {
+      "id": "57_n_condition1__8d65866ce6de",
+      "name": "57_N_condition1",
+      "csv": "source_data/57_N_condition1.csv"
+    },
+    {
+      "id": "58_n_condition2__221c0e35f3c1",
+      "name": "58_N_condition2",
+      "csv": "source_data/58_N_condition2.csv"
+    },
+    {
+      "id": "59_n_condition3__e03e0b582cd1",
+      "name": "59_N_condition3",
+      "csv": "source_data/59_N_condition3.csv"
+    },
+    {
+      "id": "60_o_single__f5590893ca94",
+      "name": "60_O_single",
+      "csv": "source_data/60_O_single.csv"
+    },
+    {
+      "id": "61_o_poisson__f07b441dbe80",
+      "name": "61_O_poisson",
+      "csv": "source_data/61_O_poisson.csv"
+    },
+    {
+      "id": "n_condition1_stimuli__73b59e6234a3",
+      "name": "N_condition1_stimuli",
+      "csv": "source_data/N_condition1_stimuli.csv"
+    },
+    {
+      "id": "n_condition2_stimuli__b3e7dc5a37a8",
+      "name": "N_condition2_stimuli",
+      "csv": "source_data/N_condition2_stimuli.csv"
+    },
+    {
+      "id": "n_condition3_stimuli__9f41bb87dbd4",
+      "name": "N_condition3_stimuli",
+      "csv": "source_data/N_condition3_stimuli.csv"
+    },
+    {
+      "id": "o_poisson_stimuli__2be24e62e5a8",
+      "name": "O_poisson_stimuli",
+      "csv": "source_data/O_poisson_stimuli.csv"
+    },
+    {
+      "id": "o_single_stimuli__62316c9e6e80",
+      "name": "O_single_stimuli",
+      "csv": "source_data/O_single_stimuli.csv"
+    },
+    {
+      "id": "m_finite_snr_filtered_tau_events__84329d57e5d1",
+      "name": "M_finite_SNR_filtered_tau_events",
+      "csv": "source_data/M_finite_SNR_filtered_tau_events.csv"
+    },
+    {
+      "id": "k_selected_event_parameters__8df2268c99f0",
+      "name": "K_selected_event_parameters",
+      "csv": "source_data/K_selected_event_parameters.csv"
+    },
+    {
+      "id": "k_raw_examples__e23dd767bd01",
+      "name": "K_raw_examples",
+      "csv": "source_data/K_raw_examples.csv"
+    },
+    {
+      "id": "k_aligned_examples__d31fee467d04",
+      "name": "K_aligned_examples",
+      "csv": "source_data/K_aligned_examples.csv"
+    },
+    {
+      "id": "k_fitted_examples__4a6086843bcf",
+      "name": "K_fitted_examples",
+      "csv": "source_data/K_fitted_examples.csv"
+    },
+    {
+      "id": "k_spikes_examples__d3a9e4838750",
+      "name": "K_spikes_examples",
+      "csv": "source_data/K_spikes_examples.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/figure1_B_C_G_I_code.m",
+      "call": "figure1_B_C_G_I_code",
+      "panels": [
+        "B",
+        "C",
+        "G",
+        "I"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure1_B_C_G_I_01",
+        "figure1_B_C_G_I_02",
+        "figure1_B_C_G_I_03",
+        "figure1_B_C_G_I_04"
+      ],
+      "stem_panels": {
+        "figure1_B_C_G_I_01": [
+          "B"
+        ],
+        "figure1_B_C_G_I_02": [
+          "C"
+        ],
+        "figure1_B_C_G_I_03": [
+          "G"
+        ],
+        "figure1_B_C_G_I_04": [
+          "I"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure1_D_E_F_code.m",
+      "call": "figure1_D_E_F_code",
+      "panels": [
+        "D",
+        "E",
+        "F"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure1_D_E_F_01",
+        "figure1_D_E_F_02",
+        "figure1_D_E_F_03"
+      ],
+      "stem_panels": {
+        "figure1_D_E_F_01": [
+          "D"
+        ],
+        "figure1_D_E_F_02": [
+          "E"
+        ],
+        "figure1_D_E_F_03": [
+          "F"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure1_H_J_code.m",
+      "call": "figure1_H_J_code",
+      "panels": [
+        "H",
+        "J"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure1_H_J_01",
+        "figure1_H_J_02"
+      ],
+      "stem_panels": {
+        "figure1_H_J_01": [
+          "H"
+        ],
+        "figure1_H_J_02": [
+          "J"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure1_K_L_M_csv_code.m",
+      "call": "figure1_K_L_M_csv_code",
+      "panels": [
+        "K",
+        "L",
+        "M"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure1_K_L_M"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure1_N_code.m",
+      "call": "figure1_N_code",
+      "panels": [
+        "N"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure1_N"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure1_O_code.m",
+      "call": "figure1_O_code",
+      "panels": [
+        "O"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure1_O"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

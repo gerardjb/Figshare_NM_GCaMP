@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryFigure4",
+  "legacy_id": "supp_figure12",
+  "source_data_item": "SupplementaryFigure4",
+  "datasets": [
+    {
+      "id": "01_sf4_existing_matched_bias_uncer__c0f5a89bffe0",
+      "name": "SF4_existing_matched_bias_uncer",
+      "csv": "source_data/01_SF4_existing_matched_bias_uncer.csv"
+    },
+    {
+      "id": "02_sf4_existing_unmatched_bias_unc__d0e29b036786",
+      "name": "SF4_existing_unmatched_bias_unc",
+      "csv": "source_data/02_SF4_existing_unmatched_bias_unc.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "python",
+      "script": "code/suppfigure12_A_B_code.py",
+      "call": "main",
+      "panels": [
+        "A",
+        "B"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure12_A_B"
+      ],
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED4",
+  "legacy_id": "supp_figure8",
+  "source_data_item": "ED4",
+  "datasets": [
+    {
+      "id": "01_ground_truth_spike_times__2b92c8c3a71f",
+      "name": "ground_truth_spike_times",
+      "csv": "source_data/01_ground_truth_spike_times.csv"
+    },
+    {
+      "id": "02_inh_snr_02_5_trace__f08f874e4def",
+      "name": "inh_SNR_02_5_trace",
+      "csv": "source_data/02_inh_SNR_02_5_trace.csv"
+    },
+    {
+      "id": "03_inh_snr_02_5_posterior__9743f1b14ab4",
+      "name": "inh_SNR_02_5_posterior",
+      "csv": "source_data/03_inh_SNR_02_5_posterior.csv"
+    },
+    {
+      "id": "04_inh_snr_05_trace__3f3b062357dd",
+      "name": "inh_SNR_05_trace",
+      "csv": "source_data/04_inh_SNR_05_trace.csv"
+    },
+    {
+      "id": "05_inh_snr_05_posterior__0c7a46d6f96b",
+      "name": "inh_SNR_05_posterior",
+      "csv": "source_data/05_inh_SNR_05_posterior.csv"
+    },
+    {
+      "id": "06_pyr_snr_02_5_trace__5106f3678454",
+      "name": "pyr_SNR_02_5_trace",
+      "csv": "source_data/06_pyr_SNR_02_5_trace.csv"
+    },
+    {
+      "id": "07_pyr_snr_02_5_posterior__72a4587eb6e7",
+      "name": "pyr_SNR_02_5_posterior",
+      "csv": "source_data/07_pyr_SNR_02_5_posterior.csv"
+    },
+    {
+      "id": "08_pyr_snr_05_trace__aff15247418a",
+      "name": "pyr_SNR_05_trace",
+      "csv": "source_data/08_pyr_SNR_05_trace.csv"
+    },
+    {
+      "id": "09_pyr_snr_05_posterior__25453983c9db",
+      "name": "pyr_SNR_05_posterior",
+      "csv": "source_data/09_pyr_SNR_05_posterior.csv"
+    },
+    {
+      "id": "10_single_ap_traces__101fe5983c2e",
+      "name": "single_ap_traces",
+      "csv": "source_data/10_single_ap_traces.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "python",
+      "script": "code/ED4_code.py",
+      "call": "main",
+      "panels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED4_A_single_ap_overlay",
+        "ED4_B_pyramidal_inference",
+        "ED4_C_interneuron_inference",
+        "ED4_D_E_single_ap_recovery",
+        "ED4_full"
+      ],
+      "stem_panels": {
+        "ED4_A_single_ap_overlay": [
+          "A"
+        ],
+        "ED4_B_pyramidal_inference": [
+          "B"
+        ],
+        "ED4_C_interneuron_inference": [
+          "C"
+        ],
+        "ED4_D_E_single_ap_recovery": [
+          "D",
+          "E"
+        ],
+        "ED4_full": []
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

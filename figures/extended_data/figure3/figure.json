@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED3",
+  "legacy_id": "supp_figure6",
+  "source_data_item": "ED3",
+  "datasets": [
+    {
+      "id": "01_bouton_g6f_condition1__1f71220d66d7",
+      "name": "Bouton_G6f_condition1",
+      "csv": "source_data/01_Bouton_G6f_condition1.csv"
+    },
+    {
+      "id": "02_bouton_g6f_condition2__72197f11f3d9",
+      "name": "Bouton_G6f_condition2",
+      "csv": "source_data/02_Bouton_G6f_condition2.csv"
+    },
+    {
+      "id": "03_bouton_g6f_condition3__b3c79d69562c",
+      "name": "Bouton_G6f_condition3",
+      "csv": "source_data/03_Bouton_G6f_condition3.csv"
+    },
+    {
+      "id": "04_bouton_g6f_condition4__8f304458933e",
+      "name": "Bouton_G6f_condition4",
+      "csv": "source_data/04_Bouton_G6f_condition4.csv"
+    },
+    {
+      "id": "05_bouton_g6f_condition5__bb5c10d7c5ca",
+      "name": "Bouton_G6f_condition5",
+      "csv": "source_data/05_Bouton_G6f_condition5.csv"
+    },
+    {
+      "id": "06_states_g6f_condition1__156475dd9790",
+      "name": "States_G6f_condition1",
+      "csv": "source_data/06_States_G6f_condition1.csv"
+    },
+    {
+      "id": "07_states_g6f_condition2__431dbd3d9346",
+      "name": "States_G6f_condition2",
+      "csv": "source_data/07_States_G6f_condition2.csv"
+    },
+    {
+      "id": "08_states_g6f_condition3__0c2c571ccde4",
+      "name": "States_G6f_condition3",
+      "csv": "source_data/08_States_G6f_condition3.csv"
+    },
+    {
+      "id": "09_states_g6f_condition4__ffdebe629edd",
+      "name": "States_G6f_condition4",
+      "csv": "source_data/09_States_G6f_condition4.csv"
+    },
+    {
+      "id": "10_states_g6f_condition5__b56f0b1f6770",
+      "name": "States_G6f_condition5",
+      "csv": "source_data/10_States_G6f_condition5.csv"
+    },
+    {
+      "id": "11_sf_rise_g6f__b241310ffcee",
+      "name": "SF_rise_G6f",
+      "csv": "source_data/11_SF_rise_G6f.csv"
+    },
+    {
+      "id": "12_sf_decay_g6f__bb02c9e0403f",
+      "name": "SF_decay_G6f",
+      "csv": "source_data/12_SF_decay_G6f.csv"
+    },
+    {
+      "id": "13_bouton_jg7f_condition1__98a894e9fd34",
+      "name": "Bouton_jG7f_condition1",
+      "csv": "source_data/13_Bouton_jG7f_condition1.csv"
+    },
+    {
+      "id": "14_bouton_jg7f_condition2__da714ab1b0dd",
+      "name": "Bouton_jG7f_condition2",
+      "csv": "source_data/14_Bouton_jG7f_condition2.csv"
+    },
+    {
+      "id": "15_bouton_jg7f_condition3__5f0916639b99",
+      "name": "Bouton_jG7f_condition3",
+      "csv": "source_data/15_Bouton_jG7f_condition3.csv"
+    },
+    {
+      "id": "16_bouton_jg7f_condition4__631de75d221f",
+      "name": "Bouton_jG7f_condition4",
+      "csv": "source_data/16_Bouton_jG7f_condition4.csv"
+    },
+    {
+      "id": "17_bouton_jg7f_condition5__83260963d2bb",
+      "name": "Bouton_jG7f_condition5",
+      "csv": "source_data/17_Bouton_jG7f_condition5.csv"
+    },
+    {
+      "id": "18_states_jg7f_condition1__e676255784b1",
+      "name": "States_jG7f_condition1",
+      "csv": "source_data/18_States_jG7f_condition1.csv"
+    },
+    {
+      "id": "19_states_jg7f_condition2__5da8024c0f3c",
+      "name": "States_jG7f_condition2",
+      "csv": "source_data/19_States_jG7f_condition2.csv"
+    },
+    {
+      "id": "20_states_jg7f_condition3__c6b62d1e3157",
+      "name": "States_jG7f_condition3",
+      "csv": "source_data/20_States_jG7f_condition3.csv"
+    },
+    {
+      "id": "21_states_jg7f_condition4__88d7f445d158",
+      "name": "States_jG7f_condition4",
+      "csv": "source_data/21_States_jG7f_condition4.csv"
+    },
+    {
+      "id": "22_states_jg7f_condition5__0c01a18c318f",
+      "name": "States_jG7f_condition5",
+      "csv": "source_data/22_States_jG7f_condition5.csv"
+    },
+    {
+      "id": "23_sf_rise_jg7f__7b9c244b42db",
+      "name": "SF_rise_jG7f",
+      "csv": "source_data/23_SF_rise_jG7f.csv"
+    },
+    {
+      "id": "24_sf_decay_jg7f__e3eb4ff86018",
+      "name": "SF_decay_jG7f",
+      "csv": "source_data/24_SF_decay_jG7f.csv"
+    },
+    {
+      "id": "25_bouton_jg8f_condition1__79e63097275b",
+      "name": "Bouton_jG8f_condition1",
+      "csv": "source_data/25_Bouton_jG8f_condition1.csv"
+    },
+    {
+      "id": "26_bouton_jg8f_condition2__3255ceba1670",
+      "name": "Bouton_jG8f_condition2",
+      "csv": "source_data/26_Bouton_jG8f_condition2.csv"
+    },
+    {
+      "id": "27_bouton_jg8f_condition3__37e5b923e0eb",
+      "name": "Bouton_jG8f_condition3",
+      "csv": "source_data/27_Bouton_jG8f_condition3.csv"
+    },
+    {
+      "id": "28_bouton_jg8f_condition4__56f026a8b945",
+      "name": "Bouton_jG8f_condition4",
+      "csv": "source_data/28_Bouton_jG8f_condition4.csv"
+    },
+    {
+      "id": "29_bouton_jg8f_condition5__19dfa7752797",
+      "name": "Bouton_jG8f_condition5",
+      "csv": "source_data/29_Bouton_jG8f_condition5.csv"
+    },
+    {
+      "id": "30_states_jg8f_condition1__8c9f69e3da12",
+      "name": "States_jG8f_condition1",
+      "csv": "source_data/30_States_jG8f_condition1.csv"
+    },
+    {
+      "id": "31_states_jg8f_condition2__d34ad483d77f",
+      "name": "States_jG8f_condition2",
+      "csv": "source_data/31_States_jG8f_condition2.csv"
+    },
+    {
+      "id": "32_states_jg8f_condition3__c6e03004a572",
+      "name": "States_jG8f_condition3",
+      "csv": "source_data/32_States_jG8f_condition3.csv"
+    },
+    {
+      "id": "33_states_jg8f_condition4__0865103e14dd",
+      "name": "States_jG8f_condition4",
+      "csv": "source_data/33_States_jG8f_condition4.csv"
+    },
+    {
+      "id": "34_states_jg8f_condition5__43ce706f3aaf",
+      "name": "States_jG8f_condition5",
+      "csv": "source_data/34_States_jG8f_condition5.csv"
+    },
+    {
+      "id": "35_sf_rise_jg8f__a349c8e4cfcd",
+      "name": "SF_rise_jG8f",
+      "csv": "source_data/35_SF_rise_jG8f.csv"
+    },
+    {
+      "id": "36_sf_decay_jg8f__58d9624c2742",
+      "name": "SF_decay_jG8f",
+      "csv": "source_data/36_SF_decay_jG8f.csv"
+    },
+    {
+      "id": "ed3_gcamp6f_bouton_states__0bb7cd0c86e5",
+      "name": "ED3_GCaMP6f_bouton_states",
+      "csv": "source_data/ED3_GCaMP6f_bouton_states.csv"
+    },
+    {
+      "id": "ed3_gcamp6f_bouton_stimulus_events__70b139471f44",
+      "name": "ED3_GCaMP6f_bouton_stimulus_events",
+      "csv": "source_data/ED3_GCaMP6f_bouton_stimulus_events.csv"
+    },
+    {
+      "id": "ed3_gcamp6f_bouton_traces__d0cb468c2f6b",
+      "name": "ED3_GCaMP6f_bouton_traces",
+      "csv": "source_data/ED3_GCaMP6f_bouton_traces.csv"
+    },
+    {
+      "id": "ed3_gcamp6f_decay_stoppedflow_states__addbc194511c",
+      "name": "ED3_GCaMP6f_decay_stoppedflow_states",
+      "csv": "source_data/ED3_GCaMP6f_decay_stoppedflow_states.csv"
+    },
+    {
+      "id": "ed3_gcamp6f_rise_stoppedflow_states__a8e7d45e63c0",
+      "name": "ED3_GCaMP6f_rise_stoppedflow_states",
+      "csv": "source_data/ED3_GCaMP6f_rise_stoppedflow_states.csv"
+    },
+    {
+      "id": "ed3_jgcamp7f_bouton_states__091e124bff0d",
+      "name": "ED3_jGCaMP7f_bouton_states",
+      "csv": "source_data/ED3_jGCaMP7f_bouton_states.csv"
+    },
+    {
+      "id": "ed3_jgcamp7f_bouton_stimulus_events__febc72879b94",
+      "name": "ED3_jGCaMP7f_bouton_stimulus_events",
+      "csv": "source_data/ED3_jGCaMP7f_bouton_stimulus_events.csv"
+    },
+    {
+      "id": "ed3_jgcamp7f_bouton_traces__daeddeb48ba3",
+      "name": "ED3_jGCaMP7f_bouton_traces",
+      "csv": "source_data/ED3_jGCaMP7f_bouton_traces.csv"
+    },
+    {
+      "id": "ed3_jgcamp7f_decay_stoppedflow_states__dcff6442647e",
+      "name": "ED3_jGCaMP7f_decay_stoppedflow_states",
+      "csv": "source_data/ED3_jGCaMP7f_decay_stoppedflow_states.csv"
+    },
+    {
+      "id": "ed3_jgcamp7f_rise_stoppedflow_states__b33fca964f88",
+      "name": "ED3_jGCaMP7f_rise_stoppedflow_states",
+      "csv": "source_data/ED3_jGCaMP7f_rise_stoppedflow_states.csv"
+    },
+    {
+      "id": "ed3_jgcamp8f_bouton_states__40798aed05be",
+      "name": "ED3_jGCaMP8f_bouton_states",
+      "csv": "source_data/ED3_jGCaMP8f_bouton_states.csv"
+    },
+    {
+      "id": "ed3_jgcamp8f_bouton_stimulus_events__df278a89536b",
+      "name": "ED3_jGCaMP8f_bouton_stimulus_events",
+      "csv": "source_data/ED3_jGCaMP8f_bouton_stimulus_events.csv"
+    },
+    {
+      "id": "ed3_jgcamp8f_bouton_traces__3160b103e20b",
+      "name": "ED3_jGCaMP8f_bouton_traces",
+      "csv": "source_data/ED3_jGCaMP8f_bouton_traces.csv"
+    },
+    {
+      "id": "ed3_jgcamp8f_decay_stoppedflow_states__c2ac4b8d840d",
+      "name": "ED3_jGCaMP8f_decay_stoppedflow_states",
+      "csv": "source_data/ED3_jGCaMP8f_decay_stoppedflow_states.csv"
+    },
+    {
+      "id": "ed3_jgcamp8f_rise_stoppedflow_states__c1f0973d4c45",
+      "name": "ED3_jGCaMP8f_rise_stoppedflow_states",
+      "csv": "source_data/ED3_jGCaMP8f_rise_stoppedflow_states.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "python",
+      "script": "code/fast_ed3.py",
+      "call": "main",
+      "panels": [
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED3_b_rise_states",
+        "ED3_c_decay_states",
+        "ED3_d_bouton_traces",
+        "ED3_e_bouton_states"
+      ],
+      "stem_panels": {
+        "ED3_b_rise_states": [
+          "B"
+        ],
+        "ED3_c_decay_states": [
+          "C"
+        ],
+        "ED3_d_bouton_traces": [
+          "D"
+        ],
+        "ED3_e_bouton_states": [
+          "E"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "publication_id": "Figure4",
+  "legacy_id": "figure4",
+  "source_data_item": "Figure4",
+  "datasets": [
+    {
+      "id": "01_matched_spike_bias__da3c21d80d5a",
+      "name": "Matched_spike_bias",
+      "csv": "source_data/01_Matched_spike_bias.csv"
+    },
+    {
+      "id": "02_epoch_precision_recall__0b85dcd1fe23",
+      "name": "Epoch_precision_recall",
+      "csv": "source_data/02_Epoch_precision_recall.csv"
+    },
+    {
+      "id": "sourcedata_fig4_legend_statistics__46dbc5061fe3",
+      "name": "Legend_statistics",
+      "csv": "source_data/SourceData_Fig4_legend_statistics.csv"
+    },
+    {
+      "id": "d_epoch_correlations_all_widths__0f8aedb1380a",
+      "name": "D_epoch_correlations_all_widths",
+      "csv": "source_data/D_epoch_correlations_all_widths.csv"
+    },
+    {
+      "id": "figure4b_fluorescence_ground_truth__c4e161d23f22",
+      "name": "Figure4B_fluorescence_ground_truth",
+      "csv": "source_data/Figure4B_fluorescence_ground_truth.csv"
+    },
+    {
+      "id": "figure4b_ground_truth_spike_events__53359977f61b",
+      "name": "Figure4B_ground_truth_spike_events",
+      "csv": "source_data/Figure4B_ground_truth_spike_events.csv"
+    },
+    {
+      "id": "figure4b_biophyssmc_prediction__d6ff61c11ad4",
+      "name": "Figure4B_BiophysSMC_prediction",
+      "csv": "source_data/Figure4B_BiophysSMC_prediction.csv"
+    },
+    {
+      "id": "figure4b_biophyssmc_predicted_spike_events__02932ba35cb9",
+      "name": "Figure4B_BiophysSMC_predicted_spike_events",
+      "csv": "source_data/Figure4B_BiophysSMC_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4b_pgbar_prediction__97e84c130bbf",
+      "name": "Figure4B_PGBAR_prediction",
+      "csv": "source_data/Figure4B_PGBAR_prediction.csv"
+    },
+    {
+      "id": "figure4b_pgbar_predicted_spike_events__b6d010d98485",
+      "name": "Figure4B_PGBAR_predicted_spike_events",
+      "csv": "source_data/Figure4B_PGBAR_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4b_mlspike_prediction__0b367d513fb1",
+      "name": "Figure4B_MLspike_prediction",
+      "csv": "source_data/Figure4B_MLspike_prediction.csv"
+    },
+    {
+      "id": "figure4b_mlspike_predicted_spike_events__a74719892c6a",
+      "name": "Figure4B_MLspike_predicted_spike_events",
+      "csv": "source_data/Figure4B_MLspike_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4b_biophysml_prediction__1e7ca3e9156e",
+      "name": "Figure4B_BiophysML_prediction",
+      "csv": "source_data/Figure4B_BiophysML_prediction.csv"
+    },
+    {
+      "id": "figure4b_biophysml_predicted_spike_events__fc3c03561261",
+      "name": "Figure4B_BiophysML_predicted_spike_events",
+      "csv": "source_data/Figure4B_BiophysML_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4b_cascade_prediction__fac8ebc8011e",
+      "name": "Figure4B_CASCADE_prediction",
+      "csv": "source_data/Figure4B_CASCADE_prediction.csv"
+    },
+    {
+      "id": "figure4b_cascade_predicted_spike_events__4bca669aca60",
+      "name": "Figure4B_CASCADE_predicted_spike_events",
+      "csv": "source_data/Figure4B_CASCADE_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4b_ens2_prediction__3aa5815a81ee",
+      "name": "Figure4B_ENS2_prediction",
+      "csv": "source_data/Figure4B_ENS2_prediction.csv"
+    },
+    {
+      "id": "figure4b_ens2_predicted_spike_events__b612a63cf66f",
+      "name": "Figure4B_ENS2_predicted_spike_events",
+      "csv": "source_data/Figure4B_ENS2_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4b_displayed_correlations__bbd7bd22d979",
+      "name": "Figure4B_displayed_correlations",
+      "csv": "source_data/Figure4B_displayed_correlations.csv"
+    },
+    {
+      "id": "figure4c_fluorescence_ground_truth__de18fb2a9f79",
+      "name": "Figure4C_fluorescence_ground_truth",
+      "csv": "source_data/Figure4C_fluorescence_ground_truth.csv"
+    },
+    {
+      "id": "figure4c_ground_truth_spike_events__35df5df9486d",
+      "name": "Figure4C_ground_truth_spike_events",
+      "csv": "source_data/Figure4C_ground_truth_spike_events.csv"
+    },
+    {
+      "id": "figure4c_biophyssmc_prediction__8fcccdb0d797",
+      "name": "Figure4C_BiophysSMC_prediction",
+      "csv": "source_data/Figure4C_BiophysSMC_prediction.csv"
+    },
+    {
+      "id": "figure4c_biophyssmc_predicted_spike_events__8689b3ca4351",
+      "name": "Figure4C_BiophysSMC_predicted_spike_events",
+      "csv": "source_data/Figure4C_BiophysSMC_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4c_pgbar_prediction__3cb738af7d70",
+      "name": "Figure4C_PGBAR_prediction",
+      "csv": "source_data/Figure4C_PGBAR_prediction.csv"
+    },
+    {
+      "id": "figure4c_pgbar_predicted_spike_events__7766aeff792b",
+      "name": "Figure4C_PGBAR_predicted_spike_events",
+      "csv": "source_data/Figure4C_PGBAR_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4c_mlspike_prediction__5781c43e15ed",
+      "name": "Figure4C_MLspike_prediction",
+      "csv": "source_data/Figure4C_MLspike_prediction.csv"
+    },
+    {
+      "id": "figure4c_mlspike_predicted_spike_events__0b27e165b8df",
+      "name": "Figure4C_MLspike_predicted_spike_events",
+      "csv": "source_data/Figure4C_MLspike_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4c_biophysml_prediction__4d7eae789ff0",
+      "name": "Figure4C_BiophysML_prediction",
+      "csv": "source_data/Figure4C_BiophysML_prediction.csv"
+    },
+    {
+      "id": "figure4c_biophysml_predicted_spike_events__95bf6ef7de39",
+      "name": "Figure4C_BiophysML_predicted_spike_events",
+      "csv": "source_data/Figure4C_BiophysML_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4c_cascade_prediction__9530d50696d8",
+      "name": "Figure4C_CASCADE_prediction",
+      "csv": "source_data/Figure4C_CASCADE_prediction.csv"
+    },
+    {
+      "id": "figure4c_cascade_predicted_spike_events__2243f830dd45",
+      "name": "Figure4C_CASCADE_predicted_spike_events",
+      "csv": "source_data/Figure4C_CASCADE_predicted_spike_events.csv"
+    },
+    {
+      "id": "figure4c_ens2_prediction__b7122a902c02",
+      "name": "Figure4C_ENS2_prediction",
+      "csv": "source_data/Figure4C_ENS2_prediction.csv"
+    },
+    {
+      "id": "figure4c_ens2_displayed_ticks_inherited_from_cascade__70262f89d02d",
+      "name": "Figure4C_ENS2_displayed_ticks_inherited_from_CASCADE",
+      "csv": "source_data/Figure4C_ENS2_displayed_ticks_inherited_from_CASCADE.csv"
+    },
+    {
+      "id": "figure4c_displayed_correlations__753d38837e73",
+      "name": "Figure4C_displayed_correlations",
+      "csv": "source_data/Figure4C_displayed_correlations.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/figure4B_C_code.m",
+      "call": "figure4B_C_code",
+      "panels": [
+        "B",
+        "C"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure4_B_C"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure4_D_code.m",
+      "call": "figure4_D_code",
+      "panels": [
+        "D"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure4_D"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "python",
+      "script": "code/figure4_E_code.py",
+      "call": "main",
+      "panels": [
+        "E",
+        "F",
+        "G"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure4_E_F_G"
+      ],
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

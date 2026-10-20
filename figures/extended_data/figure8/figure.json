@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED8",
+  "legacy_id": "supp_figure14",
+  "source_data_item": "ED8",
+  "datasets": [
+    {
+      "id": "01_epoch_correlations__7767a9038f61",
+      "name": "Epoch_correlations",
+      "csv": "source_data/01_Epoch_correlations.csv"
+    },
+    {
+      "id": "02_ed8c_trace_values__b2c5c932c6bb",
+      "name": "ED8C_trace_values",
+      "csv": "source_data/02_ED8C_trace_values.csv"
+    },
+    {
+      "id": "03_mean_sem_curves__0db429423d8a",
+      "name": "Mean_SEM_curves",
+      "csv": "source_data/03_Mean_SEM_curves.csv"
+    },
+    {
+      "id": "a_stopped_flow_bestfit_curves__3259c47b95d0",
+      "name": "A_stopped_flow_bestfit_curves",
+      "csv": "source_data/A_stopped_flow_bestfit_curves.csv"
+    },
+    {
+      "id": "b_janelia_observed__220ae117728d",
+      "name": "B_Janelia_observed",
+      "csv": "source_data/B_Janelia_observed.csv"
+    },
+    {
+      "id": "b_janelia_fitted__4755d49f6f51",
+      "name": "B_Janelia_fitted",
+      "csv": "source_data/B_Janelia_fitted.csv"
+    },
+    {
+      "id": "b_janelia_ground_truth_spikes__024380b097b7",
+      "name": "B_Janelia_ground_truth_spikes",
+      "csv": "source_data/B_Janelia_ground_truth_spikes.csv"
+    },
+    {
+      "id": "c_ground_truth_spikes__a3195dd6eec6",
+      "name": "C_ground_truth_spikes",
+      "csv": "source_data/C_ground_truth_spikes.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/ED8_A_B_code.m",
+      "call": "ED8_A_B_code",
+      "panels": [
+        "A",
+        "B"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED8_A_B_global_best"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "python",
+      "script": "code/ED8_C_D_code.py",
+      "call": "main",
+      "panels": [
+        "C",
+        "D"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED8_C_trace_param_compare",
+        "ED8_D_corr_vs_sigma_param_compare"
+      ],
+      "stem_panels": {
+        "ED8_C_trace_param_compare": [
+          "C"
+        ],
+        "ED8_D_corr_vs_sigma_param_compare": [
+          "D"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

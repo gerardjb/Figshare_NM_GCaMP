@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryFigure3",
+  "legacy_id": "supp_figure9",
+  "source_data_item": "SupplementaryFigure3",
+  "datasets": [
+    {
+      "id": "b_epoch_correlations__0970ac49d07f",
+      "name": "B_epoch_correlations",
+      "csv": "source_data/B_epoch_correlations.csv"
+    },
+    {
+      "id": "b_mean_sem_curves__de58dbff23ed",
+      "name": "B_mean_SEM_curves",
+      "csv": "source_data/B_mean_SEM_curves.csv"
+    }
+  ],
+  "plot_only_datasets": [
+    {
+      "id": "sf3_a_saved_displayed_traces__056165ee3610",
+      "name": "SF3_A_saved_displayed_traces",
+      "csv": "source_data/SF3_A_saved_displayed_traces.csv",
+      "panel": "A",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure9/suppfigure9_A.fig",
+      "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun."
+    },
+    {
+      "id": "sf3_a_saved_event_ticks__4ebcc0ba1d1c",
+      "name": "SF3_A_saved_event_ticks",
+      "csv": "source_data/SF3_A_saved_event_ticks.csv",
+      "panel": "A",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure9/suppfigure9_A.fig",
+      "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun."
+    }
+  ],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/suppfigure9_A_code.m",
+      "call": "suppfigure9_A_code",
+      "panels": [
+        "A"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure9_A"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/suppfigure9_B_code.m",
+      "call": "suppfigure9_B_code",
+      "panels": [
+        "B"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure9_B"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED7",
+  "legacy_id": "supp_figure13",
+  "source_data_item": "ED7",
+  "datasets": [
+    {
+      "id": "01_plotted_epoch_correlations__dc1b43d7e8b2",
+      "name": "Plotted_epoch_correlations",
+      "csv": "source_data/01_Plotted_epoch_correlations.csv"
+    },
+    {
+      "id": "02_ed7a_smoothing_plot_panel0__d2e319da7a61",
+      "name": "ED7A_smoothing_plot_panel0",
+      "csv": "source_data/02_ED7A_smoothing_plot_panel0.csv"
+    },
+    {
+      "id": "03_ed7a_smoothing_plot_panel1__b5a130fbf9da",
+      "name": "ED7A_smoothing_plot_panel1",
+      "csv": "source_data/03_ED7A_smoothing_plot_panel1.csv"
+    },
+    {
+      "id": "04_ed7a_smoothing_plot_panel2__b0a5f4c89f91",
+      "name": "ED7A_smoothing_plot_panel2",
+      "csv": "source_data/04_ED7A_smoothing_plot_panel2.csv"
+    },
+    {
+      "id": "sourcedata_extendeddatafig7_legend_statistics__f38993e06407",
+      "name": "Legend_statistics",
+      "csv": "source_data/SourceData_ExtendedDataFig7_legend_statistics.csv"
+    },
+    {
+      "id": "a_condition0_fluorescence_groundtruth__f43c3919bd2b",
+      "name": "A_condition0_fluorescence_groundtruth",
+      "csv": "source_data/A_condition0_fluorescence_groundtruth.csv"
+    },
+    {
+      "id": "a_condition0_predictions__33b7f6d0d624",
+      "name": "A_condition0_predictions",
+      "csv": "source_data/A_condition0_predictions.csv"
+    },
+    {
+      "id": "a_condition0_spike_times__2998e89f6912",
+      "name": "A_condition0_spike_times",
+      "csv": "source_data/A_condition0_spike_times.csv"
+    },
+    {
+      "id": "a_condition1_fluorescence_groundtruth__307a8d4a78d0",
+      "name": "A_condition1_fluorescence_groundtruth",
+      "csv": "source_data/A_condition1_fluorescence_groundtruth.csv"
+    },
+    {
+      "id": "a_condition1_predictions__6a2fd555cd8f",
+      "name": "A_condition1_predictions",
+      "csv": "source_data/A_condition1_predictions.csv"
+    },
+    {
+      "id": "a_condition1_spike_times__555a9fe56f67",
+      "name": "A_condition1_spike_times",
+      "csv": "source_data/A_condition1_spike_times.csv"
+    },
+    {
+      "id": "a_condition2_fluorescence_groundtruth__ccb131ac7e00",
+      "name": "A_condition2_fluorescence_groundtruth",
+      "csv": "source_data/A_condition2_fluorescence_groundtruth.csv"
+    },
+    {
+      "id": "a_condition2_predictions__1b97fc3a0901",
+      "name": "A_condition2_predictions",
+      "csv": "source_data/A_condition2_predictions.csv"
+    },
+    {
+      "id": "a_condition2_spike_times__fdec3595b187",
+      "name": "A_condition2_spike_times",
+      "csv": "source_data/A_condition2_spike_times.csv"
+    },
+    {
+      "id": "a_trace_metadata_correlations__6b38016bcfaf",
+      "name": "A_trace_metadata_correlations",
+      "csv": "source_data/A_trace_metadata_correlations.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "python",
+      "script": "code/ED7_code.py",
+      "call": "main",
+      "panels": [
+        "A",
+        "B"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED7_trace_panels",
+        "ED7_raincloud_downsample"
+      ],
+      "stem_panels": {
+        "ED7_trace_panels": [],
+        "ED7_raincloud_downsample": [
+          "A",
+          "B"
+        ]
+      },
+      "required_formats": [
+        "pdf"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

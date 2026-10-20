@@ -1,4 +1,10 @@
-function figure2_K_L_code
+function figure2_K_L_code(mode)
+% CSV mode is the fast canonical plotting route; original mode retains extraction.
+if nargin < 1, mode="csv"; end
+mode=lower(string(mode));
+assert(ismember(mode,["csv","original"]),'Figure2:Mode','Use csv or original mode.');
+useCsv=mode=="csv";
+sourceDataDir=fullfile(fileparts(fileparts(mfilename('fullpath'))),'source_data');
 %%%
 % Plots of elongation and its comparison ot accessible slowing as shown in
 % the refernced figure
@@ -8,13 +14,20 @@ function figure2_K_L_code
 close all
 
 % Collect data files
-d = fileparts(mfilename("fullpath"));
+d = fullfile(fileparts(mfilename("fullpath")),'..','inputs');
 fname = fullfile(d,'10pulseData.mat');
 fname2 = fullfile(d,'decay.mat');
 fname3 = fullfile(d,'kineticContribution2.mat');
 
 %% Elongation plot
-load(fname);
+if useCsv
+    q=readtable(fullfile(sourceDataDir,'05_K_decay_inputs.csv'),'TextType','string');
+    G6f=[q.one_pulse_half_decay(q.indicator=="G6f"),q.ten_pulse_half_decay(q.indicator=="G6f")];
+    jG7f=[q.one_pulse_half_decay(q.indicator=="jG7f"),q.ten_pulse_half_decay(q.indicator=="jG7f")];
+    jG8f=[q.one_pulse_half_decay(q.indicator=="jG8f"),q.ten_pulse_half_decay(q.indicator=="jG8f")];
+else
+    load(fname);
+end
 consts = {'G6f','jG7f','jG8f'};
 all = {[G6f,G6f(:,2)./G6f(:,1)],...
     [jG7f,jG7f(:,2)./jG7f(:,1)],...
@@ -45,6 +58,7 @@ ylabel({'fold slowing','(1 to 10 pulse)'})
 box off
 set(gca,'tickdir','out','linewidth',1,'fontsize',10);
 
+if ~useCsv
 % One-way ANOVA with Tukey-Kramer post hoc tests for panel K.
 elong_vals = elongs(:);
 elong_groups = repelem(1:size(elongs,2),size(elongs,1))';
@@ -92,8 +106,15 @@ posthoc_out = table( ...
 disp('  Tukey-Kramer post hoc comparisons:');
 disp(posthoc_out);
 
+end % Preserve published K without extra ANOVA annotations.
+
 %% Elongation vs. accessible slowing
 % Load other files
+if useCsv
+    q=readtable(fullfile(sourceDataDir,'L_selected_condition_contributions.csv'),'TextType','string');
+    keys=["GCaMP6f","jGCaMP7f","jGCaMP8f"];
+    a_slow_values=arrayfun(@(name) q.accessible_slowing(q.indicator==name),keys,'UniformOutput',false);
+else
 load(fname2)
 load(fname3)
 
@@ -102,6 +123,7 @@ load(fname3)
 goodCa = ca>200 & ca<2000;
 a_slow_values = cellfun(@(x,y) y(2,goodCa)./y(1,goodCa).*(1-x(goodCa)),...
     all_proportions1(2:end),all_taus(2:end),'UniformOutput',false);
+end
 a_slow_values = cellfun(@(x) x(isfinite(x)),a_slow_values,'UniformOutput',false);
 elong_values = arrayfun(@(i) elongs(isfinite(elongs(:,i)),i),...
     1:size(elongs,2),'UniformOutput',false);
@@ -116,7 +138,7 @@ elongs_med = [1,cellfun(@median,elong_values)];
 elong_q1 = [1,cellfun(@(x) prctile(x,25),elong_values)];
 elong_q3 = [1,cellfun(@(x) prctile(x,75),elong_values)];
 
-% Descriptive, unweighted regression of the four displayed indicator
+% Descriptive regression of the four displayed indicator
 % summaries, including the fixed OGB5N reference. IQRs describe spread
 % across calcium conditions / boutons, not sampling variances of medians.
 mdl = fitlm(a_slow(:),elongs_med(:));
@@ -168,7 +190,7 @@ text(0.97,0.03,stats_text,...
     'Units','normalized','HorizontalAlignment','right',...
     'VerticalAlignment','bottom','FontName','arial','FontSize',8);
 
-fprintf('Panel 2L unweighted linear regression: fold slowing ~ accessible slowing\n');
+fprintf('Panel 2L linear regression: fold slowing ~ accessible slowing\n');
 fprintf('  Four indicator summaries, including the fixed OGB5N reference.\n');
 fprintf('  n = %d indicator summaries\n',mdl.NumObservations);
 fprintf('  slope = %.4f (95%% CI [%.4f, %.4f])\n',...

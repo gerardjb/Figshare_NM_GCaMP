@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryFigure2",
+  "legacy_id": "supp_figure7",
+  "source_data_item": null,
+  "datasets": [],
+  "plot_only_datasets": [],
+  "entrypoints": [],
+  "static_panels": [
+    "A",
+    "B"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

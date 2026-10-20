@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryFigure1",
+  "legacy_id": "supp_figure2",
+  "source_data_item": "SupplementaryFigure1",
+  "datasets": [
+    {
+      "id": "01_sf1_onsummary20200711_on_37_i__3a13a6cfbe91",
+      "name": "SF1_OnSummary20200711_On 37 I -",
+      "csv": "source_data/01_SF1_OnSummary20200711_On_37_I_-.csv"
+    },
+    {
+      "id": "02_sf1_onsummary20210129_on_37_k__70ef5a8bfa5d",
+      "name": "SF1_OnSummary20210129_On 37 K -",
+      "csv": "source_data/02_SF1_OnSummary20210129_On_37_K_-.csv"
+    },
+    {
+      "id": "03_sf1_onsummary20200711_on_37_i__e1604ae04dae",
+      "name": "SF1_OnSummary20200711_On 37 I -",
+      "csv": "source_data/03_SF1_OnSummary20200711_On_37_I_-.csv"
+    },
+    {
+      "id": "04_sf1_onsummary20210129_on_37_k__cfca68d12694",
+      "name": "SF1_OnSummary20210129_On 37 K -",
+      "csv": "source_data/04_SF1_OnSummary20210129_On_37_K_-.csv"
+    }
+  ],
+  "plot_only_datasets": [
+    {
+      "id": "sf1_c_saved_simulation__3e03bcbc78b8",
+      "name": "SF1_c_saved_simulation",
+      "csv": "source_data/SF1_c_saved_simulation.csv",
+      "panel": "C",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure2/suppfigure2.fig",
+      "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun."
+    },
+    {
+      "id": "sf1_d_saved_simulation__0a1152769d35",
+      "name": "SF1_d_saved_simulation",
+      "csv": "source_data/SF1_d_saved_simulation.csv",
+      "panel": "D",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure2/suppfigure2.fig",
+      "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun."
+    },
+    {
+      "id": "sf1_e_sim_saved_simulation__b7d340f268fa",
+      "name": "SF1_e_sim_saved_simulation",
+      "csv": "source_data/SF1_e_sim_saved_simulation.csv",
+      "panel": "E",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure2/suppfigure2.fig",
+      "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun."
+    },
+    {
+      "id": "sf1_f_sim_saved_simulation__4c121614c090",
+      "name": "SF1_f_sim_saved_simulation",
+      "csv": "source_data/SF1_f_sim_saved_simulation.csv",
+      "panel": "F",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure2/suppfigure2.fig",
+      "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun."
+    }
+  ],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/suppfigure2_code.m",
+      "call": "suppfigure2_code",
+      "panels": [
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure2"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A",
+    "B"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

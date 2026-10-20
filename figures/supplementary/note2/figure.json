@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryNote2",
+  "legacy_id": "supp_figure5",
+  "source_data_item": "SupplementaryNote2",
+  "datasets": [
+    {
+      "id": "01_note2_existing_candidate_parame__6ff67cf7b79f",
+      "name": "Note2_existing_candidate_parame",
+      "csv": "source_data/01_Note2_existing_candidate_parame.csv"
+    },
+    {
+      "id": "b_stopped_flow__9608758121e8",
+      "name": "B_stopped_flow",
+      "csv": "source_data/B_stopped_flow.csv"
+    },
+    {
+      "id": "b_paired_pulse__9825cb7f3c31",
+      "name": "B_paired_pulse",
+      "csv": "source_data/B_paired_pulse.csv"
+    },
+    {
+      "id": "b_poisson__29bf51c0b972",
+      "name": "B_poisson",
+      "csv": "source_data/B_poisson.csv"
+    },
+    {
+      "id": "b_poisson_zoom__f623a480ead3",
+      "name": "B_poisson_zoom",
+      "csv": "source_data/B_poisson_zoom.csv"
+    },
+    {
+      "id": "b_stimulus_times__8c2205714dea",
+      "name": "B_stimulus_times",
+      "csv": "source_data/B_stimulus_times.csv"
+    },
+    {
+      "id": "c_stopped_flow__0920a720590c",
+      "name": "C_stopped_flow",
+      "csv": "source_data/C_stopped_flow.csv"
+    },
+    {
+      "id": "c_paired_pulse__711899e082b9",
+      "name": "C_paired_pulse",
+      "csv": "source_data/C_paired_pulse.csv"
+    },
+    {
+      "id": "c_poisson__03e7f1620df7",
+      "name": "C_poisson",
+      "csv": "source_data/C_poisson.csv"
+    },
+    {
+      "id": "c_poisson_zoom__6b11795d4884",
+      "name": "C_poisson_zoom",
+      "csv": "source_data/C_poisson_zoom.csv"
+    },
+    {
+      "id": "c_stimulus_times__3d4aa32a08eb",
+      "name": "C_stimulus_times",
+      "csv": "source_data/C_stimulus_times.csv"
+    },
+    {
+      "id": "d_stopped_flow__32038722d93c",
+      "name": "D_stopped_flow",
+      "csv": "source_data/D_stopped_flow.csv"
+    },
+    {
+      "id": "d_paired_pulse__e9415fb77cab",
+      "name": "D_paired_pulse",
+      "csv": "source_data/D_paired_pulse.csv"
+    },
+    {
+      "id": "d_poisson__b495af2fbea4",
+      "name": "D_poisson",
+      "csv": "source_data/D_poisson.csv"
+    },
+    {
+      "id": "d_poisson_zoom__abf93835603a",
+      "name": "D_poisson_zoom",
+      "csv": "source_data/D_poisson_zoom.csv"
+    },
+    {
+      "id": "d_stimulus_times__538ce67ecffc",
+      "name": "D_stimulus_times",
+      "csv": "source_data/D_stimulus_times.csv"
+    }
+  ],
+  "plot_only_datasets": [
+    {
+      "id": "a_displayed_heatmap__354d5f0c9312",
+      "name": "Note2_A_displayed_heatmap",
+      "csv": "source_data/A_displayed_heatmap.csv",
+      "panel": "A",
+      "role": "plot_only_recovered_display_array",
+      "source": "output/supp_figure5/suppfigure5_01.fig",
+      "method": "Exact saved 180 x 18 displayed heatmap, row order and nine cluster labels; uniquely mapped to canonical candidate rows. No clustering or refitting rerun."
+    }
+  ],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/suppfigure_5_code.m",
+      "call": "suppfigure_5_code",
+      "panels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure5_01",
+        "suppfigure5_02",
+        "suppfigure5_03",
+        "suppfigure5_04"
+      ],
+      "stem_panels": {
+        "suppfigure5_01": [
+          "A"
+        ],
+        "suppfigure5_02": [
+          "B"
+        ],
+        "suppfigure5_03": [
+          "C"
+        ],
+        "suppfigure5_04": [
+          "D"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

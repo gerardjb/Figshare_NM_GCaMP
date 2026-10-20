@@ -1,0 +1,597 @@
+[
+  {
+    "item": "SupplementaryFigure1",
+    "name": "SF1_c_saved_simulation",
+    "panel": "C",
+    "repo_destination": "figures/supplementary/figure1/source_data/SF1_c_saved_simulation.csv",
+    "rows_count": 80004,
+    "csv_sha256": "ca7bc5a9b05135ce0fd3e624e49da7ea82df83849f8dba67ffc8e827a5f06c79",
+    "columns": [
+      {
+        "name": "panel",
+        "unit": ""
+      },
+      {
+        "name": "buffer",
+        "unit": ""
+      },
+      {
+        "name": "saved_line",
+        "unit": "index"
+      },
+      {
+        "name": "nominal_step_uM",
+        "unit": "uM"
+      },
+      {
+        "name": "line_style",
+        "unit": ""
+      },
+      {
+        "name": "time_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "free_calcium_uM",
+        "unit": "uM"
+      }
+    ],
+    "source": "output/supp_figure2/suppfigure2.fig",
+    "source_sha256": "5bed3d485bd021b07db3e55c6a05012b765379b402d0fb6a2180fff2b56702ee",
+    "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun.",
+    "workbook_export": {
+      "interpolation": "existing uniform-time linear interpolation;200 maximum points per continuous curve;full-resolution CSV retained",
+      "time_column": "time_ms",
+      "group_columns": [
+        "saved_line"
+      ],
+      "limit_per_curve": 200
+    }
+  },
+  {
+    "item": "SupplementaryFigure1",
+    "name": "SF1_d_saved_simulation",
+    "panel": "D",
+    "repo_destination": "figures/supplementary/figure1/source_data/SF1_d_saved_simulation.csv",
+    "rows_count": 80004,
+    "csv_sha256": "aa1c26dfea82f69e9af8f4d18c5686ba58c79df8cc58a36e14bb1ca3ec681bc7",
+    "columns": [
+      {
+        "name": "panel",
+        "unit": ""
+      },
+      {
+        "name": "buffer",
+        "unit": ""
+      },
+      {
+        "name": "saved_line",
+        "unit": "index"
+      },
+      {
+        "name": "nominal_step_uM",
+        "unit": "uM"
+      },
+      {
+        "name": "line_style",
+        "unit": ""
+      },
+      {
+        "name": "time_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "free_calcium_uM",
+        "unit": "uM"
+      }
+    ],
+    "source": "output/supp_figure2/suppfigure2.fig",
+    "source_sha256": "5bed3d485bd021b07db3e55c6a05012b765379b402d0fb6a2180fff2b56702ee",
+    "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun.",
+    "workbook_export": {
+      "interpolation": "existing uniform-time linear interpolation;200 maximum points per continuous curve;full-resolution CSV retained",
+      "time_column": "time_ms",
+      "group_columns": [
+        "saved_line"
+      ],
+      "limit_per_curve": 200
+    }
+  },
+  {
+    "item": "SupplementaryFigure1",
+    "name": "SF1_e_sim_saved_simulation",
+    "panel": "E",
+    "repo_destination": "figures/supplementary/figure1/source_data/SF1_e_sim_saved_simulation.csv",
+    "rows_count": 160008,
+    "csv_sha256": "2aeb65754707c873788b2b95fe4d6333ffc8501ef26ff546d2f114b34ca3506e",
+    "columns": [
+      {
+        "name": "panel",
+        "unit": ""
+      },
+      {
+        "name": "buffer",
+        "unit": ""
+      },
+      {
+        "name": "saved_line",
+        "unit": "index"
+      },
+      {
+        "name": "nominal_step_uM",
+        "unit": "uM"
+      },
+      {
+        "name": "line_style",
+        "unit": ""
+      },
+      {
+        "name": "time_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "normalized_OGB1_response",
+        "unit": "dimensionless"
+      }
+    ],
+    "source": "output/supp_figure2/suppfigure2.fig",
+    "source_sha256": "5bed3d485bd021b07db3e55c6a05012b765379b402d0fb6a2180fff2b56702ee",
+    "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun.",
+    "workbook_export": {
+      "interpolation": "existing uniform-time linear interpolation;200 maximum points per continuous curve;full-resolution CSV retained",
+      "time_column": "time_ms",
+      "group_columns": [
+        "saved_line"
+      ],
+      "limit_per_curve": 200
+    }
+  },
+  {
+    "item": "SupplementaryFigure1",
+    "name": "SF1_f_sim_saved_simulation",
+    "panel": "F",
+    "repo_destination": "figures/supplementary/figure1/source_data/SF1_f_sim_saved_simulation.csv",
+    "rows_count": 160008,
+    "csv_sha256": "07cc620e124fa94e63eb71e650ce44fb571778bebb1fe73da29c26d0db281c78",
+    "columns": [
+      {
+        "name": "panel",
+        "unit": ""
+      },
+      {
+        "name": "buffer",
+        "unit": ""
+      },
+      {
+        "name": "saved_line",
+        "unit": "index"
+      },
+      {
+        "name": "nominal_step_uM",
+        "unit": "uM"
+      },
+      {
+        "name": "line_style",
+        "unit": ""
+      },
+      {
+        "name": "time_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "normalized_OGB1_response",
+        "unit": "dimensionless"
+      }
+    ],
+    "source": "output/supp_figure2/suppfigure2.fig",
+    "source_sha256": "5bed3d485bd021b07db3e55c6a05012b765379b402d0fb6a2180fff2b56702ee",
+    "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun.",
+    "workbook_export": {
+      "interpolation": "existing uniform-time linear interpolation;200 maximum points per continuous curve;full-resolution CSV retained",
+      "time_column": "time_ms",
+      "group_columns": [
+        "saved_line"
+      ],
+      "limit_per_curve": 200
+    }
+  },
+  {
+    "item": "SupplementaryFigure3",
+    "name": "SF3_A_saved_displayed_traces",
+    "panel": "A",
+    "repo_destination": "figures/supplementary/figure3/source_data/SF3_A_saved_displayed_traces.csv",
+    "rows_count": 2212,
+    "csv_sha256": "f2ef689bff15968ec23305a39e2f2885163c0988a3b085e79fdf304f41a9b3d4",
+    "columns": [
+      {
+        "name": "trace_role",
+        "unit": ""
+      },
+      {
+        "name": "source_sample_index",
+        "unit": "index"
+      },
+      {
+        "name": "time_s",
+        "unit": "s"
+      },
+      {
+        "name": "displayed_value",
+        "unit": "row-specific trace_role; fluorescence=DeltaF/F, other traces=dimensionless"
+      }
+    ],
+    "source": "output/supp_figure9/suppfigure9_A.fig",
+    "source_sha256": "95545ada0f84bb58fd8f8899622516276aea011eb4ee70a6aa7c004368066cb3",
+    "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun.",
+    "workbook_export": {
+      "interpolation": "existing uniform-time linear interpolation;200 maximum points per continuous curve;full-resolution CSV retained",
+      "time_column": "time_s",
+      "group_columns": [
+        "trace_role"
+      ],
+      "limit_per_curve": 200
+    }
+  },
+  {
+    "item": "SupplementaryFigure3",
+    "name": "SF3_A_saved_event_ticks",
+    "panel": "A",
+    "repo_destination": "figures/supplementary/figure3/source_data/SF3_A_saved_event_ticks.csv",
+    "rows_count": 95,
+    "csv_sha256": "57bddfab3d122dfb13b065daa308341533d021eb64840d7e34a6eae0fbb6ab45",
+    "columns": [
+      {
+        "name": "trace_role",
+        "unit": ""
+      },
+      {
+        "name": "event_kind",
+        "unit": ""
+      },
+      {
+        "name": "event_time_s",
+        "unit": "s"
+      },
+      {
+        "name": "display_tick_bottom",
+        "unit": "display coordinate"
+      },
+      {
+        "name": "display_tick_top",
+        "unit": "display coordinate"
+      }
+    ],
+    "source": "output/supp_figure9/suppfigure9_A.fig",
+    "source_sha256": "95545ada0f84bb58fd8f8899622516276aea011eb4ee70a6aa7c004368066cb3",
+    "method": "Read saved native MATLAB line arrays, verified against published SI PDF vector vertices. No simulation/refitting rerun.",
+    "workbook_export": {
+      "interpolation": "none",
+      "preserve_exact_events": true
+    }
+  },
+  {
+    "item": "SupplementaryNote2",
+    "name": "Note2_A_displayed_heatmap",
+    "panel": "A",
+    "repo_destination": "figures/supplementary/note2/source_data/A_displayed_heatmap.csv",
+    "rows_count": 180,
+    "csv_sha256": "2f8e54481bd3565879dd622dce206782dc1ac6a05e917f0be4b02b326e4cf581",
+    "columns": [
+      {
+        "name": "display_row",
+        "unit": "index"
+      },
+      {
+        "name": "displayed_cluster",
+        "unit": "category"
+      },
+      {
+        "name": "source_row",
+        "unit": "index"
+      },
+      {
+        "name": "z_score_columns",
+        "unit": "standard deviations"
+      }
+    ],
+    "source": "output/supp_figure5/suppfigure5_01.fig",
+    "source_sha256": "1fbcfe9f2a0642b2aba73655e94b6fff937283d4532ec1d8d0562b463acae5cb",
+    "method": "Exact saved 180 x 18 displayed heatmap, row order and nine cluster labels; uniquely mapped to canonical candidate rows. No clustering or refitting rerun."
+  },
+  {
+    "item": "Figure2",
+    "name": "D_saved_prestep_baselines",
+    "panel": "D",
+    "repo_destination": "figures/main/figure2/source_data/D_saved_prestep_baselines.csv",
+    "rows_count": 119,
+    "csv_sha256": "b2c9a8a158960706275b73c230fa3e24067f8543f694e9f82f9bf4ec24ed947d",
+    "columns": [
+      {
+        "name": "indicator",
+        "unit": ""
+      },
+      {
+        "name": "source_time_index",
+        "unit": "index"
+      },
+      {
+        "name": "time_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "normalized_fluorescence",
+        "unit": "dimensionless"
+      }
+    ],
+    "source": "saved published Figure 2 panel D display arrays",
+    "method": "Recovered exact displayed prestep baselines; no fitting rerun."
+  },
+  {
+    "item": "Figure2",
+    "name": "G_saved_full_jGCaMP8f_rise",
+    "panel": "G",
+    "repo_destination": "figures/main/figure2/source_data/G_saved_full_jGCaMP8f_rise.csv",
+    "rows_count": 89991,
+    "csv_sha256": "d6354ac8efc05b6b53e87b06751ca082443207609916d843c553b44f57659078",
+    "columns": [
+      {
+        "name": "calcium_column_index",
+        "unit": "index"
+      },
+      {
+        "name": "calcium_nM",
+        "unit": "nM"
+      },
+      {
+        "name": "source_time_index",
+        "unit": "index"
+      },
+      {
+        "name": "time_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "normalized_fluorescence",
+        "unit": "dimensionless"
+      }
+    ],
+    "source": "saved published Figure 2 panel G display arrays",
+    "method": "Recovered the full saved jGCaMP8f rise paths; no simulation or fitting rerun."
+  },
+  {
+    "item": "Figure2",
+    "name": "J_saved_annotation_metadata",
+    "panel": "J",
+    "repo_destination": "figures/main/figure2/source_data/J_saved_annotation_metadata.csv",
+    "rows_count": 2,
+    "csv_sha256": "2dcba542a389102ae587efebf88f529078bb2588c9074573b74f1eabc005df18",
+    "columns": [
+      {
+        "name": "indicator",
+        "unit": ""
+      },
+      {
+        "name": "tau_fast_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "tau_slow_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "fast_fraction",
+        "unit": "fraction"
+      },
+      {
+        "name": "text_x_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "fast_text_y",
+        "unit": "display coordinate"
+      },
+      {
+        "name": "slow_text_y",
+        "unit": "display coordinate"
+      }
+    ],
+    "source": "saved published Figure 2 panel J annotations",
+    "method": "Recovered exact annotation values and positions used with the registered plotted curves."
+  },
+  {
+    "item": "SupplementaryNote1",
+    "name": "Note1_A_D_reference_plot_paths",
+    "panel": "A-D",
+    "repo_destination": "figures/supplementary/note1/source_data/A_D_reference_plot_paths.csv",
+    "rows_count": 15297,
+    "csv_sha256": "f313e6fe79958483331b856efadf82c383575aa1f1d5e93aec22d3a42e0ea7fc",
+    "columns": [
+      {
+        "name": "panel",
+        "unit": ""
+      },
+      {
+        "name": "series_id",
+        "unit": ""
+      },
+      {
+        "name": "point_index",
+        "unit": "index"
+      },
+      {
+        "name": "reference_plot_x",
+        "unit": "display coordinate"
+      },
+      {
+        "name": "reference_plot_y",
+        "unit": "display coordinate"
+      },
+      {
+        "name": "coordinate_unit",
+        "unit": ""
+      }
+    ],
+    "source": "published Supplementary Information PDF page 11",
+    "method": "Recovered published vector plot paths at PDF precision; explicitly not physical fit parameters."
+  },
+  {
+    "item": "SupplementaryNote1",
+    "name": "Note1_C_reference_fit_labels",
+    "panel": "C",
+    "repo_destination": "figures/supplementary/note1/source_data/C_reference_fit_labels.csv",
+    "rows_count": 3,
+    "csv_sha256": "1caafba7376d84e2722312d79ecf1e0cf1cd348bc15597ed57ea36f7531227e2",
+    "columns": [
+      {
+        "name": "spikes",
+        "unit": "count"
+      },
+      {
+        "name": "tau1_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "fast_component_percent",
+        "unit": "percent"
+      },
+      {
+        "name": "tau2_ms",
+        "unit": "ms"
+      },
+      {
+        "name": "precision",
+        "unit": ""
+      }
+    ],
+    "source": "published Supplementary Information PDF page 11",
+    "method": "Transcribed the published displayed labels without refitting."
+  },
+  {
+    "item": "SupplementaryNote1",
+    "name": "Note1_D_reference_summary_values",
+    "panel": "D",
+    "repo_destination": "figures/supplementary/note1/source_data/D_reference_summary_values_PDF_precision.csv",
+    "rows_count": 90,
+    "csv_sha256": "2765aaa9b2ea95441550dad868027664521a0ffd2936e229901fa3c68d296e0b",
+    "columns": [
+      {
+        "name": "metric",
+        "unit": ""
+      },
+      {
+        "name": "series",
+        "unit": ""
+      },
+      {
+        "name": "spikes",
+        "unit": "count"
+      },
+      {
+        "name": "value",
+        "unit": "metric-specific"
+      },
+      {
+        "name": "PDF_path_x",
+        "unit": "display coordinate"
+      },
+      {
+        "name": "PDF_path_y",
+        "unit": "display coordinate"
+      },
+      {
+        "name": "recovery",
+        "unit": ""
+      }
+    ],
+    "source": "published Supplementary Information PDF page 11",
+    "method": "Recovered published summary paths and values at PDF precision; no model fitting rerun."
+  },
+  {
+    "item": "SupplementaryNote1",
+    "name": "Note1_D_reference_SEM_endpoints",
+    "panel": "D",
+    "repo_destination": "figures/supplementary/note1/source_data/D_reference_SEM_endpoints_PDF_precision.csv",
+    "rows_count": 9,
+    "csv_sha256": "a2d480d0aa5a136b09d301674bf9682a738fb03d2f9fdaeb6c1306e5de319e06",
+    "columns": [
+      {
+        "name": "metric",
+        "unit": ""
+      },
+      {
+        "name": "spikes",
+        "unit": "count"
+      },
+      {
+        "name": "lower_endpoint",
+        "unit": "metric-specific"
+      },
+      {
+        "name": "upper_endpoint",
+        "unit": "metric-specific"
+      },
+      {
+        "name": "precision",
+        "unit": ""
+      }
+    ],
+    "source": "published Supplementary Information PDF page 11",
+    "method": "Recovered published mean-plus-or-minus-SEM endpoints at PDF precision; no model fitting rerun."
+  },
+  {
+    "item": "SupplementaryNote1",
+    "name": "Note1_E_G_confirmed_native_series",
+    "panel": "E-G",
+    "repo_destination": "figures/supplementary/note1/source_data/E_G_confirmed_native_series.csv",
+    "rows_count": 22824,
+    "csv_sha256": "2feb4b65169c421348276b60a6ab5daf02f3f2d0ac38ead8932985faadc7c269",
+    "columns": [
+      {
+        "name": "panel",
+        "unit": ""
+      },
+      {
+        "name": "subpanel",
+        "unit": ""
+      },
+      {
+        "name": "axis_id",
+        "unit": "index"
+      },
+      {
+        "name": "series_id",
+        "unit": ""
+      },
+      {
+        "name": "object_type",
+        "unit": ""
+      },
+      {
+        "name": "point_index",
+        "unit": "index"
+      },
+      {
+        "name": "x",
+        "unit": "x_unit"
+      },
+      {
+        "name": "y",
+        "unit": "y_unit"
+      },
+      {
+        "name": "x_unit",
+        "unit": ""
+      },
+      {
+        "name": "y_unit",
+        "unit": ""
+      },
+      {
+        "name": "structure",
+        "unit": ""
+      }
+    ],
+    "source": "confirmed native Supplementary Note 1 saved figure",
+    "method": "Recovered native numerical series in physical units; no kernel, simulation, or fitting rerun."
+  }
+]

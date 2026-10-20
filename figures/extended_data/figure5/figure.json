@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "publication_id": "ED5",
+  "legacy_id": "supp_figure10",
+  "source_data_item": "ED5",
+  "datasets": [
+    {
+      "id": "01_input_cell_snr_metadata__da1fbc78c2de",
+      "name": "Input_cell_SNR_metadata",
+      "csv": "source_data/01_Input_cell_SNR_metadata.csv"
+    },
+    {
+      "id": "c_pooled_classification_counts__cbf1a32aa680",
+      "name": "C_pooled_classification_counts",
+      "csv": "source_data/C_pooled_classification_counts.csv"
+    },
+    {
+      "id": "def_epoch_metrics_and_snr__55cd79699ce3",
+      "name": "DEF_epoch_metrics_and_SNR",
+      "csv": "source_data/DEF_epoch_metrics_and_SNR.csv"
+    },
+    {
+      "id": "def_regression_sample_sizes__ffc73d99fcdd",
+      "name": "DEF_regression_sample_sizes",
+      "csv": "source_data/DEF_regression_sample_sizes.csv"
+    },
+    {
+      "id": "a_fluorescence__c842654ddaa3",
+      "name": "A_fluorescence",
+      "csv": "source_data/A_fluorescence.csv"
+    },
+    {
+      "id": "a_ground_truth_events__a716433e62a4",
+      "name": "A_ground_truth_events",
+      "csv": "source_data/A_ground_truth_events.csv"
+    },
+    {
+      "id": "a_prediction_curves__527c66cc5665",
+      "name": "A_prediction_curves",
+      "csv": "source_data/A_prediction_curves.csv"
+    },
+    {
+      "id": "a_ground_truth_curve__e12e35f7ae4f",
+      "name": "A_ground_truth_curve",
+      "csv": "source_data/A_ground_truth_curve.csv"
+    },
+    {
+      "id": "a_plotted_classified_events__b303384ecd57",
+      "name": "A_plotted_classified_events",
+      "csv": "source_data/A_plotted_classified_events.csv"
+    },
+    {
+      "id": "a_inferred_events__aa27ca2a44e2",
+      "name": "A_inferred_events",
+      "csv": "source_data/A_inferred_events.csv"
+    },
+    {
+      "id": "b_fluorescence__721a9fef982c",
+      "name": "B_fluorescence",
+      "csv": "source_data/B_fluorescence.csv"
+    },
+    {
+      "id": "b_ground_truth_events__185510bd4801",
+      "name": "B_ground_truth_events",
+      "csv": "source_data/B_ground_truth_events.csv"
+    },
+    {
+      "id": "b_prediction_curves__382529fb3dd5",
+      "name": "B_prediction_curves",
+      "csv": "source_data/B_prediction_curves.csv"
+    },
+    {
+      "id": "b_ground_truth_curve__3761b497c510",
+      "name": "B_ground_truth_curve",
+      "csv": "source_data/B_ground_truth_curve.csv"
+    },
+    {
+      "id": "b_plotted_classified_events__89dcf9eb2f8e",
+      "name": "B_plotted_classified_events",
+      "csv": "source_data/B_plotted_classified_events.csv"
+    },
+    {
+      "id": "b_inferred_events__f124eb01e46e",
+      "name": "B_inferred_events",
+      "csv": "source_data/B_inferred_events.csv"
+    }
+  ],
+  "plot_only_datasets": [],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/ED5_A_B_csv_code.m",
+      "call": "ED5_A_B_csv_code",
+      "panels": [
+        "A",
+        "B"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED5_A_B"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/ED5_C_to_F_code.m",
+      "call": "ED5_C_to_F_code",
+      "panels": [
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "ED5_C_to_F"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "publication_id": "Figure2",
+  "legacy_id": "figure2",
+  "source_data_item": "Figure2",
+  "datasets": [
+    {
+      "id": "01_f_bouton_rise__4b990652e5b7",
+      "name": "F_bouton_rise",
+      "csv": "source_data/01_F_bouton_rise.csv"
+    },
+    {
+      "id": "02_ef_g6f_rise__1fd76f3e0ac7",
+      "name": "EF_G6f_rise",
+      "csv": "source_data/02_EF_G6f_rise.csv"
+    },
+    {
+      "id": "03_ef_jg7f_rise__35febde84087",
+      "name": "EF_jG7f_rise",
+      "csv": "source_data/03_EF_jG7f_rise.csv"
+    },
+    {
+      "id": "04_ef_jg8f_rise__8f59381d1879",
+      "name": "EF_jG8f_rise",
+      "csv": "source_data/04_EF_jG8f_rise.csv"
+    },
+    {
+      "id": "05_k_decay_inputs__4dd23736fe30",
+      "name": "K_decay_inputs",
+      "csv": "source_data/05_K_decay_inputs.csv"
+    },
+    {
+      "id": "06_l_component_inputs__3e29aa323e96",
+      "name": "L_component_inputs",
+      "csv": "source_data/06_L_component_inputs.csv"
+    },
+    {
+      "id": "07_i_ppr_inputs__d755b2e7be91",
+      "name": "I_PPR_inputs",
+      "csv": "source_data/07_I_PPR_inputs.csv"
+    },
+    {
+      "id": "08_cd_rise_ogb1__3a8d99046130",
+      "name": "CD_rise_OGB1",
+      "csv": "source_data/08_CD_rise_OGB1.csv"
+    },
+    {
+      "id": "09_gh_ogb1_samples__c3f382017c3d",
+      "name": "GH_OGB1_samples",
+      "csv": "source_data/09_GH_OGB1_samples.csv"
+    },
+    {
+      "id": "10_cd_rise_gcamp6f__1e90949390be",
+      "name": "CD_rise_GCaMP6f",
+      "csv": "source_data/10_CD_rise_GCaMP6f.csv"
+    },
+    {
+      "id": "11_gh_gcamp6f_samples__602cb6be3490",
+      "name": "GH_GCaMP6f_samples",
+      "csv": "source_data/11_GH_GCaMP6f_samples.csv"
+    },
+    {
+      "id": "12_cd_rise_jgcamp7f__c7501eb6aa4f",
+      "name": "CD_rise_jGCaMP7f",
+      "csv": "source_data/12_CD_rise_jGCaMP7f.csv"
+    },
+    {
+      "id": "13_gh_jgcamp7f_samples__e7185910d7f8",
+      "name": "GH_jGCaMP7f_samples",
+      "csv": "source_data/13_GH_jGCaMP7f_samples.csv"
+    },
+    {
+      "id": "14_cd_rise_jgcamp8f__7a2398f2d9a4",
+      "name": "CD_rise_jGCaMP8f",
+      "csv": "source_data/14_CD_rise_jGCaMP8f.csv"
+    },
+    {
+      "id": "15_gh_jgcamp8f_samples__969087d4851a",
+      "name": "GH_jGCaMP8f_samples",
+      "csv": "source_data/15_GH_jGCaMP8f_samples.csv"
+    },
+    {
+      "id": "16_cd_decay_ogb1__ece90854c617",
+      "name": "CD_decay_OGB1",
+      "csv": "source_data/16_CD_decay_OGB1.csv"
+    },
+    {
+      "id": "17_cd_decay_gcamp6f__b68de8967372",
+      "name": "CD_decay_GCaMP6f",
+      "csv": "source_data/17_CD_decay_GCaMP6f.csv"
+    },
+    {
+      "id": "18_cd_decay_jgcamp7f__4f1cc24484d6",
+      "name": "CD_decay_jGCaMP7f",
+      "csv": "source_data/18_CD_decay_jGCaMP7f.csv"
+    },
+    {
+      "id": "19_cd_decay_jgcamp8f__c11063806d70",
+      "name": "CD_decay_jGCaMP8f",
+      "csv": "source_data/19_CD_decay_jGCaMP8f.csv"
+    },
+    {
+      "id": "sourcedata_fig2_legend_statistics__97c73d751b21",
+      "name": "Legend_statistics",
+      "csv": "source_data/SourceData_Fig2_legend_statistics.csv"
+    },
+    {
+      "id": "j_gcamp6f_plotted_curves__8b0bab41bb07",
+      "name": "J_GCaMP6f_plotted_curves",
+      "csv": "source_data/J_GCaMP6f_plotted_curves.csv"
+    },
+    {
+      "id": "j_jgcamp8f_plotted_curves__467946ce5c0b",
+      "name": "J_jGCaMP8f_plotted_curves",
+      "csv": "source_data/J_jGCaMP8f_plotted_curves.csv"
+    },
+    {
+      "id": "l_selected_condition_contributions__7eb71482713f",
+      "name": "L_selected_condition_contributions",
+      "csv": "source_data/L_selected_condition_contributions.csv"
+    }
+  ],
+  "plot_only_datasets": [
+    {
+      "id": "d_saved_prestep_baselines__d5bce0d6153a",
+      "name": "D_saved_prestep_baselines",
+      "csv": "source_data/D_saved_prestep_baselines.csv",
+      "panel": "D",
+      "role": "plot_only_recovered_display_array",
+      "source": "saved published Figure 2 panel D display arrays",
+      "method": "Recovered exact displayed prestep baselines; no fitting rerun."
+    },
+    {
+      "id": "g_saved_full_jgcamp8f_rise__a675d7f6fe22",
+      "name": "G_saved_full_jGCaMP8f_rise",
+      "csv": "source_data/G_saved_full_jGCaMP8f_rise.csv",
+      "panel": "G",
+      "role": "plot_only_recovered_display_array",
+      "source": "saved published Figure 2 panel G display arrays",
+      "method": "Recovered the full saved jGCaMP8f rise paths; no simulation or fitting rerun."
+    },
+    {
+      "id": "j_saved_annotation_metadata__f0b11df044b0",
+      "name": "J_saved_annotation_metadata",
+      "csv": "source_data/J_saved_annotation_metadata.csv",
+      "panel": "J",
+      "role": "plot_only_recovered_display_array",
+      "source": "saved published Figure 2 panel J annotations",
+      "method": "Recovered exact annotation values and positions used with the registered plotted curves."
+    }
+  ],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/figure2_C_D_code.m",
+      "call": "figure2_C_D_code",
+      "panels": [
+        "C",
+        "D"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure2_C_D_01",
+        "figure2_C_D_02"
+      ],
+      "stem_panels": {
+        "figure2_C_D_01": [
+          "C"
+        ],
+        "figure2_C_D_02": [
+          "D"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure2_E_F_code.m",
+      "call": "figure2_E_F_code",
+      "panels": [
+        "E",
+        "F"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure2_E_F_01",
+        "figure2_E_F_02"
+      ],
+      "stem_panels": {
+        "figure2_E_F_01": [
+          "E"
+        ],
+        "figure2_E_F_02": [
+          "F"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure2_G_H_I_code.m",
+      "call": "figure2_G_H_I_code",
+      "panels": [
+        "G",
+        "H",
+        "I"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure2_G_H_I"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure2_J_code.m",
+      "call": "figure2_J_code",
+      "panels": [
+        "J"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure2_J_01",
+        "figure2_J_02"
+      ],
+      "stem_panels": {
+        "figure2_J_01": [
+          "J"
+        ],
+        "figure2_J_02": [
+          "J"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/figure2_K_L_code.m",
+      "call": "figure2_K_L_code",
+      "panels": [
+        "K",
+        "L"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "figure2_K_L_01",
+        "figure2_K_L_02"
+      ],
+      "stem_panels": {
+        "figure2_K_L_01": [
+          "K"
+        ],
+        "figure2_K_L_02": [
+          "L"
+        ]
+      },
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [
+    "A",
+    "B"
+  ],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "publication_id": "SupplementaryNote1",
+  "legacy_id": "supp_figure1",
+  "source_data_item": "SupplementaryNote1",
+  "datasets": [
+    {
+      "id": "01_note1_existing_1_2_10_traces__9d2e5ad29c7b",
+      "name": "Note1_existing_1_2_10_traces",
+      "csv": "source_data/01_Note1_existing_1_2_10_traces.csv"
+    }
+  ],
+  "plot_only_datasets": [
+    {
+      "id": "a_d_reference_plot_paths__72b6516c69d3",
+      "name": "Note1_A_D_reference_plot_paths",
+      "csv": "source_data/A_D_reference_plot_paths.csv",
+      "panel": "A-D",
+      "role": "plot_only_recovered_display_array",
+      "source": "published Supplementary Information PDF page 11",
+      "method": "Recovered published vector plot paths at PDF precision; explicitly not physical fit parameters."
+    },
+    {
+      "id": "c_reference_fit_labels__931a6b1fc55c",
+      "name": "Note1_C_reference_fit_labels",
+      "csv": "source_data/C_reference_fit_labels.csv",
+      "panel": "C",
+      "role": "plot_only_recovered_display_array",
+      "source": "published Supplementary Information PDF page 11",
+      "method": "Transcribed the published displayed labels without refitting."
+    },
+    {
+      "id": "d_reference_summary_values_pdf_precision__7088764df3a3",
+      "name": "Note1_D_reference_summary_values",
+      "csv": "source_data/D_reference_summary_values_PDF_precision.csv",
+      "panel": "D",
+      "role": "plot_only_recovered_display_array",
+      "source": "published Supplementary Information PDF page 11",
+      "method": "Recovered published summary paths and values at PDF precision; no model fitting rerun."
+    },
+    {
+      "id": "d_reference_sem_endpoints_pdf_precision__ea861ee2f579",
+      "name": "Note1_D_reference_SEM_endpoints",
+      "csv": "source_data/D_reference_SEM_endpoints_PDF_precision.csv",
+      "panel": "D",
+      "role": "plot_only_recovered_display_array",
+      "source": "published Supplementary Information PDF page 11",
+      "method": "Recovered published mean-plus-or-minus-SEM endpoints at PDF precision; no model fitting rerun."
+    },
+    {
+      "id": "e_g_confirmed_native_series__a308611f0c5e",
+      "name": "Note1_E_G_confirmed_native_series",
+      "csv": "source_data/E_G_confirmed_native_series.csv",
+      "panel": "E-G",
+      "role": "plot_only_recovered_display_array",
+      "source": "confirmed native Supplementary Note 1 saved figure",
+      "method": "Recovered native numerical series in physical units; no kernel, simulation, or fitting rerun."
+    }
+  ],
+  "entrypoints": [
+    {
+      "language": "matlab",
+      "script": "code/suppfigure1_A_to_D_code.m",
+      "call": "suppfigure1_A_to_D_code",
+      "panels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure1_A_to_D"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    },
+    {
+      "language": "matlab",
+      "script": "code/suppfigure1_E_to_G_code.m",
+      "call": "suppfigure1_E_to_G_code",
+      "panels": [
+        "E",
+        "F",
+        "G"
+      ],
+      "mode": "packaged_csv",
+      "stems": [
+        "suppfigure1_E_to_G"
+      ],
+      "required_formats": [
+        "pdf",
+        "png",
+        "fig"
+      ]
+    }
+  ],
+  "static_panels": [],
+  "paths": {
+    "inputs": "inputs",
+    "code": "code",
+    "source_data": "source_data"
+  },
+  "build": {
+    "dynamic_panels": "entrypoints above",
+    "source_data_policy": "full-resolution tracked CSVs; workbook views at most 200 points per continuous series; exact events retained"
+  }
+}
