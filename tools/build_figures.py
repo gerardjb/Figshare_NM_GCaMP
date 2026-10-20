@@ -39,16 +39,6 @@ def command_for(
             "close all force",
         ])
         return [matlab_executable, "-batch", matlab_code]
-    if entry["language"] == "powershell":
-        if os.name != "nt":
-            return [
-                python_executable, str(REPO_ROOT / "tools" / "render_tables.py"),
-                "--wrapper", str(script), "--python", python_executable,
-            ]
-        return [
-            "powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
-            "-File", str(script), "-PythonExe", python_executable,
-        ]
     raise ValueError(f"Unsupported language: {entry['language']}")
 
 

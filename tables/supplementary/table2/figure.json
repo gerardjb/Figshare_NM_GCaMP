@@ -13,9 +13,9 @@
   "plot_only_datasets": [],
   "entrypoints": [
     {
-      "language": "powershell",
-      "script": "code/render_gcamp_parameter_table_pdf.ps1",
-      "call": "render",
+      "language": "python",
+      "script": "code/render_gcamp_parameter_table_pdf.py",
+      "call": "main",
       "panels": [
         "table"
       ],

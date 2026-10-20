@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
-"""Create manuscript-ready GCaMP parameter tables from JSON files.
+"""Create the GCaMP parameter CSV from JSON inputs or copy its canonical CSV.
 
-This script reads `indicator.Gparams` from one or more JSON files (for example
-`Table3/best_*_params.json`) and writes:
-
-1) A CSV table for spreadsheet workflows.
-2) A LaTeX table using `booktabs` for publication use.
-
-By default, only the first 14 `Gparams` entries are used because the provided
-parameter definitions correspond to 14 kinetic terms.
+The first 14 indicator.Gparams entries define the kinetic terms. The ReportLab
+renderer consumes the resulting CSV separately, preserving displayed strings.
 """
 
 from __future__ import annotations
@@ -20,25 +14,25 @@ import json
 import sys
 from pathlib import Path
 import re
-from typing import List, Optional, Sequence, Tuple
+from typing import List, Sequence, Tuple
 
 
-# (parameter symbol, description, units for CSV, units for LaTeX, scale factor)
-PARAM_SPECS: List[Tuple[str, str, str, str, float]] = [
-    ("K_{aN}", "Affinity [N-term]", "microM", r"$\mu M$", 1e6),
-    ("k_{offN}", "Off Rate [N-term]", "s^-1", r"$s^{-1}$", 1.0),
-    ("H_N", "Hill coeff [N-term]", "unitless", "unitless", 1.0),
-    ("K_{aC}", "Affinity [C-term]", "microM", r"$\mu M$", 1e6),
-    ("k_{offC}", "Off Rate [C-term]", "s^-1", r"$s^{-1}$", 1.0),
-    ("H_C", "Hill coeff [C-term]", "unitless", "unitless", 1.0),
-    ("k_{onPN}", "On Rate N [N-lobe bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{offPN}", "Off Rate N [N-lobe bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{onPC}", "On Rate C [C-lobe bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{offPC}", "Off Rate C [C-lobe bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{onPN2}", "On Rate N [both bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{offPN2}", "Off Rate N [both bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{onPC2}", "On Rate C [both bound]", "s^-1", r"$s^{-1}$", 1.0),
-    ("k_{offPC2}", "Off Rate C [both bound]", "s^-1", r"$s^{-1}$", 1.0),
+# (parameter symbol, description, units for CSV, scale factor)
+PARAM_SPECS: List[Tuple[str, str, str, float]] = [
+    ('K_{aN}', 'Affinity [N-term]', 'microM', 1000000.0),
+    ('k_{offN}', 'Off Rate [N-term]', 's^-1', 1.0),
+    ('H_N', 'Hill coeff [N-term]', 'unitless', 1.0),
+    ('K_{aC}', 'Affinity [C-term]', 'microM', 1000000.0),
+    ('k_{offC}', 'Off Rate [C-term]', 's^-1', 1.0),
+    ('H_C', 'Hill coeff [C-term]', 'unitless', 1.0),
+    ('k_{onPN}', 'On Rate N [N-lobe bound]', 's^-1', 1.0),
+    ('k_{offPN}', 'Off Rate N [N-lobe bound]', 's^-1', 1.0),
+    ('k_{onPC}', 'On Rate C [C-lobe bound]', 's^-1', 1.0),
+    ('k_{offPC}', 'Off Rate C [C-lobe bound]', 's^-1', 1.0),
+    ('k_{onPN2}', 'On Rate N [both bound]', 's^-1', 1.0),
+    ('k_{offPN2}', 'Off Rate N [both bound]', 's^-1', 1.0),
+    ('k_{onPC2}', 'On Rate C [both bound]', 's^-1', 1.0),
+    ('k_{offPC2}', 'Off Rate C [both bound]', 's^-1', 1.0),
 ]
 
 EXPECTED_PARAM_COUNT = len(PARAM_SPECS)
@@ -51,13 +45,6 @@ SENSOR_WITH_SOURCE_PATTERN = re.compile(
     r"^(?P<prefix>j?)G(?P<tag>\d+[A-Za-z0-9]*?)_(?P<source>.+)$",
     re.IGNORECASE,
 )
-# Mirrors Utilities/pickGCaMPcolorsMS.m for sensor-specific colors.
-SENSOR_COLOR_HEX = {
-    "gcamp6f": "0F1C79",
-    "jgcamp7f": "CC5F09",
-    "jgcamp8f": "9E0142",
-    "jgcamp8m": "53338B",
-}
 
 
 def parse_args() -> argparse.Namespace:
@@ -67,7 +54,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input-csv",
         type=Path,
-        help="Render the reviewed canonical source-data CSV, preserving its displayed numeric strings.",
+        help="Copy the canonical source-data CSV, preserving its displayed numeric strings.",
     )
     parser.add_argument(
         "--input-glob",
@@ -77,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-prefix",
         default="build/tables/supplementary/table2/gcamp_parameter_table",
-        help="Output prefix path (writes <prefix>.csv and <prefix>.tex).",
+        help="Output prefix path (writes <prefix>.csv).",
     )
     parser.add_argument(
         "--sig-figs",
@@ -196,57 +183,11 @@ def format_value(value: float, sig_figs: int, sci_decimals: int) -> str:
     return f"{value:.{sig_figs}g}"
 
 
-def format_value_latex(value: float, sig_figs: int, sci_decimals: int) -> str:
-    text = format_value(value, sig_figs, sci_decimals)
-    if "e" not in text.lower():
-        return f"${text}$"
-
-    mantissa, exponent = text.lower().split("e")
-    return rf"${mantissa}\times 10^{{{int(exponent)}}}$"
-
-
-def latex_escape(text: str) -> str:
-    replacements = {
-        "\\": r"\textbackslash{}",
-        "&": r"\&",
-        "%": r"\%",
-        "$": r"\$",
-        "#": r"\#",
-        "_": r"\_",
-        "{": r"\{",
-        "}": r"\}",
-        "~": r"\textasciitilde{}",
-        "^": r"\textasciicircum{}",
-    }
-    escaped = text
-    for old, new in replacements.items():
-        escaped = escaped.replace(old, new)
-    return escaped
-
-
 def sensor_name_for_csv(name: str) -> str:
     if "|" not in name:
         return name
     base, source = name.split("|", 1)
     return f"{base} {source}"
-
-
-def sensor_color_for_name(name: str) -> Optional[str]:
-    base = name.split("|", 1)[0]
-    return SENSOR_COLOR_HEX.get(base.lower())
-
-
-def sensor_name_for_latex(name: str) -> str:
-    if "|" not in name:
-        label = latex_escape(name)
-    else:
-        base, source = name.split("|", 1)
-        label = rf"\shortstack[c]{{{latex_escape(base)}\\{latex_escape(source)}}}"
-
-    color_hex = sensor_color_for_name(name)
-    if color_hex is None:
-        return label
-    return rf"\textcolor[HTML]{{{color_hex}}}{{{label}}}"
 
 
 def write_csv(
@@ -261,7 +202,7 @@ def write_csv(
         csv_header_names = [sensor_name_for_csv(name) for name in sensor_names]
         writer.writerow(["Parameter", "Description", "Units", *csv_header_names])
 
-        for i, (symbol, description, units_csv, _, scale_factor) in enumerate(PARAM_SPECS):
+        for i, (symbol, description, units_csv, scale_factor) in enumerate(PARAM_SPECS):
             row = [symbol, description, units_csv]
             row.extend(
                 format_value(values[i] * scale_factor, sig_figs, sci_decimals)
@@ -270,113 +211,20 @@ def write_csv(
             writer.writerow(row)
 
 
-def write_latex(
-    out_path: Path,
-    sensor_names: Sequence[str],
-    sensor_values: Sequence[Sequence[float]],
-    sig_figs: int,
-    sci_decimals: int,
-) -> None:
-    align = "lll" + ("c" * len(sensor_names))
-
-    lines: List[str] = [
-        "% Requires: \\usepackage{booktabs}",
-        "% Requires: \\usepackage{xcolor}  % for colored sensor headers",
-        r"\begin{table}[htbp]",
-        r"\centering",
-        r"\small",
-        r"\setlength{\tabcolsep}{6pt}",
-        r"\caption{GCaMP model parameters sets.}",
-        r"\label{tab:gcamp-params}",
-        rf"\begin{{tabular}}{{{align}}}",
-        r"\toprule",
-        " & ".join(
-            [latex_escape("Parameter"), latex_escape("Description"), latex_escape("Units")]
-            + [sensor_name_for_latex(name) for name in sensor_names]
-        )
-        + r" \\",
-        r"\midrule",
-    ]
-
-    for i, (symbol, description, _, units_tex, scale_factor) in enumerate(PARAM_SPECS):
-        row = [
-            rf"${symbol}$",
-            latex_escape(description),
-            units_tex,
-        ]
-        row.extend(
-            format_value_latex(values[i] * scale_factor, sig_figs, sci_decimals)
-            for values in sensor_values
-        )
-        lines.append(" & ".join(row) + r" \\")
-
-    lines.extend(
-        [
-            r"\bottomrule",
-            r"\end{tabular}",
-            r"\end{table}",
-            "",
-        ]
-    )
-
-    out_path.write_text("\n".join(lines), encoding="utf-8")
-
-
-def write_latex_from_csv(csv_path: Path, out_path: Path) -> None:
-    """Render the reviewed CSV without scaling, rounding, or refitting its cells."""
-    with csv_path.open("r", newline="", encoding="utf-8-sig") as stream:
-        reader = csv.DictReader(stream)
-        fields = reader.fieldnames or []
-        if fields[:3] != ["Parameter", "Description", "Units"] or len(fields) < 4:
-            raise ValueError("Canonical parameter CSV requires Parameter, Description, Units and sensor columns.")
-        rows = list(reader)
-    if not rows:
-        raise ValueError("Canonical parameter CSV is empty.")
-    sensor_names = []
-    for header in fields[3:]:
-        for suffix in (" Janelia", " Slice"):
-            if header.endswith(suffix):
-                header = header[:-len(suffix)] + "|" + suffix.strip()
-                break
-        sensor_names.append(header)
-    units = {"microM": r"$\mu M$", "s^-1": r"$s^{-1}$", "unitless": "unitless"}
-
-    def displayed_number(value: str) -> str:
-        match = re.fullmatch(r"([+-]?(?:\d+(?:\.\d*)?|\.\d+))[eE]([+-]?\d+)", value)
-        if match:
-            return rf"${match.group(1)}\times 10^{{{int(match.group(2))}}}$"
-        if not re.fullmatch(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)", value):
-            raise ValueError(f"Unexpected nonnumeric canonical parameter value: {value!r}")
-        return "$" + value + "$"
-
-    lines = [
-        "% Requires: \\usepackage{booktabs}",
-        "% Requires: \\usepackage{xcolor}  % for colored sensor headers",
-        r"\begin{table}[htbp]", r"\centering", r"\small",
-        r"\setlength{\tabcolsep}{6pt}",
-        r"\caption{GCaMP model parameters sets.}", r"\label{tab:gcamp-params}",
-        r"\begin{tabular}{lll" + "c" * len(sensor_names) + "}",
-        r"\toprule",
-        " & ".join([latex_escape(x) for x in fields[:3]] + [sensor_name_for_latex(x) for x in sensor_names]) + r" \\",
-        r"\midrule",
-    ]
-    for row in rows:
-        values = [rf"${row['Parameter']}$", latex_escape(row["Description"]), units.get(row["Units"], latex_escape(row["Units"]))]
-        values.extend(displayed_number(row[header]) for header in fields[3:])
-        lines.append(" & ".join(values) + r" \\")
-    lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table}", ""])
-    out_path.write_text("\n".join(lines), encoding="utf-8")
-
-
 def main() -> None:
     args = parse_args()
     if args.input_csv is not None:
         source_bytes = args.input_csv.read_bytes()
         out_prefix = Path(args.output_prefix)
         out_prefix.parent.mkdir(parents=True, exist_ok=True)
-        write_latex_from_csv(args.input_csv, out_prefix.with_suffix(".tex"))
+        with args.input_csv.open(encoding="utf-8-sig", newline="") as stream:
+            reader = csv.DictReader(stream)
+            if not reader.fieldnames or reader.fieldnames[:3] != ["Parameter", "Description", "Units"]:
+                raise ValueError("Canonical parameter CSV requires Parameter, Description, Units and sensor columns.")
+            if not list(reader):
+                raise ValueError("Canonical parameter CSV is empty.")
         out_prefix.with_suffix(".csv").write_bytes(source_bytes)
-        print(f"Rendered canonical CSV table: {args.input_csv}")
+        print(f"Copied canonical CSV table: {args.input_csv}")
         return
 
     json_paths = sorted(Path(p) for p in glob.glob(args.input_glob))
@@ -392,13 +240,10 @@ def main() -> None:
     out_prefix = Path(args.output_prefix)
     out_prefix.parent.mkdir(parents=True, exist_ok=True)
     csv_path = out_prefix.with_suffix(".csv")
-    tex_path = out_prefix.with_suffix(".tex")
 
     write_csv(csv_path, sensor_names, sensor_values, args.sig_figs, args.sci_decimals)
-    write_latex(tex_path, sensor_names, sensor_values, args.sig_figs, args.sci_decimals)
 
     print(f"Wrote CSV table: {csv_path}")
-    print(f"Wrote LaTeX table: {tex_path}")
 
 
 if __name__ == "__main__":

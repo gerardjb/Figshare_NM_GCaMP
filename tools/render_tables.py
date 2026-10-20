@@ -1,25 +1,35 @@
-"""Portable CSV-to-TeX/PDF counterpart of the four Windows table wrappers.
+"""Render publication tables directly from CSV with ReportLab.
 
-The generators and table layout are unchanged. Windows entry points retain
-their PowerShell wrappers; Linux publication builds dispatch here instead.
+This presentation layer preserves the source numeric strings. Table 1 first
+uses its existing Figure 4 summary calculation; parameter tables read their
+canonical CSVs. No TeX installation or operating-system shell is required.
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import importlib.util
 import re
 import shutil
-import subprocess
-import sys
-import tempfile
+from html import escape
 from pathlib import Path
 
+import matplotlib
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER, TA_LEFT
+from reportlab.lib.pagesizes import A4, landscape
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
+
+ROOT = Path(__file__).resolve().parents[1]
 TABLES = {
-    "render_table1_precision_recall_fscore_pdf": ("table1_precision_recall_fscore", 1),
-    "render_table2_cell_parameters_pdf": ("table2_cell_parameters", 2),
-    "render_gcamp_parameter_table_pdf": ("gcamp_parameter_table", 3),
-    "render_table4_cell_parameter_priors_pdf": ("Table4_cell_parameter_priors", 4),
+    "Table1": ("tables/main/table1", "table1_precision_recall_fscore", "Table 1. Spike-inference performance."),
+    "SupplementaryTable1": ("tables/supplementary/table1", "table2_cell_parameters", "Supplementary Table 1. Single-cell model parameter values."),
+    "SupplementaryTable2": ("tables/supplementary/table2", "gcamp_parameter_table", "Supplementary Table 2. GCaMP model parameter sets."),
+    "SupplementaryTable3": ("tables/supplementary/table3", "Table4_cell_parameter_priors", "Supplementary Table 3. Cell-parameter prior means and approximate ranges."),
 }
 DESCRIPTIONS = {
     "[GCaMP]": "Total intracellular indicator concentration used in the model.",
@@ -45,153 +55,229 @@ DESCRIPTIONS = {
 }
 
 
+def register_fonts() -> None:
+    """Embed fonts bundled with the already-required Matplotlib package."""
+    directory = Path(matplotlib.get_data_path()) / "fonts" / "ttf"
+    for name, filename in [("TableSans", "DejaVuSans.ttf"), ("TableSans-Bold", "DejaVuSans-Bold.ttf"), ("TableSans-Italic", "DejaVuSans-Oblique.ttf"), ("TableSans-BoldItalic", "DejaVuSans-BoldOblique.ttf")]:
+        if name not in pdfmetrics.getRegisteredFontNames():
+            pdfmetrics.registerFont(TTFont(name, str(directory / filename)))
+    pdfmetrics.registerFontFamily("TableSans", normal="TableSans", bold="TableSans-Bold", italic="TableSans-Italic", boldItalic="TableSans-BoldItalic")
+
+
+def markup(text: str) -> str:
+    """Translate the limited scientific notation present in the source CSVs.
+
+    Color commands retain their text in monochrome. Unknown commands raise an
+    error rather than silently dropping mathematical or explanatory content.
+    """
+    text = str(text).replace(r"\n", "\n").replace("\r\n", "\n")
+    position = 0
+    symbols = {"Delta": "Δ", "gamma": "γ", "kappa": "κ", "mu": "μ", "times": "×", "pm": "±"}
+
+    def group() -> str:
+        nonlocal position
+        if position >= len(text) or text[position] != "{":
+            raise ValueError(f"Expected a grouped expression in {text!r}")
+        position += 1
+        result = parse("}")
+        return result
+
+    def parse(stop: str = "") -> str:
+        nonlocal position
+        result = []
+        while position < len(text):
+            char = text[position]
+            position += 1
+            if char == "}":
+                if stop:
+                    return "".join(result)
+                raise ValueError(f"Unmatched closing brace in {text!r}")
+            if char == "{":
+                result.append(parse("}"))
+            elif char in "_^":
+                tag = "sub" if char == "_" else "super"
+                if position < len(text) and text[position] == "{":
+                    content = group()
+                else:
+                    match = re.match(r"[+-]?\d+|.", text[position:])
+                    if not match:
+                        raise ValueError(f"Missing subscript/superscript in {text!r}")
+                    content = escape(match[0])
+                    position += len(match[0])
+                result.append(f"<{tag}>{content}</{tag}>")
+            elif char == "\\":
+                match = re.match(r"[A-Za-z]+|.", text[position:])
+                if not match:
+                    raise ValueError(f"Incomplete command in {text!r}")
+                command = match[0]
+                position += len(command)
+                if command in symbols:
+                    result.append(symbols[command])
+                elif command in {"mathrm", "text", "textbf"}:
+                    content = group()
+                    result.append(f"<b>{content}</b>" if command == "textbf" else content)
+                elif command == "textcolor":
+                    if text[position:position + 6] == "[HTML]":
+                        position += 6
+                    group()  # Discard the color specification, preserve its text.
+                    result.append(group())
+                elif command in {",", ";", " "}:
+                    result.append(" ")
+                elif command in {"&", "%", "#", "_", "{", "}", "$"}:
+                    result.append(escape(command))
+                else:
+                    raise ValueError(f"Unsupported table notation \\{command} in {text!r}")
+            elif char == "$":
+                continue
+            elif char == "\n":
+                result.append("<br/>")
+            else:
+                result.append(escape(char))
+        if stop:
+            raise ValueError(f"Unclosed expression in {text!r}")
+        return "".join(result)
+
+    return parse()
+
+
 def split_parameter(text: str) -> tuple[str, str]:
     match = re.fullmatch(r"(.+?)\s*\(([^)]*)\)\s*", text.strip())
     return (match[1].strip(), match[2].strip()) if match else (text.strip(), "")
 
 
-def units_latex(text: str) -> str:
-    compact = re.sub(r"\s+", "", text).lower()
-    return {"microm": r"$\mu M$", "um": r"$\mu M$", "s^-1": r"$s^{-1}$",
-            "unitless": "unitless", "microm^-1*s^-1": r"$\mu M^{-1}\,s^{-1}$",
-            "um^-1*s^-1": r"$\mu M^{-1}\,s^{-1}$"}.get(compact, text.strip())
+def units_text(text: str) -> str:
+    return {"microM": "μM", "um": "μM", "microM^-1*s^-1": "μM^-1 s^-1", "um^-1*s^-1": "μM^-1 s^-1"}.get(text, text)
 
 
-def lines_cell(text: str, *, plain: bool = False, trim_single: bool = False) -> str:
-    text = (text or "").replace(r"\n", "\n")
-    def escape(value: str) -> str:
-        if not plain:
-            return value
-        for old, new in [("\\", r"\textbackslash{}"), ("&", r"\&"), ("%", r"\%"),
-                         ("#", r"\#"), ("_", r"\_")]:
-            value = value.replace(old, new)
-        return value
-    if "\n" not in text and "\r" not in text:
-        return escape(text.strip() if trim_single or plain else text)
-    parts = [escape(part.rstrip()) for part in text.splitlines() if part.rstrip()]
-    if not parts:
-        return ""
-    if plain and len(parts) == 1:
-        return parts[0]
-    return r"\shortstack[c]{" + r"\\\\[-0.3ex]".join(parts) + "}"
-
-
-def parameter_cell(text: str, *, always_math: bool) -> str:
+def parameter_text(text: str) -> str:
     parameter, units = split_parameter(text)
-    if not units:
-        return "$" + parameter + "$" if always_math and parameter else parameter
-    return "$" + parameter + "$ (" + units_latex(units) + ")"
+    return parameter + (f" ({units_text(units)})" if units else "")
 
 
-def parameter_table(csv_path: Path, destination: Path, number: int) -> None:
-    """Port the existing PowerShell ST1/ST3 TeX generators cell-for-cell."""
-    with csv_path.open(encoding="utf-8-sig", newline="") as stream:
+def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    with path.open(encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream)
         fields = reader.fieldnames or []
         rows = list(reader)
-    required = ["RowType", "Parameter (units)", "Cell Type", "Value", "References"] if number == 2 else ["Parameter (units)", "Fixed/Free", "Mean", "Approximate Range", "References"]
-    if not rows or not set(required).issubset(fields):
-        raise ValueError(f"Missing required CSV rows/columns: {csv_path}")
-    st1 = number == 2
-    keys = list(dict.fromkeys(split_parameter(row["Parameter (units)"])[0] for row in rows if row.get("RowType", "").strip().lower() == "entry")) if st1 else ["[GCaMP]", "R_f", r"\Delta Ca_{spike}", "ca_0", r"\gamma", r"\gamma_{in}", r"\gamma_{out}", r"\kappa_{B}"]
-    if any(key not in DESCRIPTIONS for key in keys) or (st1 and not keys):
-        raise ValueError("Missing parameter descriptions or entry rows.")
-    caption = "Single-cell model parameter values." if st1 else "Cell-parameter prior means and approximate ranges."
-    label = "single-cell-parameters" if st1 else "cell-parameter-priors"
-    specs = r"L{0.30\linewidth} C{0.14\linewidth} C{0.14\linewidth} L{0.34\linewidth}" if st1 else r"L{0.24\linewidth} C{0.10\linewidth} C{0.14\linewidth} C{0.18\linewidth} L{0.34\linewidth}"
-    headers = ["Parameter (units)", "Cell Type", "Value", "References"] if st1 else ["Parameter (units)", "Fixed/Free", "Mean", "Approximate range", "References"]
-    lines = [f"% Auto-generated from: {csv_path}", r"% Requires: \\usepackage{booktabs}",
-             r"% Requires: \\usepackage{xcolor}" + ("" if st1 else "  % for colored sensor labels in cells"),
-             r"% Requires: \\usepackage{array}" + ("" if st1 else "   % for column formatting"),
-             r"\begin{table}[htbp]", r"\centering", r"\small", r"\setlength{\tabcolsep}{6pt}",
-             r"\renewcommand{\arraystretch}{1.35}", r"\caption{" + caption + "}",
-             r"\label{tab:" + label + "}", r"\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}",
-             r"\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}", r"\begin{tabular}{" + specs + "}",
-             r"\toprule", " & ".join(r"\textbf{" + h + "}" for h in headers) + r" \\", r"\midrule"]
-    for row in rows:
-        row_type = row.get("RowType", "").strip().lower()
-        if row_type == "section":
-            title = lines_cell(row["Parameter (units)"], plain=st1)
-            if st1:
-                title = title.replace("Ca^{2+}", "$Ca^{2+}$").replace("Mg^{2+}", "$Mg^{2+}$")
-            if title:
-                lines += [r"\addlinespace[0.45em]", rf"\multicolumn{{{len(headers)}}}{{c}}{{\textbf{{{title}}}}} \\", r"\addlinespace[0.15em]"]
-            continue
-        if st1 and row_type != "entry":
-            raise ValueError(f"Unsupported RowType {row_type!r}")
-        cells = [parameter_cell(row["Parameter (units)"], always_math=st1)]
-        columns = ["Cell Type", "Value", "References"] if st1 else ["Fixed/Free", "Mean", "Approximate Range", "References"]
-        cells += [lines_cell(row[field], plain=st1) for field in columns]
-        lines.append(" & ".join(cells) + r" \\")
-    lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", "", r"% Bracket commands for description labels (avoids `]` inside \item[...] optional args).", r"\providecommand{\lbrack}{[}", r"\providecommand{\rbrack}{]}", "", r"\noindent\textbf{Parameter definitions.}", r"\begin{description}", r"\setlength{\itemsep}{0.25em}"]
-    for key in keys:
-        display = key.replace("[", r"\lbrack ").replace("]", r"\rbrack")
-        lines.append(r"\item[$" + display + "$] " + DESCRIPTIONS[key])
-    lines += [r"\end{description}", ""]
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    if not fields or not rows:
+        raise ValueError(f"Table CSV is empty: {path}")
+    if any(None in row or any(value is None for value in row.values()) for row in rows):
+        raise ValueError(f"Malformed CSV row: {path}")
+    return fields, rows
 
 
-def run(command: list[str], *, cwd: Path) -> None:
-    subprocess.run(command, cwd=cwd, check=True)
+def table1_csv(item: Path, destination: Path) -> None:
+    """Call the existing scientific calculation without changing its arithmetic."""
+    path = item / "code/make_table1_precision_recall_fscore_csv.py"
+    spec = importlib.util.spec_from_file_location("table1_calculation", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load Table 1 calculation: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    data = module.calculate_table(ROOT / "figures/main/figure4/source_data/02_Epoch_precision_recall.csv", ROOT / "figures/main/figure4/source_data/01_Matched_spike_bias.csv")
+    data.to_csv(destination, index=False, encoding="utf-8")
 
 
-def render(wrapper: Path, python: str, output_dir: Path | None = None,
-           pdflatex: str = "pdflatex", keep_build: bool = False) -> Path:
-    wrapper = wrapper.resolve()
-    stem, number = TABLES[wrapper.stem]
-    item = wrapper.parents[1]
-    root = next(parent for parent in item.parents if (parent / "tools/publication_config.py").is_file())
-    output_dir = output_dir.resolve() if output_dir else root / "build" / item.relative_to(root)
+def render(item_id: str, output_dir: Path | None = None) -> Path:
+    relative, stem, title = TABLES[item_id]
+    item = ROOT / relative
+    output_dir = output_dir.resolve() if output_dir else ROOT / "build" / relative
     output_dir.mkdir(parents=True, exist_ok=True)
-    tex = output_dir / f"{stem}.tex"
-    if number == 1:
-        run([python, str(wrapper.parent / "make_table1_precision_recall_fscore_csv.py"), "--sna", str(root / "figures/main/figure4/source_data/02_Epoch_precision_recall.csv"), "--matched", str(root / "figures/main/figure4/source_data/01_Matched_spike_bias.csv"), "--output-csv", str(tex.with_suffix('.csv'))], cwd=root)
-        run([python, str(wrapper.parent / "make_table1_precision_recall_fscore_tex.py"), "--csv", str(tex.with_suffix('.csv')), "--output-tex", str(tex)], cwd=root)
-    elif number == 3:
-        run([python, str(wrapper.parent / "make_gcamp_params_table.py"), "--input-csv", str(item / "source_data/01_ST2_existing_values.csv"), "--output-prefix", str(output_dir / stem)], cwd=root)
+    csv_path = output_dir / f"{stem}.csv"
+    if item_id == "Table1":
+        table1_csv(item, csv_path)
     else:
-        csv_name = "01_ST1_existing_values.csv" if number == 2 else "01_ST3_existing_values.csv"
-        parameter_table(item / "source_data" / csv_name, tex, number)
-    if shutil.which(pdflatex) is None:
-        raise FileNotFoundError("pdflatex not found. Install TeX Live (including booktabs, xcolor and array) or pass --pdflatex.")
-    build = Path(tempfile.mkdtemp(prefix=".latex_build_", dir=output_dir))
-    try:
-        document = build / "table_wrapper.tex"
-        if number == 1:
-            shutil.copyfile(tex, document)
-        else:
-            document.write_text("\n".join([r"\documentclass[10pt]{article}", r"\usepackage[margin=0.75in]{geometry}", r"\usepackage{booktabs}", r"\usepackage{xcolor}", *([r"\usepackage{array}"] if number != 3 else []), r"\begin{document}", r"\pagestyle{empty}", rf"\setcounter{{table}}{{{number - 1}}}", r"\input{" + tex.as_posix() + "}", r"\end{document}", ""]), encoding="utf-8")
-        logs = []
-        try:
-            for _ in range(2):
-                result = subprocess.run([pdflatex, "-file-line-error", "-interaction=batchmode", "-halt-on-error", document.name], cwd=build, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, errors="replace", check=False)
-                logs.append(result.stdout or "")
-                if result.returncode:
-                    raise RuntimeError(f"pdflatex failed ({result.returncode}); see {output_dir / (stem + '.latex.log')} and {output_dir / (stem + '.pdflatex.log')}")
-        finally:
-            (output_dir / f"{stem}.pdflatex.log").write_text("\n".join(logs), encoding="utf-8")
-            if document.with_suffix('.log').exists():
-                shutil.copyfile(document.with_suffix('.log'), output_dir / f"{stem}.latex.log")
-        pdf = output_dir / f"{stem}.pdf"
-        shutil.copyfile(document.with_suffix('.pdf'), pdf)
-        return pdf
-    finally:
-        if not keep_build:
-            shutil.rmtree(build)
+        source = item / "source_data" / {"SupplementaryTable1": "01_ST1_existing_values.csv", "SupplementaryTable2": "01_ST2_existing_values.csv", "SupplementaryTable3": "01_ST3_existing_values.csv"}[item_id]
+        if source.resolve() != csv_path.resolve():
+            shutil.copyfile(source, csv_path)
+    fields, rows = read_csv(csv_path)
+    register_fonts()
+    wide = item_id == "SupplementaryTable2"
+    page = landscape(A4) if wide else A4
+    available_width = page[0] - 72
+    body = ParagraphStyle("TableBody", fontName="TableSans", fontSize=8.5, leading=11, alignment=TA_LEFT)
+    center = ParagraphStyle("TableCenter", parent=body, alignment=TA_CENTER)
+    bold = ParagraphStyle("TableBold", parent=body, fontName="TableSans-Bold")
+    heading = ParagraphStyle("TableTitle", parent=bold, fontSize=11, leading=15, spaceAfter=12, keepWithNext=True)
+    definition = ParagraphStyle("TableDefinition", parent=body, spaceAfter=5)
+
+    def cell(value: str, style: ParagraphStyle = body) -> Paragraph:
+        return Paragraph(markup(value), style)
+
+    keys: list[str] = []
+    sections: list[int] = []
+    data: list[list[Paragraph]] = []
+    if item_id == "Table1":
+        if fields[0] != "Method":
+            raise ValueError("Table 1 requires a Method column.")
+        headers = ["Method", *("Uncertainty (ms)" if x == "Mean error (ms)" else x for x in fields[1:])]
+        fractions = [0.17, 0.135, 0.135, 0.135, 0.135, 0.145, 0.145]
+        data = [[cell(x, bold) for x in headers]]
+        data += [[cell(row[x], body if j == 0 else center) for j, x in enumerate(fields)] for row in rows]
+    elif item_id == "SupplementaryTable2":
+        if fields[:3] != ["Parameter", "Description", "Units"] or len(fields) < 4:
+            raise ValueError("GCaMP CSV requires Parameter, Description, Units and sensor columns.")
+        headers = [x.replace(" Janelia", "\nJanelia").replace(" Slice", "\nSlice") for x in fields]
+        fractions = [0.10, 0.22, 0.08] + [0.60 / (len(fields) - 3)] * (len(fields) - 3)
+        data = [[cell(x, bold) for x in headers]]
+        for row in rows:
+            values = [row["Parameter"], row["Description"], units_text(row["Units"])]
+            for field in fields[3:]:
+                value = row[field]
+                match = re.fullmatch(r"([+-]?(?:\d+(?:\.\d*)?|\.\d+))[eE]([+-]?\d+)", value)
+                if match:
+                    value = rf"{match[1]} \times 10^{{{int(match[2])}}}"
+                elif not re.fullmatch(r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)", value):
+                    raise ValueError(f"Unexpected nonnumeric GCaMP parameter: {value!r}")
+                values.append(value)
+            data.append([cell(value, body if j < 3 else center) for j, value in enumerate(values)])
+    else:
+        st1 = item_id == "SupplementaryTable1"
+        columns = ["Parameter (units)", "Cell Type", "Value", "References"] if st1 else ["Parameter (units)", "Fixed/Free", "Mean", "Approximate Range", "References"]
+        if not set(["RowType", *columns]).issubset(fields):
+            raise ValueError(f"Missing parameter-table columns: {csv_path}")
+        fractions = [0.34, 0.15, 0.10, 0.41] if st1 else [0.25, 0.13, 0.19, 0.19, 0.24]
+        data = [[cell(x, bold) for x in columns]]
+        for row in rows:
+            kind = row["RowType"].strip().lower()
+            if kind == "section":
+                sections.append(len(data))
+                data.append([cell(row[columns[0]], bold), *[cell("") for _ in columns[1:]]])
+            elif kind == "entry":
+                key, _ = split_parameter(row[columns[0]])
+                if key not in keys:
+                    keys.append(key)
+                values = [parameter_text(row[columns[0]]), *[row[x] for x in columns[1:]]]
+                data.append([cell(value, body if j in {0, len(columns) - 1} else center) for j, value in enumerate(values)])
+            else:
+                raise ValueError(f"Unsupported RowType: {kind!r}")
+        if any(key not in DESCRIPTIONS for key in keys):
+            raise ValueError("Missing definition for a table parameter.")
+
+    if len(fractions) != len(data[0]):
+        raise ValueError("Unexpected number of table columns.")
+    widths = [available_width * x / sum(fractions) for x in fractions]
+    styles = [("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 5), ("RIGHTPADDING", (0, 0), (-1, -1), 5), ("TOPPADDING", (0, 0), (-1, -1), 6), ("BOTTOMPADDING", (0, 0), (-1, -1), 6), ("LINEABOVE", (0, 0), (-1, 0), 0.8, colors.black), ("LINEBELOW", (0, 0), (-1, 0), 0.6, colors.black), ("LINEBELOW", (0, -1), (-1, -1), 0.8, colors.black)]
+    for row_index in sections:
+        styles += [("SPAN", (0, row_index), (-1, row_index)), ("LINEABOVE", (0, row_index), (-1, row_index), 0.3, colors.HexColor("#999999")), ("NOSPLIT", (0, row_index), (-1, min(row_index + 1, len(data) - 1)))]
+    table = Table(data, colWidths=widths, repeatRows=1, hAlign="LEFT", style=TableStyle(styles))
+    story = [Paragraph(escape(title), heading), table]
+    if keys:
+        story += [Spacer(1, 14), Paragraph("Parameter definitions", heading)]
+        for key in keys:
+            story.append(Paragraph(f"<b>{markup(key)}</b>: {markup(DESCRIPTIONS[key])}", definition))
+    pdf = output_dir / f"{stem}.pdf"
+    document = SimpleDocTemplate(str(pdf), pagesize=page, leftMargin=36, rightMargin=36, topMargin=36, bottomMargin=36, title=title, author="Broussard et al.")
+    document.build(story)
+    return pdf
 
 
-def main() -> None:
+def main(default_item: str | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--wrapper", required=True, type=Path)
-    parser.add_argument("--python", default=sys.executable)
-    parser.add_argument("--output-dir", type=Path)
-    parser.add_argument("--pdflatex", default="pdflatex")
-    parser.add_argument("--keep-build-dir", action="store_true")
+    parser.add_argument("--item", choices=TABLES, default=default_item, required=default_item is None)
+    parser.add_argument("--output-dir", type=Path, help="Destination directory for the table CSV and PDF.")
     args = parser.parse_args()
-    if args.wrapper.stem not in TABLES:
-        parser.error("Unknown table wrapper")
-    print(render(args.wrapper, args.python, args.output_dir, args.pdflatex, args.keep_build_dir))
+    print(render(args.item, args.output_dir))
 
 
 if __name__ == "__main__":

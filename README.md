@@ -6,7 +6,7 @@ The layout is `figures/main`, `figures/extended_data`, `figures/supplementary`, 
 
 ## Environment and paths
 
-The figure reproduction version of record was tested with MATLAB R2023b Update 6. MATLAB scripts use functions from the Curve Fitting, Optimization, Signal Processing, Statistics and Machine Learning, and System Identification toolboxes. The plotting runtime was Python 3.12.13. `requirements-publication.txt` provides the Python packages for plotting and source-data workbook generation in one environment.
+The figure reproduction version of record was tested with MATLAB R2023b Update 6. MATLAB scripts use functions from the Curve Fitting, Optimization, Signal Processing, Statistics and Machine Learning, and System Identification toolboxes. The plotting runtime was Python 3.12.13. `requirements-publication.txt` provides the Python packages for plotting, table PDFs, and source-data workbook generation in one environment.
 
 From the repository root on Windows:
 
@@ -28,7 +28,7 @@ python -m pip install -e . --no-deps
 
 Conda works equivalently after activating the target environment. On offline or restricted HPC nodes, install `setuptools<82` and `wheel` first, then use `python -m pip install -e . --no-deps --no-build-isolation`. Python entry points resolve data and output paths back to this project checkout. If launching from an unusual working directory, set `GCAMP_FIGSHARE_ROOT` or `FIGSHARE_PROJECT_DIR` to the repository root.
 
-Windows table builds use PowerShell 5.1 or newer; Linux table builds use the Python table renderer and do not require PowerShell. Both require a TeX distribution with `pdflatex`, `booktabs`, `xcolor`, `array`, and `geometry`. MATLAB must be licensed and installed with the toolboxes and operating-system dependencies listed above. The build uses MATLAB `-batch` and Matplotlib's `Agg` backend without opening figure windows.
+Tables use the same ReportLab renderer on Windows and Linux, with fonts embedded from Matplotlib's bundled DejaVu Sans. The Python environment above is sufficient for table PDFs and source-data workbooks; no TeX installation is needed for these outputs. MATLAB figure scripts require licensed MATLAB with the toolboxes and operating-system dependencies listed above. The build uses MATLAB `-batch` and Matplotlib's `Agg` backend without opening figure windows.
 
 ## Reproduce figures and source data
 
@@ -41,7 +41,7 @@ python tools/build.py all
 This regenerates the figure panels, tables, and source-data workbooks. Outputs are written beneath `build/`, which is excluded from Git:
 
 - `build/figures/` contains generated panels, including vector PDFs and editable MATLAB FIG files where applicable.
-- `build/tables/` contains generated table CSV, TeX, and PDF files.
+- `build/tables/` contains generated table CSV and PDF files. Tables use simple black-and-white styling, with the source values, precision, and parameter definitions preserved.
 - `build/source_data/` contains the 21 source-data workbooks, rebuilt from the figure-linked CSVs using the supplied workbooks as formatting templates. Continuous curves use at most 200 time points; exact event times are preserved. Full-resolution data remain in the CSVs.
 - `build/logs/` and `build/figure_build.json` show which scripts ran and where their outputs were written. A failed script or missing output stops the build with an error.
 
@@ -51,6 +51,12 @@ To generate only selected outputs:
 python tools/build.py figures --item ED8
 python tools/build.py workbooks --item Figure1
 python tools/build.py all --item SupplementaryTable1
+```
+
+To generate all four table PDFs and the three supplementary-table workbooks using only Python:
+
+```bash
+python tools/build.py all --item Table1 --item SupplementaryTable1 --item SupplementaryTable2 --item SupplementaryTable3
 ```
 
 `--item` may be repeated. Publication IDs follow the directory list below: `Figure1`–`Figure4`, `ED1`–`ED9`, `SupplementaryFigure1`–`SupplementaryFigure4`, `SupplementaryNote1`–`SupplementaryNote2`, `Table1`, and `SupplementaryTable1`–`SupplementaryTable3`. Supplementary Figure 2 is static artwork, and Table 1 has no separate source-data workbook. To use a MATLAB installation outside `PATH`, add `--matlab /path/to/MATLAB/R2023b/bin/matlab` (quote paths containing spaces).
@@ -78,7 +84,7 @@ The page assembler combines regenerated panels into complete vector pages for Fi
 python tools/assemble_revision_figures.py
 ```
 
-It additionally requires `xelatex` and Poppler's `pdftoppm`. Outputs go to `build/revision_assembly/`. Other figures are generated as panel assets for placement in a page layout; `reference_figures/published/` supplies the complete reference pages and static artwork.
+It additionally requires `xelatex` (with the `geometry`, `graphicx`, `tikz`/PGF, and `fontspec` packages) and Poppler's `pdftoppm`. TeX Live provides XeLaTeX on Windows and Linux; MacTeX provides it on macOS. These tools are required only for this optional figure-page assembly step. Outputs go to `build/revision_assembly/`. Other figures are generated as panel assets for placement in a page layout; `reference_figures/published/` supplies the complete reference pages and static artwork.
 
 Arial is used in the reference artwork. MATLAB and Matplotlib may substitute another font if it is absent, which can change font metrics and layout. For the page assembler, select an installed alternative explicitly with `--font "DejaVu Sans"`, or install Arial under its applicable licence.
 
@@ -88,7 +94,7 @@ Arial is used in the reference artwork. MATLAB and Matplotlib may substitute ano
 - `figures/extended_data/figure1` through `figures/extended_data/figure9` contain Extended Data Figures 1-9.
 - `figures/supplementary/figure1` through `figures/supplementary/figure4` contain Supplementary Figures 1-4. 
 - `figures/supplementary/note1` and `figures/supplementary/note2` contain the two Supplementary Notes.
-- `tables/main/table1` contains Table 1; `tables/supplementary/table1` through `tables/supplementary/table3` contain Supplementary Tables 1-3. Their table entry points write CSV, TeX, and PDF artifacts beneath `build/tables`, not the source tree.
+- `tables/main/table1` contains Table 1; `tables/supplementary/table1` through `tables/supplementary/table3` contain Supplementary Tables 1-3. Their Python entry points write CSV and PDF artifacts beneath `build/tables`. The shared renderer is `tools/render_tables.py`; calculations and canonical input CSVs are separate from PDF formatting.
 - Some figure scripts can either use the supplied CSV intermediates or rerun fitting and other longer analyses.
 
 ### Mapping *bioRxiv* to *Nature Methods* figure layout

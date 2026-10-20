@@ -67,10 +67,10 @@ ITEMS = [
     _item("SupplementaryFigure4", "figures/supplementary/figure4", "SupplementaryFigure4", "supp_figure12", python("suppfigure12_A_B_code"), dynamic_panels=["A", "B"], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=5),
     _item("SupplementaryNote1", "figures/supplementary/note1", "SupplementaryNote1", "supp_figure1", matlab("suppfigure1_A_to_D_code", "suppfigure1_E_to_G_code"), dynamic_panels=list("ABCDEFG"), baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=11),
     _item("SupplementaryNote2", "figures/supplementary/note2", "SupplementaryNote2", "supp_figure5", matlab("suppfigure_5_code"), dynamic_panels=list("ABCD"), baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=13),
-    _item("Table1", "tables/main/table1", None, "Table1", [{"language": "powershell", "script": "code/render_table1_precision_recall_fscore_pdf.ps1", "call": "render"}]),
-    _item("SupplementaryTable1", "tables/supplementary/table1", "ST1", "Table2", [{"language": "powershell", "script": "code/render_table2_cell_parameters_pdf.ps1", "call": "render"}], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=6),
-    _item("SupplementaryTable2", "tables/supplementary/table2", "ST2", "Table3", [{"language": "powershell", "script": "code/render_gcamp_parameter_table_pdf.ps1", "call": "render"}], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=8),
-    _item("SupplementaryTable3", "tables/supplementary/table3", "ST3", "Table4", [{"language": "powershell", "script": "code/render_table4_cell_parameter_priors_pdf.ps1", "call": "render"}], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=9),
+    _item("Table1", "tables/main/table1", None, "Table1", [{"language": "python", "script": "code/render_table1_precision_recall_fscore_pdf.py", "call": "main"}]),
+    _item("SupplementaryTable1", "tables/supplementary/table1", "ST1", "Table2", [{"language": "python", "script": "code/render_table2_cell_parameters_pdf.py", "call": "main"}], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=6),
+    _item("SupplementaryTable2", "tables/supplementary/table2", "ST2", "Table3", [{"language": "python", "script": "code/render_gcamp_parameter_table_pdf.py", "call": "main"}], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=8),
+    _item("SupplementaryTable3", "tables/supplementary/table3", "ST3", "Table4", [{"language": "python", "script": "code/render_table4_cell_parameter_priors_pdf.py", "call": "main"}], baseline="NMETH-A59789D_SupplementaryInformation.pdf", baseline_page=9),
 ]
 
 

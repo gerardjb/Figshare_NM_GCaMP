@@ -13,9 +13,9 @@
   "plot_only_datasets": [],
   "entrypoints": [
     {
-      "language": "powershell",
-      "script": "code/render_table2_cell_parameters_pdf.ps1",
-      "call": "render",
+      "language": "python",
+      "script": "code/render_table2_cell_parameters_pdf.py",
+      "call": "main",
       "panels": [
         "table"
       ],
