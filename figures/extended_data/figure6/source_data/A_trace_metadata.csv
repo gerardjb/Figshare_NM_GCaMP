@@ -1,0 +1,4 @@
+method,display_sample_count,median_sample_interval_s,gaussian_window_samples
+Biophys SMC,147,0.00819999999657739,17
+MLspike,147,0.00819999999657739,17
+PGBAR,147,0.00819999999657739,17

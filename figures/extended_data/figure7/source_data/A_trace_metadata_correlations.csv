@@ -1,0 +1,16 @@
+condition_index,acquisition_condition,dataset,trial,method,method_label,pearson_r,display_sigma_ms,correlation_sigma_ms
+0,raw,jGCaMP8f_ANM471994_cell05,1,pgas@base,Biophys$_{SMC}$,0.9357873491342176,30.0,30.0
+0,raw,jGCaMP8f_ANM471994_cell05,1,biophys_ml,Biophys$_{ML}$,0.9021360833856074,30.0,30.0
+0,raw,jGCaMP8f_ANM471994_cell05,1,ens2,ENS$^2$,0.8471903630504521,30.0,30.0
+0,raw,jGCaMP8f_ANM471994_cell05,1,cascade@updated_biophys-ml_cascade,CASCADE,0.8214832701676478,30.0,30.0
+0,raw,jGCaMP8f_ANM471994_cell05,1,mlspike@matlab_mlspike,MLspike,0.7388446400243387,30.0,30.0
+1,30Hz,jGCaMP8f_ANM471994_cell05,1,biophys_ml,Biophys$_{ML}$,0.8935277105684716,30.0,30.0
+1,30Hz,jGCaMP8f_ANM471994_cell05,1,pgas@base,Biophys$_{SMC}$,0.8809029172545934,30.0,30.0
+1,30Hz,jGCaMP8f_ANM471994_cell05,1,mlspike@matlab_mlspike,MLspike,0.8609334692515777,30.0,30.0
+1,30Hz,jGCaMP8f_ANM471994_cell05,1,ens2,ENS$^2$,0.7589523842610936,30.0,30.0
+1,30Hz,jGCaMP8f_ANM471994_cell05,1,cascade@updated_biophys-ml_cascade,CASCADE,0.696469784323637,30.0,30.0
+2,10Hz,jGCaMP8f_ANM471994_cell05,1,pgas@base,Biophys$_{SMC}$,0.8233489934840522,30.0,30.0
+2,10Hz,jGCaMP8f_ANM471994_cell05,1,biophys_ml,Biophys$_{ML}$,0.7775087023076497,30.0,30.0
+2,10Hz,jGCaMP8f_ANM471994_cell05,1,mlspike@matlab_mlspike,MLspike,0.6620694946696501,30.0,30.0
+2,10Hz,jGCaMP8f_ANM471994_cell05,1,ens2,ENS$^2$,0.5563620922276756,30.0,30.0
+2,10Hz,jGCaMP8f_ANM471994_cell05,1,cascade@updated_biophys-ml_cascade,CASCADE,0.5036578189582916,30.0,30.0

@@ -1,0 +1,23 @@
+RowType,Parameter (units),Cell Type,Value,References
+section,GCaMP Parameters,,,
+entry,[GCaMP] (microM),Both,50,"Zariwala et al., 2012; Huber et al., 2012; Rose et al., 2014"
+entry,R_f (unitless),Both,5,"This study"
+section,Calcium Handling,,,
+entry,\Delta Ca_{spike} (microM),Both,70,"Helmchen and Tank, 2015"
+entry,ca_0 (microM),Both,0.05,"Maravall et al., 2000"
+entry,\gamma (s^-1),Both,1800,"Brenowitz and Regehr, 2007"
+section,Endogenous Buffer,,,
+entry,Buffer_{Endo} (microM),Both,12000,"This study"
+entry,"k_{on, Endo} (microM^-1*s^-1)",Both,12000,"Xu et al., 1997"
+entry,"k_{off, Endo} (s^-1)",Both,10000,"Xu et al., 1997"
+section,ATP Ca^{2+} Binding and Concentration,,,
+entry,[ATP] (microM),Both,2000,"Rebola et al., 2019"
+entry,"k_{on, ATP} (microM^-1*s^-1)",Both,500,"Naraghi & Neher, 1997"
+entry,"k_{off, ATP} (s^-1)",Both,100000,"Naraghi & Neher, 1997"
+section,Parvalbumin Ca^{2+} Binding Properties,,,
+entry,[Parv] (microM),Interneuron,1000,"Eggermann and Jonas, 2012"
+entry,"k_{on, Parv, Ca^{2+}} (microM^-1*s^-1)",Interneuron,400,"Mueller et al., 2007"
+entry,"k_{off, Parv, Ca^{2+}} (s^-1)",Interneuron,4,"Mueller et al., 2007"
+entry,"k_{on, Parv, Mg^{2+}} (microM^-1*s^-1)",Interneuron,1,"Mueller et al., 2007"
+entry,"k_{off, Parv, Mg^{2+}} (s^-1)",Interneuron,30,"Mueller et al., 2007"
+entry,"mg_0 (microM)",Interneuron,700,"Romani and Scarpa, 1992"

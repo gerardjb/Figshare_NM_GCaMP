@@ -1,0 +1,12 @@
+RowType,Parameter (units),Fixed/Free,Mean,Approximate Range,References
+section,GCaMP Parameters,,,,
+entry,[GCaMP] (microM),Free,60,1-150,"Zariwala et al., 2012; Huber et al., 2012; Rose et al., 2014"
+entry,R_f (unitless),Free,"5 (\textcolor[HTML]{9E0142}{jGCaMP8f})\n10 (\textcolor[HTML]{53338B}{jGCaMP8m})","3-7 (\textcolor[HTML]{9E0142}{jGCaMP8f})\n8-12 (\textcolor[HTML]{53338B}{jGCaMP8m})","This study"
+section,Calcium Handling,,,,
+entry,\Delta Ca_{spike} (microM),Free,15,1-100,"Helmchen and Tank, 2015"
+entry,ca_0 (microM),Fixed,0.05,,"Maravall et al., 2000"
+entry,\gamma (s^-1),Free,750,200-2500,"Brenowitz and Regehr, 2007"
+entry,\gamma_{in} (s^-1),Free,5,0.5-50,"This study"
+entry,\gamma_{out} (s^-1),Free,5,0.5-50,"This study"
+section,Linearized Endogenous Buffer,,,,
+entry,\kappa_{B} (unitless),Fixed,40,,"Rebola et al., 2019"

@@ -1,0 +1,41 @@
+﻿Sensor,Subject ID,Cell number,Putative cell type (pyr/int),Total recording length (sec),Recording mode (current clamp / voltage clamp),Total action potential number,Median action potential signal-to-noise ratio
+jGCaMP8f,471993,0,pyr,800.1,cc & vc,619,55.82
+jGCaMP8f,471993,1,pyr,960.13,cc,481,55.14
+jGCaMP8f,471993,2,pyr,1440.25,cc,1975,268.39
+jGCaMP8f,471994,0,pyr,817.29,cc,1688,222.15
+jGCaMP8f,471994,1,pyr,480.06,cc,75,111.48
+jGCaMP8f,471994,2,pyr,160.03,cc,46,380.92
+jGCaMP8f,471994,3,pyr,320.06,vc,139,50.38
+jGCaMP8f,471994,4,pyr,800.18,cc,576,120.48
+jGCaMP8f,471994,5,pyr,160.04,cc,50,133.75
+jGCaMP8f,471994,6,pyr,1280.35,cc,1424,231.98
+jGCaMP8f,471994,7,pyr,160.05,cc,123,76.3
+jGCaMP8f,478342,0,pyr,320.09,vc,269,185.16
+jGCaMP8f,478342,2,pyr,320.09,vc,283,68.48
+jGCaMP8f,478342,3,int,320.1,cc,1016,261.53
+jGCaMP8f,478348,0,pyr,960.21,cc,430,100.27
+jGCaMP8f,478349,0,pyr,974.96,cc,1253,433.83
+jGCaMP8f,478349,1,pyr,960.24,cc,635,201.54
+jGCaMP8f,478349,2,pyr,320.08,cc,31,98.45
+jGCaMP8f,478349,3,pyr,640.17,cc,170,311.6
+jGCaMP8f,478349,4,pyr,320.09,cc,190,184.68
+jGCaMP8f,478349,5,int,320.09,cc,6656,134.21
+jGCaMP8f,478349,6,pyr,1600.43,cc,2553,196.92
+jGCaMP8f,478407,0,pyr,1280.22,cc,1536,131.65
+jGCaMP8f,478407,1,pyr,320.06,cc,94,147.07
+jGCaMP8f,478407,2,pyr,320.07,cc & vc,153,53.19
+jGCaMP8f,478407,3,pyr,320.07,cc,169,158.67
+jGCaMP8f,478407,4,pyr,160.04,cc,39,60.96
+jGCaMP8f,478407,5,int,320.08,vc,1236,78.19
+jGCaMP8f,478407,6,pyr,320.08,vc,369,89.35
+jGCaMP8f,478410,0,pyr,320.07,cc,34,131.33
+jGCaMP8f,478410,2,pyr,640.16,cc,143,78.2
+jGCaMP8f,478410,3,pyr,320.08,cc,91,193.18
+jGCaMP8f,478410,4,pyr,480.12,cc,336,158.52
+jGCaMP8f,478410,5,pyr,320.08,cc,688,132.81
+jGCaMP8f,478411,0,pyr,1282.7,cc,675,282.52
+jGCaMP8f,478411,1,pyr,800.18,cc & vc,992,80.17
+jGCaMP8f,478411,2,pyr,800.18,cc & vc,309,63.34
+jGCaMP8f,478411,3,pyr,640.16,cc,82,110.57
+jGCaMP8f,478411,4,pyr,160.05,cc,13,34.47
+jGCaMP8f,478411,5,pyr,480.14,cc & vc,195,80.34

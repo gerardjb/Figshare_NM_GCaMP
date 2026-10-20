@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "role": "frozen_published_reference_figures",
+  "files": [
+    {
+      "path": "published/NMETH-A59789D_SupplementaryInformation.pdf",
+      "size": 7833016,
+      "sha256": "9cab57ffc68f1f57a11acad65bc170668271b7043cac8fecf354f0ab8148e63b"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig1.pdf",
+      "size": 243096,
+      "sha256": "5d6ed6a636d512bc88facd11aa19fac971c61e23a9501ad9a404fbd1175c3c96"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig2.pdf",
+      "size": 405667,
+      "sha256": "d45a280b18cc739c816cb160c4848d6f0a33860c6f017ed21aa6aa73207a0edf"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig3.pdf",
+      "size": 653822,
+      "sha256": "6e37f02bffb90f24a63041cd5d6b117441faa366dd6e37967bd787fb8d005877"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig4.pdf",
+      "size": 361683,
+      "sha256": "f6e8dbdd07b891f7debe18ab24a2086efa53cd667f7135a604fc666e311025ea"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig5.pdf",
+      "size": 242877,
+      "sha256": "76f0d96b02fa76b94533d68bf2a3e21c8e4df7308435b39a7796e460ba1a48ff"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig6.pdf",
+      "size": 293733,
+      "sha256": "d70bccc222be172786f7f771bad4553a719bdd4c81029d121dca8dc7019c285e"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig7.pdf",
+      "size": 1082473,
+      "sha256": "337991d2609c2f6c34770f14f72e1bf7212022ae38d9e30edb239c9d5c38025b"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig8.pdf",
+      "size": 257206,
+      "sha256": "5eecce419542f64717f607022f0cdb92c32147095cd680c9bb7f4086eb757149"
+    },
+    {
+      "path": "published/ExtendedData/NMETH-A59789D_ExtendedDataFig9.pdf",
+      "size": 455549,
+      "sha256": "a8771381fc9bf28d8888ec072e2d66b3664a9a72934d5f197ad107cfd2cef68e"
+    },
+    {
+      "path": "published/MainFigures/NMETH-A59789D_Fig1.pdf",
+      "size": 1857733,
+      "sha256": "b8fef82fab784ace35b93a2fdfb237ecddcbb3981317834697885fba895baefe"
+    },
+    {
+      "path": "published/MainFigures/NMETH-A59789D_Fig2.pdf",
+      "size": 2048064,
+      "sha256": "fa0f960effb296f14127f88dba80086f214ef3715d7cc3c663a131b23fe3c653"
+    },
+    {
+      "path": "published/MainFigures/NMETH-A59789D_Fig3.pdf",
+      "size": 2465612,
+      "sha256": "00cbe135b4c28f083519976025a122d3b025f187f74a4f8ed6a4d56506daae04"
+    },
+    {
+      "path": "published/MainFigures/NMETH-A59789D_Fig4.pdf",
+      "size": 8673016,
+      "sha256": "e067633c3c7c0a0f4596a34cf24f04778c1b0b5bb59f6ddedd917f35eaf69c21"
+    }
+  ]
+}

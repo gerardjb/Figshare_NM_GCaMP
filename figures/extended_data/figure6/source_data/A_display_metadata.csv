@@ -1,0 +1,2 @@
+plot_start_s,plot_end_s,gaussian_sigma_s,prior_window_s,prior_gt_spikes,baseline_DeltaF_over_F,baseline_start_s,baseline_end_s,display_sample_count,displayed_ground_truth_spike_count
+-0.205,1,0.02,0.2,5,0.262167900800705,0.8,1,147,5

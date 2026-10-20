@@ -1,0 +1,10 @@
+metric,spikes,lower_endpoint,upper_endpoint,precision
+tau1_ms,1,36.482228876448374,41.01288894675168,reference mean +/- SEM endpoints; PDF-vector/tick precision
+tau1_ms,2,41.37091524541076,46.09295664627004,reference mean +/- SEM endpoints; PDF-vector/tick precision
+tau1_ms,10,78.02629865902881,91.19385496680131,reference mean +/- SEM endpoints; PDF-vector/tick precision
+tau2_ms,1,1382.523076923074,2239.0769230769224,reference mean +/- SEM endpoints; PDF-vector/tick precision
+tau2_ms,2,355.63076923076903,1033.9692307692285,reference mean +/- SEM endpoints; PDF-vector/tick precision
+tau2_ms,10,796.2461538461516,1383.076923076921,reference mean +/- SEM endpoints; PDF-vector/tick precision
+slow_fraction_percent,1,7.3099236641221195,12.599694656488518,reference mean +/- SEM endpoints; PDF-vector/tick precision
+slow_fraction_percent,2,10.655877862595393,16.393282442748088,reference mean +/- SEM endpoints; PDF-vector/tick precision
+slow_fraction_percent,10,8.898320610687005,12.172824427480911,reference mean +/- SEM endpoints; PDF-vector/tick precision

@@ -1,0 +1,33 @@
+experiment,condition,stimulus_number,stimulus_time_ms
+paired_pulse,single pulse,1,0.0
+paired_pulse,paired pulse (10 ms interval),1,-10.0
+paired_pulse,paired pulse (10 ms interval),2,0.0
+poisson,poisson train,1,0.0
+poisson,poisson train,2,5.330000000000002
+poisson,poisson train,3,18.820000000000004
+poisson,poisson train,4,25.139999999999997
+poisson,poisson train,5,142.21
+poisson,poisson train,6,145.45999999999998
+poisson,poisson train,7,190.29000000000002
+poisson,poisson train,8,309.89
+poisson,poisson train,9,397.15999999999997
+poisson,poisson train,10,419.3
+poisson,poisson train,11,433.3
+poisson,poisson train,12,507.19000000000005
+poisson,poisson train,13,544.25
+poisson,poisson train,14,600.26
+poisson,poisson train,15,606.7
+poisson,poisson train,16,643.6800000000001
+poisson,poisson train,17,654.78
+poisson,poisson train,18,659.42
+poisson,poisson train,19,668.85
+poisson,poisson train,20,675.11
+poisson,poisson train,21,721.14
+poisson,poisson train,22,757.5600000000001
+poisson,poisson train,23,816.0099999999999
+poisson,poisson train,24,827.28
+poisson,poisson train,25,868.3000000000001
+poisson,poisson train,26,934.55
+poisson,poisson train,27,1011.26
+poisson,poisson train,28,1117.02
+poisson,poisson train,29,1193.2

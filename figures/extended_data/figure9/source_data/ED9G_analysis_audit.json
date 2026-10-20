@@ -1,0 +1,29 @@
+{
+  "n_rows": 8148,
+  "n_methods": 6,
+  "n_widths": 7,
+  "widths_ms": [
+    10,
+    20,
+    30,
+    40,
+    50,
+    75,
+    100
+  ],
+  "n_epochs": 194,
+  "n_cells": 42,
+  "formula": "Z ~ Method*Width + (1|SubjectID)",
+  "DFMethod": "satterthwaite",
+  "family": "eight biophysical-versus-comparator contrasts",
+  "multiplicity": "Holm",
+  "independent_prediction_grid_maximum_error": 4.440892098500626e-16,
+  "raw_epoch_pair_mean_matches_model_contrasts": true,
+  "input_correlations_modified": false,
+  "source_csv_sha256": "3f23b5f721076715be59ecc06703b1bdd12338d01334bafe444e4d7ded6ac381",
+  "portable_reanalysis_script_sha256": "681f3319f0c5a96b3693b5eb6266d1c8e1aa5513aeb86e71f96f68abf5795ac8",
+  "log_tail_matches_representable_native_probability_max_log10_error": 4.405364961712621e-13,
+  "holm_log_space_independently_verified": true,
+  "all_eight_estimates_and_pointwise_CI_positive": true,
+  "p_reporting": "Scientific/log10 columns retain probabilities below IEEE double range; p_display uses <0.001 below 1e-100; numeric zero is underflow, not exact zero."
+}
